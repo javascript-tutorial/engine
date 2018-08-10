@@ -1,0 +1,10 @@
+{
+  "name": "@jsengine/i18n",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Ilya Kantor",
+  "license": "CC-BY-NC-SA",
+  "dependencies": {
+  }
+}
