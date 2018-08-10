@@ -1,5 +1,5 @@
 let extractHighlight = require('../../utils/source/extractHighlight');
-let stripIndents = require('textUtil/stripIndents');
+let stripIndents = require('@jsengine/text-utils/stripIndents');
 
 let fs = require('fs');
 let path = require('path');

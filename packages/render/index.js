@@ -1,12 +1,12 @@
 'use strict';
 
-const moment = require('momentWithLocale');
+const moment = require('@jsengine/moment-with-locale');
 const util = require('util');
 const path = require('path');
 const config = require('config');
 const fs = require('fs');
 const log = require('@jsengine/log')();
-const pug = require('serverPug');
+const pug = require('@jsengine/server-pug');
 const t = require('@jsengine/i18n');
 const url = require('url');
 const BasicParser = require('markit').BasicParser;

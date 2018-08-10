@@ -10,7 +10,7 @@
  */
 
 const parseAttrs = require('../utils/parseAttrs');
-const makeAnchor = require('textUtil/makeAnchor');
+const makeAnchor = require('@jsengine/text-utils/makeAnchor');
 
 const t = require('@jsengine/i18n');
 

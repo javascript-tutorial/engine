@@ -7,7 +7,7 @@
  */
 
 const parseAttrs = require('../utils/parseAttrs');
-const stripIndents = require('textUtil/stripIndents');
+const stripIndents = require('@jsengine/text-utils/stripIndents');
 const extractHighlight = require('../utils/source/extractHighlight');
 const t = require('@jsengine/i18n');
 const getPrismLanguage = require('../getPrismLanguage');

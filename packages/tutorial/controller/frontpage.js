@@ -5,7 +5,7 @@ const TutorialTree = require('../models/tutorialTree');
 const Task = require('../models/task');
 const _ = require('lodash');
 const ArticleRenderer = require('../renderer/articleRenderer');
-const localStorage = require('localStorage').instance();
+const localStorage = require('@jsengine/local-storage').instance();
 const t = require('@jsengine/i18n');
 
 t.requirePhrase('tutorial', 'frontpage');

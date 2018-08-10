@@ -18,7 +18,7 @@ const TutorialParser = require('./tutorialParser');
 const stripTitle = require('markit').stripTitle;
 const stripYamlMetadata = require('markit').stripYamlMetadata;
 const mime = require('mime');
-const stripIndents = require('textUtil/stripIndents');
+const stripIndents = require('@jsengine/text-utils/stripIndents');
 
 const t = require('@jsengine/i18n');
 

@@ -6,9 +6,9 @@ const Task = require('../models/task');
 const ArticleRenderer = require('../renderer/articleRenderer');
 const TaskRenderer = require('../renderer/taskRenderer');
 const _ = require('lodash');
-const makeAnchor = require('textUtil/makeAnchor');
+const makeAnchor = require('@jsengine/text-utils/makeAnchor');
 const t = require('@jsengine/i18n');
-const localStorage = require('localStorage').instance();
+const localStorage = require('@jsengine/local-storage').instance();
 
 exports.get = async function(ctx, next) {
 
