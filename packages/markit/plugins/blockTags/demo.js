@@ -2,7 +2,7 @@
 
 const t = require('@jsengine/i18n');
 
-t.requirePhrase('markit', 'demo');
+t.requirePhrase('@jsengine/markit', 'demo');
 
 module.exports = function(md) {
 

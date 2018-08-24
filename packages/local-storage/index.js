@@ -18,7 +18,7 @@ module.exports = class LocalStorage {
 
   static instance() {
     if (!this._instance) {
-      this._instance = new Index();
+      this._instance = new LocalStorage();
     }
     return this._instance;
   }

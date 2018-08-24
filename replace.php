@@ -5,6 +5,7 @@ $search = [
   "require('i18n",
   "require('log",
   "require('localStorage",
+  "require('nodeExample",
   "require('serverPug",
   "require('momentWithLocale"
 ];
@@ -14,6 +15,7 @@ $replace = [
  "require('@jsengine/i18n",
  "require('@jsengine/log",
  "require('@jsengine/local-storage",
+ "require('@jsengine/node-example",
  "require('@jsengine/server-pug",
  "require('@jsengine/moment-with-locale"
 ];

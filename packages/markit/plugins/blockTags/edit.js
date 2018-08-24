@@ -6,8 +6,8 @@
 
 const t = require('@jsengine/i18n');
 
-t.requirePhrase('markit', 'edit');
-t.requirePhrase('markit', 'error');
+t.requirePhrase('@jsengine/markit', 'edit');
+t.requirePhrase('@jsengine/markit', 'error');
 
 module.exports = function(md) {
 

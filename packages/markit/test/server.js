@@ -3,8 +3,8 @@
 const should = require('should');
 
 // introduce models for fixtures
-require('tutorial').Article;
-require('tutorial').Task;
+require('@jsengine/koa/tutorial').Article;
+require('@jsengine/koa/tutorial').Task;
 
 const Parser = require('../serverParser');
 const dataUtil = require('dataUtil');

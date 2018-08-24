@@ -13,7 +13,7 @@ const t = require('@jsengine/i18n');
 const fs = require('mz/fs');
 const gm = require('gm');
 
-t.requirePhrase('markit', 'error');
+t.requirePhrase('@jsengine/markit', 'error');
 
 class SrcError extends Error {
 }
@@ -95,10 +95,12 @@ module.exports = async function(tokens, options) {
 
     if (/\.svg$/i.test(sourcePath)) {
       try {
-        let size = await function(callback) {
+        let size = await new Promise((resolve, reject) => {
           // GraphicsMagick fails with `gm identify my.svg`
-          gm(sourcePath).options({imageMagick: true}).identify('{"width":%w,"height":%h}', callback);
-        };
+          gm(sourcePath)
+            .options({imageMagick: true})
+            .identify('{"width":%w,"height":%h}', (err, res) => err ? reject(err) : resolve(res));
+        });
 
         size = JSON.parse(size); // warning: no error processing
 

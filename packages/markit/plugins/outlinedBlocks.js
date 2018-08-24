@@ -6,9 +6,10 @@
 
 const markdownItContainer = require('markdown-it-container');
 const parseAttrs = require('../utils/parseAttrs');
-const t = require('@jsengine/i18n');
+const t = require('@jsengine/i18n/t');
+const config = require('config');
 
-t.requirePhrase('markit', 'outlined');
+t.i18n.add('markit.outlined', require('../locales/outlined/' + config.lang + '.yml'));
 
 module.exports = function(md) {
 
