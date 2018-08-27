@@ -1,4 +1,3 @@
-'use strict';
 
 const TutorialTree = require('../models/tutorialTree');
 const Article = require('../models/article');
@@ -37,7 +36,7 @@ exports.get = async function(ctx, next) {
   let sections = [];
   if (renderedArticle.isFolder) {
 
-    console.log(t.i18n);
+    //console.log(t.i18n);
     sections.push({
       title: t('tutorial.article.sibling_chapters'),
       links: renderedArticle.siblings

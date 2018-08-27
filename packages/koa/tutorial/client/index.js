@@ -1,4 +1,3 @@
-'use strict';
 
 let delegate = require('client/delegate');
 let prism = require('@jsengine/prism');

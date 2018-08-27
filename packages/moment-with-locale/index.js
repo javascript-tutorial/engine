@@ -15,7 +15,8 @@ if (lang === 'ru') {
     }
   });
 
-} else {
+} else if (lang !== 'en') {
+  // for "en" no need to require, it's built-in (require would fail)
   require('moment/locale/' + lang);
 }
 
