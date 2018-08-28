@@ -13,7 +13,7 @@ const t = require('@jsengine/i18n');
 const fs = require('mz/fs');
 const gm = require('gm');
 
-t.requirePhrase('@jsengine/markit', 'error');
+t.requirePhrase('@jsengine/markit');
 
 class SrcError extends Error {
 }

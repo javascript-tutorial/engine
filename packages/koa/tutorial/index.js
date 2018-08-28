@@ -4,10 +4,6 @@ const mountHandlerMiddleware = require('@jsengine/koa/mountHandlerMiddleware');
 
 const t = require('@jsengine/i18n');
 
-t.requirePhrase('@jsengine/koa/tutorial', 'article');
-t.requirePhrase('@jsengine/koa/tutorial', 'task');
-
-
 exports.TutorialViewStorage = require('./models/tutorialViewStorage');
 exports.Article = require('./models/article');
 exports.Task = require('./models/task');

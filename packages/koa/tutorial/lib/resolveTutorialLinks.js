@@ -16,10 +16,6 @@ const t = require('@jsengine/i18n');
 const url = require('url');
 const tokenUtils = require('@jsengine/markit').tokenUtils;
 
-t.requirePhrase('@jsengine/koa/tutorial', 'article');
-t.requirePhrase('@jsengine/koa/tutorial', 'task');
-
-
 module.exports = async function (tokens) {
 
   let isEmptyLink, isAutoLink;

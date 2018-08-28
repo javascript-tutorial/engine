@@ -22,8 +22,6 @@ const stripIndents = require('@jsengine/text-utils/stripIndents');
 
 const t = require('@jsengine/i18n');
 
-t.requirePhrase('@jsengine/koa/tutorial', 'importer');
-
 module.exports = class TutorialImporter {
   constructor(options) {
     this.root = fs.realpathSync(options.root);

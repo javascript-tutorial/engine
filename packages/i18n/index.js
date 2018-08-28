@@ -1,5 +1,4 @@
 const LANG = require('config').lang;
-
 const log = require('@jsengine/log')();
 const path = require('path');
 const fs = require('fs');
@@ -11,7 +10,7 @@ let t = require('./t');
 
 let docs = {};
 
-t.requireTopLocales = function () {
+t.requireHandlerLocales = function () {
 
   let translationPath = path.join(config.projectRoot, 'locales');
 
@@ -25,8 +24,15 @@ t.requireTopLocales = function () {
 
   t.i18n.add('', doc);
 
-};
+  for (let handlerName in config.handlers) {
+    let handlerPath = config.handlers[handlerName].path;
+    let localesPath = path.join(handlerPath, 'locales');
+    if (!fs.existsSync(localesPath)) continue;
 
+    this.requirePhrase(handlerPath);
+  }
+
+};
 
 
 t.requirePhrase = function (moduleName) {

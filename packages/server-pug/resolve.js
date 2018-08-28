@@ -4,8 +4,11 @@ const lang = require('config').lang;
 const config = require('config');
 
 function tryPaths(roots, filename) {
+
   let paths = [
+    `${filename}.${lang}`,
     `${filename}.${lang}.pug`,
+    `${filename}`,
     `${filename}.pug`,
     `${filename}/index.${lang}.pug`,
     `${filename}/index.pug`,
@@ -13,8 +16,9 @@ function tryPaths(roots, filename) {
 
   for(let root of roots) {
     for (let tryPath of paths) {
-      if (fs.existsSync(path.join(root, tryPath))) {
-        return path.join(root, tryPath);
+      let p = path.join(root, tryPath);
+      if (fs.existsSync(p) && !fs.statSync(p).isDirectory()) {
+        return p;
       }
     }
   }

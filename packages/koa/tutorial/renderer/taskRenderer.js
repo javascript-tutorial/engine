@@ -10,8 +10,6 @@ const TutorialViewStorage = require('../models/tutorialViewStorage');
 
 const t = require('@jsengine/i18n');
 
-t.requirePhrase('@jsengine/koa/tutorial', 'task');
-
 
 /**
  * Can render many articles, keeping metadata

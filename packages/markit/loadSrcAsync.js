@@ -17,7 +17,7 @@ const fs = require('mz/fs');
 const t = require('@jsengine/i18n');
 const tokenUtils = require('./utils/token');
 
-t.requirePhrase('@jsengine/markit', 'error');
+t.requirePhrase('@jsengine/markit');
 
 
 class SrcError extends Error {

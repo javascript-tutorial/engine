@@ -14,7 +14,7 @@ const makeAnchor = require('@jsengine/text-utils/makeAnchor');
 
 const t = require('@jsengine/i18n');
 
-t.requirePhrase('@jsengine/markit', 'error');
+t.requirePhrase('@jsengine/markit');
 
 // add headingToken.achor
 // not "id" attr, because rendering uses `.anchor` for the extra link OR id

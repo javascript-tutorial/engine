@@ -6,8 +6,7 @@
 
 const t = require('@jsengine/i18n');
 
-t.requirePhrase('@jsengine/markit', 'iframe');
-t.requirePhrase('@jsengine/markit', 'error');
+t.requirePhrase('@jsengine/markit');
 
 module.exports = function(md) {
 
