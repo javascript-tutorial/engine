@@ -40,7 +40,7 @@ for(const handlerName in config.handlers) {
 }
 
 // must be last
-app.requireHandler('@jsengine/koa/404');
+app.requireHandler('jsengine/koa/404');
 
 
 // uncomment for time-require to work

@@ -1,4 +1,4 @@
-const log = require('@jsengine/log')();
+const log = require('jsengine/log')();
 const pathToRegexp = require('path-to-regexp');
 
 function PathListCheck() {
