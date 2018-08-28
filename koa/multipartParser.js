@@ -1,7 +1,7 @@
 const PathListCheck = require('./pathListCheck');
 const multiparty = require('multiparty');
 
-let log = require('@jsengine/log')();
+let log = require('jsengine/log')();
 
 class MultipartParser {
   constructor() {

@@ -9,7 +9,7 @@ const LANG = require('config').lang;
 let err = console.error;
 
 if (typeof IS_CLIENT === 'undefined') {
-  const log = require('@jsengine/log')();
+  const log = require('jsengine/log')();
   err = (...args) => log.error(...args);
 }
 

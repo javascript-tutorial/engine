@@ -2,13 +2,13 @@
 
 const config = require('config');
 const Task = require('../models/task');
-const log = require('@jsengine/log')();
+const log = require('jsengine/log')();
 const assert = require('assert');
 
 const TutorialParser = require('../lib/tutorialParser');
 const TutorialViewStorage = require('../models/tutorialViewStorage');
 
-const t = require('@jsengine/i18n');
+const t = require('jsengine/i18n');
 
 
 /**

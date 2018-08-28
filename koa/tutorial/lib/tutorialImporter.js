@@ -9,18 +9,18 @@ const Article = require('../models/article');
 const Task = require('../models/task');
 const ArticleRenderer = require('../renderer/articleRenderer');
 const TaskRenderer = require('../renderer/taskRenderer');
-const log = require('@jsengine/log')();
+const log = require('jsengine/log')();
 
 const TutorialTree = require('../models/tutorialTree');
 const TutorialView = require('../models/tutorialView');
 const TutorialViewStorage = require('../models/tutorialViewStorage');
 const TutorialParser = require('./tutorialParser');
-const stripTitle = require('@jsengine/markit').stripTitle;
-const stripYamlMetadata = require('@jsengine/markit').stripYamlMetadata;
+const stripTitle = require('jsengine/markit').stripTitle;
+const stripYamlMetadata = require('jsengine/markit').stripYamlMetadata;
 const mime = require('mime');
-const stripIndents = require('@jsengine/text-utils/stripIndents');
+const stripIndents = require('jsengine/text-utils/stripIndents');
 
-const t = require('@jsengine/i18n');
+const t = require('jsengine/i18n');
 
 module.exports = class TutorialImporter {
   constructor(options) {

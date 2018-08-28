@@ -4,7 +4,7 @@ const Task = require('../models/task');
 const Article = require('../models/article');
 const TutorialTree = require('../models/tutorialTree');
 const TaskRenderer = require('../renderer/taskRenderer');
-const t = require('@jsengine/i18n');
+const t = require('jsengine/i18n');
 
 exports.get = async function(ctx, next) {
 

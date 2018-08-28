@@ -1,6 +1,6 @@
 
 let delegate = require('client/delegate');
-let prism = require('@jsengine/prism');
+let prism = require('jsengine/prism');
 
 function init() {
 

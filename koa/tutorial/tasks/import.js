@@ -1,7 +1,7 @@
 'use strict';
 
-let runImport = require('@jsengine/koa/tutorial').runImport;
-let log = require('@jsengine/log')();
+let runImport = require('jsengine/koa/tutorial').runImport;
+let log = require('jsengine/log')();
 
 module.exports = function(options) {
 

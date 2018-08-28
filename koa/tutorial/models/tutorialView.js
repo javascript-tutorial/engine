@@ -1,6 +1,6 @@
 let assert = require('assert');
 let _ = require('lodash');
-let log = require('@jsengine/log')();
+let log = require('jsengine/log')();
 let Zip = require('node-zip');
 
 

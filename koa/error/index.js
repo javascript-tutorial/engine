@@ -4,7 +4,7 @@ const path = require('path');
 
 let isDevelopment = process.env.NODE_ENV == 'development';
 
-const t = require('@jsengine/i18n');
+const t = require('jsengine/i18n');
 
 // can be called not from this MW, but from anywhere
 // this.templateDir can be anything

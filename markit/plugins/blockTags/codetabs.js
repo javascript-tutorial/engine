@@ -7,7 +7,7 @@ assert(typeof IS_CLIENT === 'undefined');
 const path = require('path');
 const getPrismLanguage = require('../../getPrismLanguage');
 
-require('@jsengine/server-pug');
+require('jsengine/server-pug');
 
 const codeTabsTemplate = require('../../templates/codeTabs.pug');
 

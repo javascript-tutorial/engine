@@ -11,10 +11,10 @@ assert(typeof IS_CLIENT === 'undefined');
 
 const TutorialTree = require('../models/tutorialTree');
 
-const Token = require('@jsengine/markit').Token;
-const t = require('@jsengine/i18n');
+const Token = require('jsengine/markit').Token;
+const t = require('jsengine/i18n');
 const url = require('url');
-const tokenUtils = require('@jsengine/markit').tokenUtils;
+const tokenUtils = require('jsengine/markit').tokenUtils;
 
 module.exports = async function (tokens) {
 

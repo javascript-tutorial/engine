@@ -9,11 +9,11 @@ const imageSize = require('image-size');
 
 const path = require('path');
 const tokenUtils = require('./utils/token');
-const t = require('@jsengine/i18n');
+const t = require('jsengine/i18n');
 const fs = require('mz/fs');
 const gm = require('gm');
 
-t.requirePhrase('@jsengine/markit');
+t.requirePhrase('jsengine/markit');
 
 class SrcError extends Error {
 }

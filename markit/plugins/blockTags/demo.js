@@ -1,8 +1,8 @@
 'use strict';
 
-const t = require('@jsengine/i18n');
+const t = require('jsengine/i18n');
 
-t.requirePhrase('@jsengine/markit', 'demo');
+t.requirePhrase('jsengine/markit', 'demo');
 
 module.exports = function(md) {
 

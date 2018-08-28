@@ -1,8 +1,8 @@
 'use strict';
 
-const mountHandlerMiddleware = require('@jsengine/koa/mountHandlerMiddleware');
+const mountHandlerMiddleware = require('jsengine/koa/mountHandlerMiddleware');
 
-const t = require('@jsengine/i18n');
+const t = require('jsengine/i18n');
 
 exports.TutorialViewStorage = require('./models/tutorialViewStorage');
 exports.Article = require('./models/article');

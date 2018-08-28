@@ -1,5 +1,5 @@
 const LANG = require('config').lang;
-const log = require('@jsengine/log')();
+const log = require('jsengine/log')();
 const path = require('path');
 const fs = require('fs');
 const glob = require('glob');

@@ -1,4 +1,4 @@
-const t = require('@jsengine/i18n/t');
+const t = require('jsengine/i18n/t');
 
 const LANG = require('config').lang;
 

@@ -14,10 +14,10 @@
 const assert = require('assert');
 const path = require('path');
 const fs = require('mz/fs');
-const t = require('@jsengine/i18n');
+const t = require('jsengine/i18n');
 const tokenUtils = require('./utils/token');
 
-t.requirePhrase('@jsengine/markit');
+t.requirePhrase('jsengine/markit');
 
 
 class SrcError extends Error {
@@ -38,7 +38,7 @@ let storage;
 module.exports = async function (tokens, options) {
 
   if (!storage) {
-    storage = require('@jsengine/koa/tutorial').TutorialViewStorage.instance();
+    storage = require('jsengine/koa/tutorial').TutorialViewStorage.instance();
   }
 
   let methods = {
