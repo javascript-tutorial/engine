@@ -40,7 +40,7 @@ exports.get = async function(ctx, next) {
 
   ctx.locals.breadcrumbs = breadcrumbs.reverse();
 
-  ctx.locals.siteToolbarCurrentSection = "tutorial";
+  ctx.locals.currentSection = "tutorial";
 
   // No support for task.libs & head just yet (not needed?)
   ctx.locals.title = task.title;

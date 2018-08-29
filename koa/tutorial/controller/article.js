@@ -27,7 +27,7 @@ exports.get = async function(ctx, next) {
   locals.sitetoolbar = true;
 
   locals.githubLink = renderedArticle.githubLink;
-  locals.siteToolbarCurrentSection = "tutorial";
+  locals.currentSection = "tutorial";
 
   if (!renderedArticle.isFolder) {
     locals.comments = true;

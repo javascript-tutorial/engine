@@ -122,6 +122,9 @@ module.exports = class TutorialTree {
 
   }
 
+  getAll() {
+    return Object.values(this.bySlugMap);
+  }
 
   clear() {
     for (let key in this.bySlugMap) {
