@@ -12,19 +12,19 @@ function getPluralType(n) {
 }
 
 // pluralize(10, 'груша', 'груши', 'груш')
-function pluralize(count, strOne, strFew, strMany) {
+function pluralize(count, string) {
+  var type = getPluralType(count);
+  var values = string.split(',');
 
-  let type = getPluralType(count);
-
-  switch(type) {
-  case 'one':
-    return strOne;
-  case 'few':
-    return strFew;
-  case 'many':
-    return strMany;
-  default:
-    throw new Error("Unsupported count: " + count);
+  switch (type) {
+    case 'one':
+      return values[0];
+    case 'few':
+      return values[1];
+    case 'many':
+      return values[2];
+    default:
+      throw new Error("Unsupported count: " + count);
   }
 
 }
