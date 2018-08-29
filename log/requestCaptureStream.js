@@ -51,7 +51,6 @@ class RequestCaptureStream extends Stream {
 
     let reqId = record.requestId;
     let ring;
-    let self = this;
 
     if (!(ring = this.requestMap.get(reqId))) {
       if (++this._offset > this.maxRequestIds)
@@ -59,7 +58,7 @@ class RequestCaptureStream extends Stream {
 
       if (this._rings.length <= this._offset) {
         this._rings.push(new bunyan.RingBuffer({
-          limit: self.limit
+          limit: this.limit
         }));
       }
 

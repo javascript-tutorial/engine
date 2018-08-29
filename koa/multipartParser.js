@@ -56,20 +56,19 @@ class MultipartParser {
 
 
   middleware() {
-    let self = this;
 
-    return async function (ctx, next) {
+    return async (ctx, next) => {
       // skip these methods
       let contentType = ctx.get('content-type') || '';
       if (!~['DELETE', 'POST', 'PUT', 'PATCH'].indexOf(ctx.method) || !contentType.startsWith('multipart/form-data')) {
         return await next();
       }
 
-      if (!self.ignore.check(ctx.path)) {
+      if (!this.ignore.check(ctx.path)) {
         ctx.log.debug("multipart will parse");
 
         // ctx may throw an error w/ status 400 or 415 or...
-        ctx.request.body = await self.parse(ctx.req);
+        ctx.request.body = await this.parse(ctx.req);
 
         ctx.log.debug("multipart done parse");
       } else {

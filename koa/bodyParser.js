@@ -18,14 +18,13 @@ class BodyParser {
   }
 
   middleware() {
-    let self = this;
 
-    return async function (ctx, next) {
+    return async (ctx, next) => {
 
-      if (!self.ignore.check(ctx.path)) {
+      if (!this.ignore.check(ctx.path)) {
         ctx.log.debug("bodyParser will parse");
 
-        await self.parser(ctx, next);
+        await this.parser(ctx, next);
 
         ctx.log.debug("bodyParser done parse");
       } else {
