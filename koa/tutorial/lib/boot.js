@@ -3,8 +3,10 @@ const fs = require('mz/fs');
 const config = require('config');
 const TutorialViewStorage = require('../models/tutorialViewStorage');
 const TutorialTree = require('../models/tutorialTree');
+const pmx = require('pmx');
 
-module.exports = async function() {
+// pm2 trigger javascript tutorial_boot
+async function boot() {
   if (process.env.TUTORIAL_EDIT) {
     // tutorial is imported and watched by another task
     return;
@@ -20,4 +22,12 @@ module.exports = async function() {
   let views = await fs.readFile(path.join(config.cacheRoot, 'tutorialViewStorage.json'));
   views = JSON.parse(views);
   TutorialViewStorage.instance().load(tree);
-};
+}
+
+pmx.action('tutorial_boot', function(reply) {
+  boot().then(() => {
+    reply({ answer : 'ok' });
+  });
+});
+
+module.exports = boot;
