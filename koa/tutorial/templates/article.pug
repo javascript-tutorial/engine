@@ -15,7 +15,7 @@ block append head
   !=js("tutorial", {defer: true})
 
 block content
-  article(itemscope itemtype="http://schema.org/TechArticle")
+  article.formatted(itemscope itemtype="http://schema.org/TechArticle")
     meta(itemprop="name", content=title)
     div(itemprop="author", itemscope, itemtype="http://schema.org/Person")
       meta(itemprop="email", content="iliakan@gmail.com")
@@ -26,7 +26,7 @@ block content
 
   if tasks.length
 
-    +b.tasks
+    +b.tasks.formatted
       +e('h2').title#tasks
         +e('a').title-anchor.main__anchor.main__anchor_noicon(href="#tasks")= t('tutorial.article.tasks')
 
