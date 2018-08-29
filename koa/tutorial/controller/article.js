@@ -93,6 +93,7 @@ exports.get = async function(ctx, next) {
   }
 
   locals.sidebar = {
+    class: "sidebar_sticky-footer",
     sections: sections
   };
 
