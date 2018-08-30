@@ -3,7 +3,6 @@ const fs = require('mz/fs');
 const config = require('config');
 const TutorialViewStorage = require('../models/tutorialViewStorage');
 const TutorialTree = require('../models/tutorialTree');
-const pmx = require('pmx');
 
 // pm2 trigger javascript tutorial_boot
 async function boot() {
@@ -24,10 +23,20 @@ async function boot() {
   TutorialViewStorage.instance().load(tree);
 }
 
-pmx.action('tutorial_boot', function(reply) {
-  boot().then(() => {
-    reply({ answer : 'ok' });
+// add reboot action if pmx exists (for prod, not for local server)
+let pmx;
+try {
+  pmx = require('pmx');
+} catch(e) {
+  pmx = null;
+}
+
+if (pmx) {
+  pmx.action('tutorial_boot', function(reply) {
+    boot().then(() => {
+      reply({ answer : 'ok' });
+    });
   });
-});
+}
 
 module.exports = boot;

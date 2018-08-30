@@ -99,6 +99,15 @@ module.exports = class Renderer {
 
     locals.t = t;
 
+    locals.moduleExists = function(name) {
+      try {
+        require.resolve(name);
+        return true;
+      } catch(err) {
+        return false;
+      }
+    };
+
     locals.pack = this.pack.bind(this);
 
   }
