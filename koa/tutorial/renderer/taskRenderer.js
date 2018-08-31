@@ -136,7 +136,7 @@ module.exports = class TaskRenderer {
 };
 
 /*
-TaskRenderer.regenerateCaches = function*() {
+TaskRenderer.regenerateCaches = async function() {
   let tasks = await Task.find({});
 
   for (let i = 0; i < tasks.length; i++) {

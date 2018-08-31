@@ -170,7 +170,7 @@ module.exports = class ArticleRenderer {
 };
 
 /*
-ArticleRenderer.regenerateCaches = function*() {
+ArticleRenderer.regenerateCaches = async function() {
   let articles = await Article.find({});
 
   for (let i = 0; i < articles.length; i++) {

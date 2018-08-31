@@ -19,7 +19,7 @@ should.Assertion.add('html', function(str) {
 }, false);
 
 
-function* render(text) {
+async function render(text) {
 
   let tmp;
   try {
@@ -49,13 +49,13 @@ function* render(text) {
 
 describe('MarkIt', function() {
 
-  before(function* () {
+  before(async function() {
     await dataUtil.loadModels(path.join(__dirname, './fixture/tutorial'), {reset: true});
   });
 
   describe('code', function() {
 
-    it(`[js src="1.js" height=300]`, function*() {
+    it(`[js src="1.js" height=300]`, async function() {
       let result = await render(this.test.title);
       result.should.be.html(`<div data-trusted="1" class="code-example" data-demo-height="300">
       <div class="codebox code-example__codebox">
@@ -68,7 +68,7 @@ describe('MarkIt', function() {
     });
 
 
-    it('```\ncode\n```', function*() {
+    it('```\ncode\n```', async function() {
       let result = await render(this.test.title);
       result.should.be.html(`<div data-trusted="1" class="code-example">
         <div class="codebox code-example__codebox">
@@ -80,7 +80,7 @@ describe('MarkIt', function() {
     });
 
 
-    it('```js\na = 5\n```\n', function*() {
+    it('```js\na = 5\n```\n', async function() {
       let result = await render(this.test.title);
       result.should.be.html(`<div data-trusted="1" class="code-example">
       <div class="codebox code-example__codebox">
@@ -95,7 +95,7 @@ describe('MarkIt', function() {
   });
 
 
-  it(`[iframe src="/path"]`, function*() {
+  it(`[iframe src="/path"]`, async function() {
     let result = await render(this.test.title);
     result.should.be.html(`<div class="code-result">
       <div class="code-result__toolbar toolbar"></div>
@@ -107,43 +107,43 @@ describe('MarkIt', function() {
 
 
 /*
-  it(`<info:task/task-1>`, function*() {
+  it(`<info:task/task-1>`, async function() {
     let result = await render(this.test.title);
     result.trim().should.be.eql('<p><a href="/task/task-1">Task 1</a></p>');
   });
 
-  it(`<info:article-1.2>`, function*() {
+  it(`<info:article-1.2>`, async function() {
     let result = await render(this.test.title);
     result.trim().should.be.eql('<p><a href="/article-1.2">Article 1.2</a></p>');
   });
   */
 
-  it(`notfigure ![desc|height=100 width=200](/url)`, function*() {
+  it(`notfigure ![desc|height=100 width=200](/url)`, async function() {
     let result = await render(this.test.title);
     result.trim().should.be.eql('<p>notfigure <img src="/url" alt="desc" height="100" width="200"></p>');
   });
 
-  it(`notfigure ![desc](blank.png)`, function*() {
+  it(`notfigure ![desc](blank.png)`, async function() {
     let result = await render(this.test.title);
     result.trim().should.be.eql('<p>notfigure <img src="/resources/blank.png" alt="desc" width="3" height="2"></p>');
   });
 
-  it(`notfigure ![desc](not-exists.png)`, function*() {
+  it(`notfigure ![desc](not-exists.png)`, async function() {
     let result = await render(this.test.title);
     result.trim().should.match(/^<p>notfigure <span class="markdown-error">.*?<\/p>$/);
   });
 
-  it(`notfigure ![desc](error.png)`, function*() {
+  it(`notfigure ![desc](error.png)`, async function() {
     let result = await render(this.test.title);
     result.trim().should.match(/^<p>notfigure <span class="markdown-error">.*?<\/p>$/);
   });
 
-  it(`notfigure ![desc](1.js)`, function*() {
+  it(`notfigure ![desc](1.js)`, async function() {
     let result = await render(this.test.title);
     result.trim().should.match(/^<p>notfigure <span class="markdown-error">.*?<\/p>$/);
   });
 
-  it(`![figure|height=100 width=200](/url)`, function*() {
+  it(`![figure|height=100 width=200](/url)`, async function() {
     let result = await render(this.test.title);
     result.trim().should.be.html(`<figure><div class="image" style="width:200px">
       <div class="image__ratio" style="padding-top:50%"></div>
@@ -151,12 +151,12 @@ describe('MarkIt', function() {
       </div></figure>`);
   });
 
-  it(`## Header [#anchor]`, function*() {
+  it(`## Header [#anchor]`, async function() {
     let result = await render(this.test.title);
     result.trim().should.be.html('<h2><a class="main__anchor" name="anchor" href="#anchor">Header</a></h2>');
   });
 
-  it(`## My header`, function*() {
+  it(`## My header`, async function() {
     let result = await render(this.test.title);
     result.trim().should.be.html('<h2><a class="main__anchor" name="my-header" href="#my-header">My header</a></h2>');
   });
@@ -165,7 +165,7 @@ describe('MarkIt', function() {
 - Полная интеграция с HTML/CSS.
 - Простые вещи делаются просто.
 - Поддерживается всеми распространёнными браузерами и включён по умолчанию.
-\`\`\``, function*() {
+\`\`\``, async function() {
     let result = await render(this.test.title);
     result.trim().should.be.html(`
     <div class="balance balance_single">
@@ -184,7 +184,7 @@ describe('MarkIt', function() {
   it(`\`\`\`compare
 + one
 - two
-\`\`\``, function*() {
+\`\`\``, async function() {
     let result = await render(this.test.title);
     result.trim().should.be.html(`<div class="balance">
       <div class="balance__pluses">
