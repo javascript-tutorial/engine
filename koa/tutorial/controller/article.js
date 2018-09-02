@@ -200,21 +200,25 @@ async function renderArticle(ctx) {
 
     //console.log(bookRoot);
 
+    let nextRootSlug = tree.getNext(parent.slug, false); // can be undefined if no next parent
+    // console.log("NEXT PARENT", parent.slug, nextParentSlug);
+
     let bookLeafCount = 0;
     let bookChildNumber;
-    function countChildren(article) {
-      if (tree === article) {
-        bookChildNumber = bookLeafCount + 1;
-      }
 
-      if (!tree.children) {
-        bookLeafCount++;
-      } else {
-        tree.children.forEach(countChildren);
+    let entry = parent;
+    while(true) {
+      if (!entry.isFolder) bookLeafCount++;
+      if (entry.slug == slug) {
+        bookChildNumber = bookLeafCount;
       }
+      let nextSlug = tree.getNext(entry.slug);
+      if (!nextSlug || nextSlug == nextRootSlug) {
+        break;
+      }
+      entry = tree.bySlug(nextSlug);
     }
 
-    countChildren(bookRoot);
 
     if (!(bookChildNumber == 1 && rendered.isFolder)) {
       // not on top level first chapters

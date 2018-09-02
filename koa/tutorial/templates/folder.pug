@@ -20,7 +20,7 @@ block content
   +b.lessons-list
     +e('ol').lessons
       if levelMax == 2 && level == 0
-        // top-level folders in 2-level courses
+        //- top-level folders in 2-level courses
         each article in children
           +e('li')(class="lesson #{article.children ? '_level_1' : ''}")
             +e('a').link(href=article.url) #{article.title}
@@ -30,12 +30,12 @@ block content
                   +e('li')(data-section-number=subChild.weight).lesson._level_2
                     +e('a').link(href=subChild.url) #{subChild.title}
       else if levelMax == 2 && level == 1
-        // 1-level folders in 2-level courses
+        //- 1-level folders in 2-level courses
         each article in children
           +e('li')(data-section-number=weight, class="lesson #{article.children ? '_level_1' : ''}")
             +e('a').link(href=article.url) #{article.title}
       else
-        // folders in plain courses
+        //- folders in plain courses
         each article in children
           +e('li').lesson
             +e('a').link(href=article.url) #{article.title}
