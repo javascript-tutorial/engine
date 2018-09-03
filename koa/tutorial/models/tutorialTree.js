@@ -20,6 +20,16 @@ module.exports = class TutorialTree {
     let entry = this.bySlug(slug);
     return entry.parent ? this.bySlug(entry.parent).children : this.tree;
   }
+  
+  getParents(slug) {
+    const parents = [];
+    let entry = this.bySlug(slug);
+    while(entry.parent) {
+      parents.push(entry.parent);
+      entry = entry.parent;
+    }
+    return parents;
+  }
 
   getPrev(slug) {
     let entry = this.bySlug(slug);
