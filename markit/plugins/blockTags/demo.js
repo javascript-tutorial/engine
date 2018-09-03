@@ -11,7 +11,7 @@ module.exports = function(md) {
     let src = tokens[idx].blockTagAttrs.src;
 
     if (src) {
-      let href = (src[0] == '/') ? src : options.staticHost + options.resourceWebRoot + '/' + src;
+      let href = (src[0] == '/') ? src : (options.staticHost + options.resourceWebRoot + '/' + src);
       href += '/';
 
       return `<a href="${href}" target="blank">${t('markit.demo.window')}</a>`;

@@ -85,7 +85,7 @@ module.exports = class ArticleRenderer {
 
     _.uniq(libs).forEach(function (lib) {
       if (!~lib.indexOf('://')) {
-        lib = config.urlBase.static.href + '/libs/' + lib;
+        lib = config.urlBase.static.href + 'libs/' + lib;
       }
 
       if (lib.slice(-3) == '.js') {

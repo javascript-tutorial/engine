@@ -110,7 +110,7 @@ module.exports = class TutorialImporter {
     //this.tree.destroyTree(data.slug);
 
     let options = {
-      staticHost: config.urlBase.static.href,
+      staticHost: config.urlBase.static.href.slice(0, -1),
       resourceWebRoot: Article.getResourceWebRootBySlug(data.slug)
     };
 
@@ -181,7 +181,7 @@ module.exports = class TutorialImporter {
     // this.tree.destroyTree(data.slug);
 
     const options = {
-      staticHost: config.urlBase.static.href,
+      staticHost: config.urlBase.static.href.slice(0, -1),
       resourceWebRoot: Article.getResourceWebRootBySlug(data.slug)
     };
 
@@ -294,7 +294,7 @@ module.exports = class TutorialImporter {
     //this.tree.destroyTree(data.slug);
 
     const options = {
-      staticHost: config.urlBase.static.href,
+      staticHost: config.urlBase.static.href.slice(0, -1),
       resourceWebRoot: Task.getResourceWebRootBySlug(data.slug)
     };
 
@@ -489,7 +489,7 @@ module.exports = class TutorialImporter {
 function makeSource(sourceJs, testJs) {
   let source = "<!DOCTYPE HTML>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n";
   if (testJs) {
-    source += "  <script src=\"" + config.urlBase.static.href + "/test/libs.js\"></script>\n";
+    source += "  <script src=\"" + config.urlBase.static.href + "test/libs.js\"></script>\n";
     source += "  <script src=\"test.js\"></script>\n";
   }
   source += "</head>\n<body>\n\n  <script>\n\n";
@@ -504,7 +504,7 @@ function makeSource(sourceJs, testJs) {
 function makeSolution(solutionJs, testJs) {
   let solution = "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n";
   if (testJs) {
-    solution += "  <script src=\"" + config.urlBase.static.href + "/test/libs.js\"></script>\n";
+    solution += "  <script src=\"" + config.urlBase.static.href + "test/libs.js\"></script>\n";
     solution += "  <script src=\"test.js\"></script>\n";
   }
   solution += "</head>\n<body>\n\n  <script>\n\n";
@@ -621,4 +621,3 @@ function readFs(dir) {
 
   return filesForPlunk;
 }
-  

@@ -142,7 +142,7 @@ module.exports = class Renderer {
       loc.canonicalPath = loc.canonicalPath.replace(/\/+$/, '');
     }
 
-    loc.canonicalUrl = config.urlBase.main.href + loc.canonicalPath;
+    loc.canonicalUrl = new URL(loc.canonicalPath, config.urlBase.main).href;
 
     if (ctx.templateDir) {
       loc.roots = [ctx.templateDir];
