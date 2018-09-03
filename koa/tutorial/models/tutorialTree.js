@@ -25,8 +25,9 @@ module.exports = class TutorialTree {
     const parents = [];
     let entry = this.bySlug(slug);
     while(entry.parent) {
-      parents.push(entry.parent);
-      entry = entry.parent;
+      const parent = this.bySlug(entry.parent);
+      parents.push(parent);
+      entry = parent;
     }
     return parents;
   }
