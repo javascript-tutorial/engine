@@ -82,7 +82,7 @@ module.exports = class Renderer {
 
     locals.css = this.css.bind(this);
 
-    locals.env = process.env;
+    locals.env = config.env;
 
     locals.urlBase = config.urlBase;
 

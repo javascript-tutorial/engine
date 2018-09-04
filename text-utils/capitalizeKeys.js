@@ -1,23 +1,25 @@
 
+function capitalizeKeys(obj, mapper) {
 
-function capitalizeKeys(obj) {
   if (Array.isArray(obj)) {
-    return obj.map(capitalizeKeys);
+    let arr = obj;
+    return arr.map(item => capitalizeKeys(item, mapper));
+  }
+
+  if (Object.prototype.toString.apply(obj) !== '[object Object]') {
+    return obj;
   }
 
   let output = {};
 
-  for (let key in obj) {
-    let keyCapitalized = key.replace(/_(\w)/g, function(match, letter) {
-      return letter.toUpperCase();
-    });
-    if (Object.prototype.toString.apply(obj[key]) === '[object Object]') {
-      output[keyCapitalized] = capitalizeKeys(obj[key]);
-    } else {
-      output[keyCapitalized] = obj[key];
-    }
+  for (var key in obj) {
+    var keyCapitalized = key.replace(/_(\w)/g, (match, letter) => letter.toUpperCase());
+    if (mapper) keyCapitalized = mapper(keyCapitalized);
+    output[keyCapitalized] = capitalizeKeys(obj[key], mapper);
   }
   return output;
 }
 
 module.exports = capitalizeKeys;
+
+
