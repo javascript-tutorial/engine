@@ -374,7 +374,7 @@ module.exports = class TutorialImporter {
     } else {
       view = new TutorialView({
         webPath,
-        description: "Fork from " + config.urlBase.main.href
+        description: "Fork from " + config.urlBaseProduction.main.href
       });
       log.debug("Created new plunk (db empty)", view);
     }
@@ -432,7 +432,7 @@ module.exports = class TutorialImporter {
     if (!sourceView) {
       sourceView = new TutorialView({
         webPath: sourceWebPath,
-        description: "Fork from " + config.urlBase.main.href
+        description: "Fork from " + config.urlBaseProduction.main.href
       });
       TutorialViewStorage.instance().set(sourceWebPath, sourceView);
     }
@@ -461,7 +461,7 @@ module.exports = class TutorialImporter {
     if (!solutionView) {
       solutionView = new TutorialView({
         webPath:     solutionWebPath,
-        description: "Fork from " + config.urlBase.main.href
+        description: "Fork from " + config.urlBaseProduction.main.href
       });
       TutorialViewStorage.instance().set(solutionWebPath, solutionView);
     }
@@ -618,6 +618,8 @@ function readFs(dir) {
       content: stripIndents(fs.readFileSync(path.join(dir, file), 'utf-8'))
     };
   }
+
+  // console.log("FILES FOR PLUNK", filesForPlunk);
 
   return filesForPlunk;
 }

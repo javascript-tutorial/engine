@@ -4,26 +4,36 @@ const config = require('config');
 const pug = require('pug');
 const pugResolve = require('./resolve');
 
+require('./filterMarkit');
+
+require('./filterUglify');
+
+pug.pugResolve = pugResolve;
+
+pug.pugConfig = Object.assign({}, config.pug, {
+  pretty:       false,
+  compileDebug: false,
+  plugins:      [{
+    resolve: pugResolve
+  }]
+});
+
+pug.serverRenderFile = function(file, options) {
+  return pug.renderFile(file, Object.assign({}, pug.pugConfig, options));
+};
+
 /**
  * extension for require('file.pug'),
  * works in libs that are shared between client & server
  */
-require.extensions['.pug'] = function(module, filename) {
+require.extensions['.pug'] = function (module, filename) {
 
   let compiled = pug.compile(
     fs.readFileSync(filename, 'utf-8'),
-    Object.assign({}, config.pug, {
-      pretty:        false,
-      compileDebug:  false,
-      filename:      filename,
-      plugins: [{
-        resolve: pugResolve
-      }]
-    })
+    Object.assign({}, pug.pugConfig, {filename})
   );
 
-
-  module.exports = function(locals) {
+  module.exports = function (locals) {
     locals = locals || {};
 
     return compiled(locals);
@@ -33,10 +43,6 @@ require.extensions['.pug'] = function(module, filename) {
 
 };
 
-require('./filterMarkit');
-
-require('./filterUglify');
-
-pug.pugResolve = pugResolve;
 
 module.exports = pug;
+

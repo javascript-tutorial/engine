@@ -6,10 +6,10 @@ assert(typeof IS_CLIENT === 'undefined');
 
 const path = require('path');
 const getPrismLanguage = require('../../getPrismLanguage');
+const log = require('jsengine/log')();
+const t = require('jsengine/i18n');
 
-require('jsengine/server-pug');
-
-const codeTabsTemplate = require('../../templates/codeTabs.pug');
+const pug = require('jsengine/server-pug');
 
 module.exports = function(md) {
 
@@ -21,6 +21,9 @@ module.exports = function(md) {
     }
 
     let files = token.plunk.files;
+
+    // console.log("FILES");
+    // console.log(JSON.stringify(files, (key, value) => (key === 'content' ? value.trim().slice(0, 10) : value), 4));
 
     let tabs = [];
 
@@ -74,7 +77,9 @@ module.exports = function(md) {
       href: locals.src
     };
 
-    return codeTabsTemplate(locals);
+    locals.t = t;
+
+    return pug.serverRenderFile(path.join(__dirname, '../../templates/codeTabs.pug'), locals);
   };
 };
 

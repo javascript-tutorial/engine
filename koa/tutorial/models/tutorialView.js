@@ -74,7 +74,6 @@ module.exports = class TutorialView {
       } else {
         this.files.push(files[name]);
       }
-      delete files[name].filename;
       changes[name] = files[name];
     }
 
