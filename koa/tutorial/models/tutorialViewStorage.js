@@ -1,4 +1,7 @@
 const TutorialView = require('./tutorialView');
+const config = require('config');
+const fs = require('mz/fs');
+const path = require('path');
 
 module.exports = class TutorialViewStorage {
   constructor() {
@@ -49,5 +52,16 @@ module.exports = class TutorialViewStorage {
       this.storage[key] = new TutorialView(storage[key]);
     }
   }
+
+  async loadFromCache() {
+    let views = await fs.readFile(path.join(config.cacheRoot, 'tutorialViewStorage.json'));
+    views = JSON.parse(views);
+    this.load(views);
+  }
+
+  async saveToCache() {
+    await fs.writeFile(path.join(config.cacheRoot, 'tutorialViewStorage.json'), JSON.stringify(this.serialize()));
+  }
+
 
 };

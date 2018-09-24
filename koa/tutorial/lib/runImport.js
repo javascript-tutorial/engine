@@ -18,7 +18,7 @@ module.exports = async function() {
   });
 
   tree.clear();
-  viewStorage.clear();
+  await TutorialViewStorage.instance().loadFromCache();
 
   let subRoots = fs.readdirSync(config.tutorialRoot);
 
@@ -27,8 +27,8 @@ module.exports = async function() {
     await importer.sync(path.join(config.tutorialRoot, subRoot));
   }
 
-  await fs.writeFile(path.join(config.cacheRoot, 'tutorialTree.json'), JSON.stringify(tree.serialize()));
-  await fs.writeFile(path.join(config.cacheRoot, 'tutorialViewStorage.json'), JSON.stringify(viewStorage.serialize()));
+  await tree.saveToCache();
+  await viewStorage.saveToCache();
   // await importer.generateCaches();
 
   log.info("Tutorial import complete");

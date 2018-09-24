@@ -98,10 +98,11 @@ function ru(_number) {
     if (isNaN(_number)) return 'Ноль рублей';
   }
   _number = _number.toFixed(2);
+  let _number_decimals;
   if (_number.indexOf('.') != -1) {
     let _number_arr = _number.split('.');
-    let _number = _number_arr[0];
-    let _number_decimals = _number_arr[1];
+    _number = _number_arr[0];
+    _number_decimals = _number_arr[1];
   }
   let _number_length = _number.length;
   let _string = '';

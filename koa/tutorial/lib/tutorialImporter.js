@@ -14,6 +14,7 @@ const log = require('jsengine/log')();
 const TutorialTree = require('../models/tutorialTree');
 const TutorialView = require('../models/tutorialView');
 const TutorialViewStorage = require('../models/tutorialViewStorage');
+const getPlunkerToken = require('../lib/getPlunkerToken');
 const TutorialParser = require('./tutorialParser');
 const stripTitle = require('jsengine/markit').stripTitle;
 const stripYamlMetadata = require('jsengine/markit').stripYamlMetadata;
@@ -34,6 +35,10 @@ module.exports = class TutorialImporter {
   update=true => doesnn't remove anything, for adding only (checks for dupe slugs)
    */
   async sync(directory, update = false) {
+
+    if (process.env.PLUNK_ENABLED && !this.plunkerToken) {
+      this.plunkerToken = await getPlunkerToken();
+    }
 
     log.info("sync", directory);
     let dir = fs.realpathSync(directory);
@@ -367,6 +372,7 @@ module.exports = class TutorialImporter {
     let webPath = parent.getResourceWebRoot() + '/' + pathName;
 
     log.debug("syncView webpath", webPath);
+
     let view = TutorialViewStorage.instance().get(webPath);
 
     if (view) {

@@ -86,7 +86,6 @@ module.exports = class TutorialView {
       log.debug("plunk " + this.plunkId + " changes", changes);
     }
 
-
     if (this.plunkId) {
       log.debug("update remotely", this.webPath, this.plunkId);
       await this.updatePlunk(this.plunkId, changes, plunkerToken);
@@ -94,6 +93,8 @@ module.exports = class TutorialView {
       log.debug("create plunk remotely", this.webPath);
       this.plunkId = await this.createPlunk(this.description, this.files, plunkerToken);
     }
+
+    process.exit(1);
   }
 
   async createPlunk(description, files, plunkerToken) {

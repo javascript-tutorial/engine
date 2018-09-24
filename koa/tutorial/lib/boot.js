@@ -14,13 +14,9 @@ async function boot() {
     throw new Error("Tutorial not imported? No cache/tutorialTree.json");
   }
 
-  let tree = await fs.readFile(path.join(config.cacheRoot, 'tutorialTree.json'));
-  tree = JSON.parse(tree);
-  TutorialTree.instance().load(tree);
+  await TutorialTree.instance().loadFromCache();
 
-  let views = await fs.readFile(path.join(config.cacheRoot, 'tutorialViewStorage.json'));
-  views = JSON.parse(views);
-  TutorialViewStorage.instance().load(tree);
+  await TutorialViewStorage.instance().loadFromCache();
 }
 
 // add reboot action if pmx exists (for prod, not for local server)

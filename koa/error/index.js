@@ -108,7 +108,7 @@ function renderError(ctx, err) {
 exports.init = function(app) {
 
   app.use(async function(ctx, next) {
-    // ctx.renderError = renderError;
+    ctx.renderError = err => renderError(ctx, err);
 
     try {
       await next();

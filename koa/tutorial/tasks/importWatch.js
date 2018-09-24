@@ -19,6 +19,9 @@ module.exports = function(options) {
     let tree = TutorialTree.instance();
     let viewStorage = TutorialViewStorage.instance();
 
+    await TutorialViewStorage.instance().loadFromCache();
+
+
     let importer = new TutorialImporter({
       root: config.tutorialRoot
     });

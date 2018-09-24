@@ -5,6 +5,10 @@ const Article = require('./article');
 const Task = require('./task');
 const log = require('jsengine/log')();
 
+const config = require('config');
+const fs = require('mz/fs');
+const path = require('path');
+
 module.exports = class TutorialTree {
 
   constructor() {
@@ -20,11 +24,11 @@ module.exports = class TutorialTree {
     let entry = this.bySlug(slug);
     return entry.parent ? this.bySlug(entry.parent).children : this.tree;
   }
-  
+
   getParents(slug) {
     const parents = [];
     let entry = this.bySlug(slug);
-    while(entry.parent) {
+    while (entry.parent) {
       const parent = this.bySlug(entry.parent);
       parents.push(parent);
       entry = parent;
@@ -175,6 +179,19 @@ module.exports = class TutorialTree {
       this.bySlugMap[slug] = constructors[type].deserialize(value);
     }
 
+  }
+
+
+  async loadFromCache() {
+
+    let tree = await fs.readFile(path.join(config.cacheRoot, 'tutorialTree.json'));
+    tree = JSON.parse(tree);
+    this.load(tree);
+
+  }
+
+  async saveToCache() {
+    await fs.writeFile(path.join(config.cacheRoot, 'tutorialTree.json'), JSON.stringify(this.serialize()));
   }
 
 };
