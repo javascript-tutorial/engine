@@ -8,7 +8,7 @@ block sidebar
 
 block sidebar-buttons
   if moduleExists('tutorialMap')
-    +b("a").map(href="/tutorial/map", data-action="tutorial-map", data-tooltip=t('site.tutorial_map'))
+    +b("a").map(href="/tutorial/map", data-action="tutorial-map", data-tooltip=t('tutorial.tutorial_map'))
 
 block append head
   !=js("tutorial", {defer: true})

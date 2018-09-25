@@ -241,7 +241,7 @@ async function renderArticle(ctx) {
       parent = a.parent;
     }
     path.push({
-      title: t('site.tutorial'),
+      title: t('tutorial.tutorial'),
       url: '/'
     });
     path = path.reverse();

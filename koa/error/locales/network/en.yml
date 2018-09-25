@@ -1,0 +1,7 @@
+
+server_connection_error: Server connection error.
+server_request_timeout: Server request timeout.
+request_aborted: Request was aborted.
+no_response: No response from server.
+server_error: "Server error (code #{status}), try again later."
+invalid_format: Invalid response format.

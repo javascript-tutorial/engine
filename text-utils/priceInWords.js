@@ -1,6 +1,8 @@
 // borrowed from http://javascript.ru/forum/misc/40642-summa-propisyu-2.html
 
-module.exports = function(number, locale) {
+module.exports = priceInWords;
+
+function priceInWords(number, locale) {
   locale = locale || 'ru';
 
   return locale == 'ru' ? ru(number) : ua(number);
@@ -25,12 +27,14 @@ function ru(_number) {
       let _second_num = _num.substr(1, 2);
       _string += _arr_numbers[2][_first_num] + ' ' + _arr_numbers[1][_second_num] + ' ';
     }
+    let last, _last_num, _slice_num, _pre_last_num;
+
     switch (_desc) {
     case 0:
-      let last = _num.length - 1;
-      let _last_num = parseFloat(_num.charAt(last));
-      let _slice_num = _num.slice(0, -1);
-      let _pre_last_num = parseFloat(_slice_num);
+      last = _num.length - 1;
+      _last_num = parseFloat(_num.charAt(last));
+      _slice_num = _num.slice(0, -1);
+      _pre_last_num = parseFloat(_slice_num);
       if (_last_num == 1 && 1 != _pre_last_num) _string += 'рубль';
       else if (_last_num > 1 && _last_num < 5 && 1 != _pre_last_num)  _string += 'рубля';
       else if ("" != _slice_num) _string += 'рублей';
@@ -42,10 +46,10 @@ function ru(_number) {
       break;
 
     case 1:
-      let last = _num.length - 1;
-      let _last_num = parseFloat(_num.charAt(last));
-      let _slice_num = _num.slice(0, -1);
-      let _pre_last_num = parseFloat(_slice_num);
+      last = _num.length - 1;
+      _last_num = parseFloat(_num.charAt(last));
+      _slice_num = _num.slice(0, -1);
+      _pre_last_num = parseFloat(_slice_num);
       if (_last_num == 1 && 1 != _pre_last_num) _string += 'тысяча ';
       else if (_last_num == 1 && 1 == _pre_last_num.toString().length) _string += 'тысяча ';
       else if (_last_num > 1 && _last_num < 5 && 1 != _pre_last_num) _string += 'тысячи ';
@@ -55,22 +59,22 @@ function ru(_number) {
       break;
 
     case 2:
-      let _last_num = parseFloat(_num.substr(-1));
-      let last = _num.length - 1;
-      let _last_num = parseFloat(_num.charAt(last));
-      let _slice_num = _num.slice(0, -1);
-      let _pre_last_num = parseFloat(_slice_num);
+      _last_num = parseFloat(_num.substr(-1));
+      last = _num.length - 1;
+      _last_num = parseFloat(_num.charAt(last));
+      _slice_num = _num.slice(0, -1);
+      _pre_last_num = parseFloat(_slice_num);
       if (_last_num == 1 && 1 != _pre_last_num) _string += 'миллион ';
       else if (_last_num == 1 && 1 == _pre_last_num.toString().length) _string += 'миллион ';
       else if (_last_num > 1 && _last_num < 5 && 1 != _pre_last_num) _string += 'миллиона ';
       else _string += 'миллионов ';
       break;
     case 3:
-      let _last_num = parseFloat(_num.substr(-1));
-      let last = _num.length - 1;
-      let _last_num = parseFloat(_num.charAt(last));
-      let _slice_num = _num.slice(0, -1);
-      let _pre_last_num = parseFloat(_slice_num);
+      _last_num = parseFloat(_num.substr(-1));
+      last = _num.length - 1;
+      _last_num = parseFloat(_num.charAt(last));
+      _slice_num = _num.slice(0, -1);
+      _pre_last_num = parseFloat(_slice_num);
       if (_last_num == 1 && 1 != _pre_last_num) _string += 'миллиард ';
       else if (_last_num == 1 && 1 == _pre_last_num.toString().length) _string += 'миллиард ';
       else if (_last_num > 1 && _last_num < 5 && 1 != _pre_last_num) _string += 'миллиарда ';

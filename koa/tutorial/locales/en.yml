@@ -8,3 +8,6 @@ description: 'Main course contains 2 parts which cover JavaScript as a programmi
 part3:
   title: "Additional articles"
   content: "List of extra topics that are not covered by first two parts of tutorial. There is no clear hierarchy here, you can access articles in the order you want."
+
+tutorial: Tutorial
+tutorial_map: Tutorial map
