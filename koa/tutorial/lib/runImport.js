@@ -18,7 +18,7 @@ module.exports = async function() {
   });
 
   tree.clear();
-  await TutorialViewStorage.instance().loadFromCache();
+  await TutorialViewStorage.instance().loadFromCache({allowEmpty: true});
 
   let subRoots = fs.readdirSync(config.tutorialRoot);
 

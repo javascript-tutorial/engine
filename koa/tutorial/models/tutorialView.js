@@ -94,7 +94,8 @@ module.exports = class TutorialView {
       this.plunkId = await this.createPlunk(this.description, this.files, plunkerToken);
     }
 
-    process.exit(1);
+    // console.error("TEST PLUNK UPLOAD")
+    // process.exit(1);
   }
 
   async createPlunk(description, files, plunkerToken) {

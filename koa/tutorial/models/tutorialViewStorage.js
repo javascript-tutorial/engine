@@ -53,7 +53,11 @@ module.exports = class TutorialViewStorage {
     }
   }
 
-  async loadFromCache() {
+  async loadFromCache({allowEmpty = true} = {}) {
+    if (allowEmpty) {
+      let exists = await fs.exists(path.join(config.cacheRoot, 'tutorialViewStorage.json'));
+      if (!exists) return;
+    }
     let views = await fs.readFile(path.join(config.cacheRoot, 'tutorialViewStorage.json'));
     views = JSON.parse(views);
     this.load(views);
