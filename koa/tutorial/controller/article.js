@@ -94,7 +94,8 @@ exports.get = async function(ctx, next) {
 
   locals.sidebar = {
     class: "sidebar_sticky-footer",
-    sections: sections
+    sections: sections,
+    toggle: true
   };
 
   ctx.body = ctx.render(renderedArticle.isFolder ? "folder" : "article", locals);
