@@ -12,6 +12,7 @@ exports.TutorialView = require('./models/tutorialView');
 
 exports.TaskRenderer = require('./renderer/taskRenderer');
 exports.ArticleRenderer = require('./renderer/articleRenderer');
+exports.TutorialParser = require('./lib/tutorialParser');
 
 exports.runImport = require('./lib/runImport');
 

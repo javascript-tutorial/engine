@@ -89,7 +89,7 @@ module.exports = class Renderer {
     // replace lone surrogates in json, </script> -> <\/script>
     locals.escapeJSON = this.escapeJSON;
 
-    locals.markit = function(text, options) {
+    locals.markit = function(text = '', options) {
       return new BasicParser(options).render(text);
     };
 
