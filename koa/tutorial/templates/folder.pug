@@ -4,7 +4,7 @@ block append variables
   - let layout_main_class = "main_width-limit"
 
 block sidebar
-  include sidebar
+  include ~jsengine/sidebar/templates/sidebar
 
 block sidebar-buttons
   if moduleExists('tutorialMap')
