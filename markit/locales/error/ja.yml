@@ -1,0 +1,7 @@
+image_not_found: "イメージ \"#{src}\" が見つかりませんでした"
+image_invalid: "Image \"#{src}\" is corrupted"
+attr_required: "属性 \"#{attr}\" は必須です"
+src_out_of_root: "The source path \"#{src}\" is outside of the root"
+read_file: "ファイル \"#{src}\" が読み込めません"
+no_such_plunk: "No such plunk \"#{src}\""
+anchor_exits: "Anchor exists already: \"#{anchor}\""

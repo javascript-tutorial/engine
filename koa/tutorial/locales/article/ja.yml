@@ -1,0 +1,11 @@
+lesson:
+  next: 次のレッスン
+  prev: 前のレッスン
+
+sibling_chapters: チャプター一覧
+lesson_navigation: レッスンナビゲーション
+tasks: タスク
+chapter: チャプター
+lesson_of: "レッスン #{bookChildNumber} of #{bookLeafCount}"
+
+article_not_found: "記事 \"#{path}\" が見つかりません"

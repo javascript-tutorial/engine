@@ -1,0 +1,7 @@
+
+server_connection_error: サーバ接続エラー.
+server_request_timeout: サーバリクエストタイムアウト.
+request_aborted: リクエストが中断されました.
+no_response: サーバからの応答がありません.
+server_error: "サーバエラー (コード #{status}), しばらく経ってから再度試してみてください."
+invalid_format: 無効なレスポンス形式です.

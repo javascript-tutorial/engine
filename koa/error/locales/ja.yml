@@ -1,0 +1,25 @@
+400:
+  title: 無効なリクエストです
+401:
+  title: 認証が必要です
+  description: <a href="#" data-action-login>ログイン</a> する必要がありますか？
+
+403:
+  title: アクセスが拒否されました
+  wrong_user: 間違ったユーザでログインしていませんか？
+  login: もしかして, <a href="#" data-action-login>ログイン</a> する必要がありませんか?
+
+404:
+  title: ページが見つかりません
+  use_search:  '検索を使ってページを探すことができます:'
+  search: 検索
+  use_top: …またはトップのナビゲーション
+
+500:
+  title: サーバエラー
+  subject: "Error 500 at #{href}"
+  description: '詳細を <a href="mailto:#{email}?subject=#{subject}">#{email}</a> に報告することで、素早くエラーの分析を行うことができます。'
+
+503:
+  title: サービスは利用できません
+  desc: サービスは利用できません。申し訳ありませんが、後でアクセスしてください。
