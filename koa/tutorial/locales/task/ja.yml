@@ -1,0 +1,17 @@
+open_task:
+  sandbox:
+    tests: テストと一緒にサンドボックスを開く
+    no_tests: タスクのためのサンドボックスを開く
+
+open_solution:
+  sandbox:
+    tests: サンドボックスでテストと一緒に解答を開く
+    no_tests: サンドボックスで解答を開く
+
+Importance: 重要性
+importance: 重要性
+solution: 解答
+back: レッスンに戻る
+importance_help: タスクの重要度を表し、1 から 5 までです
+
+task_not_found: "タスク \"#{path}\" が見つかりません"
