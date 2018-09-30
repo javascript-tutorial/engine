@@ -4,8 +4,8 @@ const assert = require('assert');
 
 assert(typeof IS_CLIENT === 'undefined');
 
-
-const imageSize = require('image-size');
+const { promisify } = require('util');
+const imageSize = promisify(require('image-size'));
 
 const path = require('path');
 const tokenUtils = require('./utils/token');
@@ -110,12 +110,8 @@ module.exports = async function(tokens, options) {
       }
     }
 
-
     try {
-      return await new Promise((resolve, reject) => {
-        imageSize(sourcePath, (err, res) => err ? reject(err) : resolve(res));
-      });
-
+      return await imageSize(sourcePath);
     } catch (e) {
       if (e instanceof TypeError) {
         throw new SrcError(t('markit.error.image_invalid', {src}));

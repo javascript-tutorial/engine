@@ -8,11 +8,13 @@ describe("TaskRenderer", function() {
   it("renderContent", async function () {
 
     const task = new Task({
-      "content":    "Content",
-      "slug":       "unique-slug-no-plunk-link-add",
-      "title":      "Title",
-      "importance": 4,
-      "solution":   "..."
+      content:    "Content",
+      slug:       "unique-slug-no-plunk-link-add",
+      title:      "Title",
+      importance: 4,
+      solution:   "...",
+      githubLink: 'http://not.exists.com',
+      weight: 1
     });
 
     const renderer = new TaskRenderer();
@@ -26,11 +28,13 @@ describe("TaskRenderer", function() {
   it("renderSolution", async function () {
 
     const task = new Task({
-      "content":    "# Title\n\nContent",
-      "slug":       "unique-slug-no-plunk-link-add",
-      "title":      "Title",
-      "importance": 4,
-      "solution":   "# Part 1\n\nContent 1\n\n# Part 2\n\nContent 2"
+      content:    "# Title\n\nContent",
+      slug:       "unique-slug-no-plunk-link-add",
+      title:      "Title",
+      importance: 4,
+      solution:   "# Part 1\n\nContent 1\n\n# Part 2\n\nContent 2",
+      githubLink: 'http://not.exists.com',
+      weight: 1
     });
     const renderer = new TaskRenderer();
 

@@ -9,6 +9,8 @@ describe("ArticleRenderer", function() {
     const article = new Article({
       title:   "Title",
       slug:    "test",
+      isFolder: false,
+      weight: 1,
       githubLink: 'http://not.exists.com',
       content: "## Title\n\n## Title\n\n"
     });

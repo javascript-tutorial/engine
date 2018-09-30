@@ -108,6 +108,11 @@ module.exports = class Renderer {
       }
     };
 
+
+    locals.handlerExists = function(name) {
+      return Boolean(config.handlers[name]);
+    };
+
     locals.pack = this.pack.bind(this);
 
   }
