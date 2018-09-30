@@ -1,12 +1,11 @@
 'use strict';
 
 let ids = [];
-
-for (let i = 0; i < 10; i++) ids[i] = new mongoose.Types.ObjectId();
-
+const oid = require('oid');
+/*
 exports.Article = [
   {
-    _id:        ids[0],
+    _id:        oid('article-1[0],
     title:      "Article 1",
     slug:       "article-1",
     content:    "Content 1",
@@ -81,3 +80,4 @@ exports.Task = [{
   content:    'Task 1 content',
   title:      'Task 1'
 }];
+*/

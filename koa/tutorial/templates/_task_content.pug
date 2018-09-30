@@ -1,4 +1,7 @@
 +e.content
+  if notTranslated
+    p(style="border:1px dashed gray;padding: 5px")!= t('tutorial.not_translated', {url: githubLink})
+
   +e.answer
     if (task.solution instanceof Array)
       each step, i in task.solution

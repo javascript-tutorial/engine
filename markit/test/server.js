@@ -7,7 +7,7 @@ require('jsengine/koa/tutorial').Article;
 require('jsengine/koa/tutorial').Task;
 
 const Parser = require('../serverParser');
-const dataUtil = require('dataUtil');
+const dataUtil = require('lib/dataUtil');
 const path = require('path');
 const stripYamlMetadata = require('../stripYamlMetadata');
 

@@ -8,6 +8,7 @@ const _ = require('lodash');
 const makeAnchor = require('jsengine/text-utils/makeAnchor');
 const t = require('jsengine/i18n');
 const localStorage = require('jsengine/local-storage').instance();
+const TranslationStats = require('jsengine/translationStats').TranslationStats;
 
 exports.get = async function(ctx, next) {
 
@@ -27,6 +28,8 @@ exports.get = async function(ctx, next) {
   locals.sitetoolbar = true;
 
   locals.githubLink = renderedArticle.githubLink;
+  locals.notTranslated = renderedArticle.notTranslated;
+
   locals.currentSection = "tutorial";
 
   if (!renderedArticle.isFolder) {
@@ -140,6 +143,7 @@ async function renderArticle(ctx) {
   rendered.weight = article.weight;
   rendered.githubLink = article.githubLink;
   rendered.canonicalPath = article.getUrl();
+  rendered.notTranslated = TranslationStats.instance().isTranslated(article.getUrl()) === false;
 
   await renderProgress();
 

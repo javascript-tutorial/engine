@@ -4,9 +4,8 @@ const config = require('config');
 const pug = require('pug');
 const pugResolve = require('./resolve');
 
-require('./filterMarkit');
 
-require('./filterUglify');
+module.exports = pug;
 
 pug.pugResolve = pugResolve;
 
@@ -44,5 +43,9 @@ require.extensions['.pug'] = function (module, filename) {
 };
 
 
-module.exports = pug;
+// put to the bottom because of the require loop
+// nested module needs populated pug
+require('./filterMarkit');
+
+require('./filterUglify');
 

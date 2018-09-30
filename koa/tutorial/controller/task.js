@@ -5,6 +5,7 @@ const Article = require('../models/article');
 const TutorialTree = require('../models/tutorialTree');
 const TaskRenderer = require('../renderer/taskRenderer');
 const t = require('jsengine/i18n');
+const TranslationStats = require('jsengine/translationStats').TranslationStats;
 
 exports.get = async function(ctx, next) {
 
@@ -20,6 +21,8 @@ exports.get = async function(ctx, next) {
   const rendered = await renderer.render(task);
 
   ctx.locals.githubLink = task.githubLink;
+
+  ctx.locals.notTranslated = TranslationStats.instance().isTranslated(task.getUrl()) === false;
 
   let breadcrumbs = [];
 

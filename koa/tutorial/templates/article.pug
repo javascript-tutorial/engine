@@ -18,6 +18,10 @@ block append head
   !=js("tutorial", {defer: true})
 
 block content
+
+  if notTranslated
+    p(style="border:1px dashed gray;padding: 5px")!= t('tutorial.not_translated', {url: githubLink})
+
   article.formatted(itemscope itemtype="http://schema.org/TechArticle")
     meta(itemprop="name", content=title)
     div(itemprop="author", itemscope, itemtype="http://schema.org/Person")

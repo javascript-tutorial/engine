@@ -21,7 +21,6 @@ module.exports = function(options) {
 
     await TutorialViewStorage.instance().loadFromCache();
 
-
     let importer = new TutorialImporter({
       root: config.tutorialRoot
     });
