@@ -19,7 +19,7 @@ block append head
 
 block content
 
-  if notTranslated
+  if notTranslated && lang != 'ru'
     p(style="border:1px dashed gray;padding: 5px")!= t('tutorial.not_translated', {url: githubLink})
 
   article.formatted(itemscope itemtype="http://schema.org/TechArticle")
