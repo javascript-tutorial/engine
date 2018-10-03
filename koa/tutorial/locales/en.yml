@@ -11,4 +11,4 @@ part3:
 
 tutorial: Tutorial
 tutorial_map: Tutorial map
-not_translated: This material is not translated yet. Please <a href="#{url}">help to translate</a>.
+not_translated: 'This material is only available in the following languages: #{translatedLangs}. Please, <a href="#{url}">help us</a> translate into <strong>#{currentLang.title}</strong>.'

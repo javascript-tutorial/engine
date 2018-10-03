@@ -17,10 +17,12 @@ block append head
   meta(property="og:type", content="article")
   !=js("tutorial", {defer: true})
 
-block content
+block append over-title
+  if translateNotification
+    +b.notification._message._warning._article
+      +e.content!= translateNotification
 
-  if notTranslated && lang != 'ru'
-    p(style="border:1px dashed gray;padding: 5px")!= t('tutorial.not_translated', {url: githubLink})
+block content
 
   article.formatted(itemscope itemtype="http://schema.org/TechArticle")
     meta(itemprop="name", content=title)
@@ -29,7 +31,6 @@ block content
       meta(itemprop="name" content="Ilya Kantor")
     div(itemprop="articleBody")
       != content
-
 
   if tasks.length
 

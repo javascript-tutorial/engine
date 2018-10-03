@@ -6,6 +6,7 @@ const TutorialTree = require('../models/tutorialTree');
 const TaskRenderer = require('../renderer/taskRenderer');
 const t = require('jsengine/i18n');
 const TranslationStats = require('jsengine/translationStats').TranslationStats;
+const config = require('config');
 
 exports.get = async function(ctx, next) {
 
@@ -22,7 +23,13 @@ exports.get = async function(ctx, next) {
 
   ctx.locals.githubLink = task.githubLink;
 
-  ctx.locals.notTranslated = TranslationStats.instance().isTranslated(task.getUrl()) === false;
+  const translationStats = TranslationStats.instance();
+
+  if (translationStats.isTranslated(task.getUrl()) === false && config.lang !== 'ru') {
+    const currentLang = translationStats.getLangByCode(config.lang);
+    const translatedLangs = translationStats.getMaterialLangs(task.getUrl());
+    ctx.locals.translateNotification = t('tutorial.not_translated', {url: task.githubLink, translatedLangs, currentLang});
+  }
 
   let breadcrumbs = [];
 
