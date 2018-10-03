@@ -14,4 +14,4 @@ part3:
 
 tutorial: Учебник
 tutorial_map: Карта учебника
-not_translated: Этот материал еще не переведён. Пожалуйста, <a href="#{url}">помогите перевести</a>.
+not_translated: 'Этот материал доступен только на следующих языках: #{translatedLangs}. Пожалуйста, <a href="#{url}">помогите</a> перевести на #{currentLang.title}.'

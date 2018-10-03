@@ -55,10 +55,10 @@ module.exports = class TranslationStats {
       }
 
       // console.log("translated url", url, supportedLang.code, translatedUrl);
-      linksByLang[supportedLang.code] = buildLink(supportedLang.code, translatedUrl);
+      linksByLang[supportedLang.code] = this.buildLink(supportedLang.code, translatedUrl);
     }
 
-    //result.en = isNotAllowedUrl ? buildLink('en', '/') : buildLink('en', url);
+    //result.en = isNotAllowedUrl ? this.buildLink('en', '/') : this.buildLink('en', url);
 
     return linksByLang;
   }
@@ -72,6 +72,20 @@ module.exports = class TranslationStats {
     return stats ? stats.translated.includes(url) : null;
   }
 
+  getMaterialLangs(url) {
+    let translatedLangs = [];
+    for (let supportedLang of config.supportedLangs) {
+      let stats = this.stats[supportedLang.code];
+      if (supportedLang.pages.find(pageReg => pageReg.test(url)) || (stats && stats.translated.includes(url))) {
+        translatedLangs.push({
+          url: this.buildLink(supportedLang.code, url),
+          title: supportedLang.title
+        });
+      }
+    }
+    return translatedLangs.map(lang => `<a href="${lang.url}">${lang.title}</a>`).join(", ");
+  }
+
   getLangsCtxBy(url) {
     const links = this.getLinksBy(url);
     const result = config.supportedLangs.map(lang => {
@@ -81,6 +95,15 @@ module.exports = class TranslationStats {
     });
     return result;
   }
+
+  buildLink(lang, originalUrl) {
+    const { domain } = this.getLangByCode(lang);
+    return `https://${domain}${originalUrl}`;
+  }
+
+  getLangByCode(lang) {
+    return config.supportedLangs.filter(l => l.code === lang).pop();
+  }
 };
 
 function removeEngIn(langs) {
@@ -89,9 +112,4 @@ function removeEngIn(langs) {
     langs.splice(idx, 1);
   }
   return langs;
-}
-
-function buildLink(lang, originalUrl) {
-  const { domain } = config.supportedLangs.filter(l => l.code === lang).pop();
-  return `https://${domain}${originalUrl}`;
 }

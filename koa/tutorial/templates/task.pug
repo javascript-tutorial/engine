@@ -24,6 +24,10 @@ block main
       span= t('tutorial.task.back')
 
     +b.task.__task(itemprop="articleBody")
+      if translateNotification
+        +b.notification._message._warning._article
+          +e.content!= translateNotification
+
       +e.header
         +e.title-wrap
           +e('h2').title= task.title
