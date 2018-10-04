@@ -1,14 +1,14 @@
-modern_javascript_tutorial: "The Modern Javascript Tutorial"
-subtitle: "How it's done now. From the basics to advanced topics with simple, but detailed explanations."
-part: "Part #{num}"
-more: "More…"
-contents: 'Table of contents'
-description: 'Main course contains 2 parts which cover JavaScript as a programming language and working with a browser. There are also additional series of thematic articles.'
+modern_javascript_tutorial: "现代 Javascript 教程"
+subtitle: "它现在完成的如何了。从基础知识到高阶主题，只需既简单又详细的解释。"
+part: "第 #{num} 部分"
+more: "更多内容…"
+contents: '目录'
+description: '主要课程包含 2 部分，涵盖了以 JavaScript 作为编程语言并在浏览器中运行。此外还有一系列专题文章。'
 
 part3:
-  title: "Additional articles"
-  content: "List of extra topics that are not covered by first two parts of tutorial. There is no clear hierarchy here, you can access articles in the order you want."
+  title: "其他文章"
+  content: "教程的前两部分未涉及的其他主题的内容列表。此处没有明确的层次结构，你可以按你需要的顺序阅读文章。"
 
-tutorial: Tutorial
-tutorial_map: Tutorial map
-not_translated: 'This material is only available in the following languages: #{translatedLangs}. Please, <a href="#{url}">help us</a> translate into <strong>#{currentLang.title}</strong>.'
+tutorial: 教程
+tutorial_map: 教程路线图
+not_translated: '本资料仅提供以下语言版本：#{translatedLangs}。请 <a href="#{url}">帮助我们</a> 将其翻译为 <strong>#{currentLang.title}</strong> 版本。'
