@@ -15,7 +15,9 @@ if (lang === 'ru') {
     }
   });
 
-} else if (lang !== 'en') {
+} else if (lang === 'zh') {
+  require('moment/locale/zh-cn');
+} else {
   // for "en" no need to require, it's built-in (require would fail)
   require('moment/locale/' + lang);
 }
