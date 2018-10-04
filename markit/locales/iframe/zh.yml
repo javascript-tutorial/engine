@@ -1,4 +1,4 @@
 open:
-  sandbox: open in sandbox
-  window: open in new window
-  download: download as zip
+  sandbox: 在沙箱中打开
+  window: 在新窗口中打开
+  download: 下载为 zip 文件
