@@ -1,4 +1,4 @@
-run: run
-show: show
+run: 运行
+show: 展示
 open:
-  sandbox: open in sandbox
+  sandbox: 在沙箱中打开
