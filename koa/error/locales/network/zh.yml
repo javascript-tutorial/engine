@@ -1,0 +1,7 @@
+
+server_connection_error: 服务器连接错误。
+server_request_timeout: 服务器请求超时。
+request_aborted: 请求已终止。
+no_response: 服务器没有响应。
+server_error: "服务器错误（code #{status}），请稍后再试。"
+invalid_format: 响应格式无效。

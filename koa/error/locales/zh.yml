@@ -1,0 +1,25 @@
+400:
+  title: 请求无效
+401:
+  title: 需要验证
+  description: 可能，你需要 <a href="#" data-action-login>登录</a>？
+
+403:
+  title: 禁止访问
+  wrong_user: 可能，你使用了错误的账号进行登录？
+  login: 可能，你需要 <a href="#" data-action-login>登录</a>？
+
+404:
+  title: 找不到网页
+  use_search:  '你可以通过搜索找到想要的网页：'
+  search: 搜索
+  use_top: …或顶部导航。
+
+500:
+  title: 服务器错误
+  subject: "#{href} 服务器错误码 500"
+  description: '我们分析了错误，但你还可以通过向 <a href="mailto:#{email}?subject=#{subject}">#{email}</a> 报告详细信息来加快处理流程。'
+
+503:
+  title: 暂停服务
+  desc: 很抱歉，服务暂不可用，请稍后再尝试访问。
