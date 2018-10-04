@@ -1,11 +1,11 @@
 lesson:
-  next: Next lesson
-  prev: Previous lesson
+  next: 下一节
+  prev: 上一节
 
-sibling_chapters: Sibling chapters
-lesson_navigation: Lesson navigation
-tasks: Tasks
-chapter: Chapter
-lesson_of: "Lesson #{bookChildNumber} of #{bookLeafCount}"
+sibling_chapters: 兄弟篇
+lesson_navigation: 课程导航
+tasks: 任务
+chapter: 章节
+lesson_of: "第 #{bookLeafCount} 章，第 #{bookChildNumber} 节"
 
-article_not_found: "Article \"#{path}\" not found"
+article_not_found: "文章 \"#{path}\" 未找到"
