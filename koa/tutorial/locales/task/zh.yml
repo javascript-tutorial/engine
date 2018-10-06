@@ -1,0 +1,17 @@
+open_task:
+  sandbox:
+    tests: 打开带有测试的沙箱。
+    no_tests: 打开一个任务沙箱。
+
+open_solution:
+  sandbox:
+    tests: 使用沙箱的测试功能打开解决方案（solution）。
+    no_tests: 使用沙箱打开解决方案（solution）。
+
+Importance: 重要程度（Importance）
+importance: 重要程度（importance）
+solution: 解决方案（solution）
+back: 回到课程
+importance_help: 任务的重要程度有多高，等级从 1 到 5。
+
+task_not_found: "任务 \"#{path}\" 未找到"

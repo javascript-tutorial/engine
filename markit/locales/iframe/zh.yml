@@ -1,0 +1,4 @@
+open:
+  sandbox: 在沙箱中打开
+  window: 在新窗口中打开
+  download: 下载为 zip 文件
