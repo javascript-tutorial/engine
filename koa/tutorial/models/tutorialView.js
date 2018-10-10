@@ -100,7 +100,7 @@ module.exports = class TutorialView {
 
   async createPlunk(description, files, plunkerToken) {
 
-    if (!process.env.PLUNK_ENABLED) {
+    if (!process.env.PLNKR_ENABLED) {
       return Math.random().toString(36).slice(2);
     }
 
@@ -159,7 +159,7 @@ module.exports = class TutorialView {
 
   async updatePlunk(plunkId, changes, plunkerToken) {
 
-    if (!process.env.PLUNK_ENABLED) {
+    if (!process.env.PLNKR_ENABLED) {
       return;
     }
 

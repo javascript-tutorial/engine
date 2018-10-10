@@ -148,7 +148,7 @@ async function renderArticle(ctx) {
   rendered.canonicalPath = article.getUrl();
   rendered.githubLink = article.githubLink;
 
-  if (translationStats.isTranslated(article.getUrl()) === false && config.lang !== 'ru') {
+  if (translationStats.isTranslated(article.getUrl()) === false && config.lang !== 'ru' && config.env !== 'development') {
     const currentLang = translationStats.getLangByCode(config.lang);
     const translatedLangs = translationStats.getMaterialLangs(article.getUrl());
     rendered.translateNotification = t('tutorial.not_translated', {url: article.githubLink, translatedLangs, currentLang});

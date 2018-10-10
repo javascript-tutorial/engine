@@ -17,6 +17,7 @@ module.exports = class FiguresImporter {
 
     this.root = fs.realpathSync(options.root);
     this.figuresFilePath = options.figuresFilePath;
+
   }
 
   async syncFigures() {

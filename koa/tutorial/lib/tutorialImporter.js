@@ -36,7 +36,7 @@ module.exports = class TutorialImporter {
    */
   async sync(directory, update = false) {
 
-    if (process.env.PLUNK_ENABLED && !this.plunkerToken) {
+    if (process.env.PLNKR_ENABLED && !this.plunkerToken) {
       this.plunkerToken = await getPlunkerToken();
     }
 

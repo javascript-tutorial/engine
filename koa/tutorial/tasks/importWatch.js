@@ -38,6 +38,7 @@ module.exports = function(options) {
     log.info("Import complete");
 
     watchTutorial();
+
     watchFigures();
 
     livereload.listen();

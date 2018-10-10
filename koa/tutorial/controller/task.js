@@ -25,7 +25,7 @@ exports.get = async function(ctx, next) {
 
   const translationStats = TranslationStats.instance();
 
-  if (translationStats.isTranslated(task.getUrl()) === false && config.lang !== 'ru') {
+  if (translationStats.isTranslated(task.getUrl()) === false && config.lang !== 'ru' && config.env !== 'development') {
     const currentLang = translationStats.getLangByCode(config.lang);
     const translatedLangs = translationStats.getMaterialLangs(task.getUrl());
     ctx.locals.translateNotification = t('tutorial.not_translated', {url: task.githubLink, translatedLangs, currentLang});
