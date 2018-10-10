@@ -1,9 +1,9 @@
-modern_javascript_tutorial: "現代の Javascript チュートリアル"
+modern_javascript_tutorial: "現代の JavaScript チュートリアル"
 subtitle: "現在どのように行われているか。基本から高度なトピックまで、シンプルで詳細な説明をします。"
 part: "パート #{num}"
 more: "もっと…"
 contents: '目次'
-description: 'メインのコースにはプログラミング言語としての JavaScript とブラウザでの動作を説明する 2 つのパートを含んでいます。テーマ別の追加の記事もあります。'
+description: 'メインのコースには、プログラミング言語としての JavaScript とブラウザでの動作を説明する 2 つのパートを含んでいます。テーマ別の追加の記事もあります。'
 
 part3:
   title: "その他の記事"
