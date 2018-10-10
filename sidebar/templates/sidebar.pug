@@ -1,15 +1,8 @@
+include /blocks/profile-brief/index
+
 if profileUser
   +e.profile
-    +b.profile-sidebar
-      +e.photo
-        +e.upic(style="background-image: url('" + profileUser.getPhotoUrl(96, 96) + "')")
-      +e.info
-        +e('h1').title= profileUser.displayName
-        +e.created= t('profileGuest.created') + ' '
-          date-local(timestamp=profileUser.created.toISOString() format="DD.MM.YYYY")
-        if teachesCourses.length
-          +e.sign
-            +e('span').sign-text!= _.capitalize(t('profileGuest.teacher'))
+    +profile-brief()
 
 each section in sidebar.sections
   +e.section
