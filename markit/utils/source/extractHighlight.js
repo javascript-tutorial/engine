@@ -34,7 +34,8 @@ module.exports = function(text) {
   text = deTab(text);
   text += "\n";
 
-  let r = {block: [], inline: []};
+  let block = [];
+  let inline = [];
   let last = null;
   let newText = [];
 
@@ -47,13 +48,13 @@ module.exports = function(text) {
       }
     } else if (/^\s*\*\/!\*\s*$/.test(line)) { // only */!*
       if (last !== null) {
-        r.block.push(last + '-' + (newText.length-1));
+        block.push({start: last, end: newText.length-1});
         last = null;
       } else {
         newText.push(line);
       }
     } else if (/\s*\*!\*\s*$/.test(line)) { // ends with *!*
-      r.block.push(newText.length + '-' + newText.length);
+      block.push({start: newText.length, end: newText.length});
       line = line.replace(/\s*\*!\*\s*$/g, '');
       newText.push(line);
     } else {
@@ -63,7 +64,7 @@ module.exports = function(text) {
         let fromPos = line.indexOf('*!*');
         let toPos = line.indexOf('*/!*');
         if (fromPos != -1 && toPos != -1) {
-          r.inline.push( (newText.length-1) + ':' + (offset+fromPos) + '-' + (offset+toPos-3) );
+          inline.push({ start: newText.length-1, col: {start: offset+fromPos, end: offset+toPos-3} });
           newText[newText.length-1] += line.slice(0, toPos+4).replace(/\*\/?!\*/g, '');
           offset += toPos - 3;
           line = line.slice(toPos+4);
@@ -76,12 +77,23 @@ module.exports = function(text) {
   });
 
   if (last) {
-    r.block.push( last + '-' + (newText.length-1) );
+    block.push({start: last, end: newText.length-1});
   }
 
+  let inlineGrouped = [];
+  for(let inlineObj of inline) {
+    let existing = inlineGrouped.find(obj => obj.start === inlineObj.start);
+    if (existing) {
+      existing.cols.push(inlineObj.col);
+    } else {
+      inlineGrouped.push({start: inlineObj.start, cols: [inlineObj.col]});
+    }
+  }
+
+  let highlight = [...block, ...inlineGrouped].sort((a, b) => b.start - a.start);
+
   return {
-    block: r.block.join(','),
-    inline: r.inline.join(','),
+    highlight,
     text: newText.join("\n").replace(/\s+$/, '')
   };
 

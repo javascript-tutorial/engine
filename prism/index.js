@@ -2,31 +2,18 @@
 let script = document.currentScript || [].slice.call(document.getElementsByTagName("script")).pop();
 script.setAttribute('data-manual', 1);
 
-require('prismjs/components/prism-core.js');
-require('prismjs/components/prism-markup.js');
-require('prismjs/components/prism-css.js');
-require('prismjs/components/prism-css-extras.js');
-require('prismjs/components/prism-clike.js');
-require('prismjs/components/prism-javascript.js');
-require('prismjs/components/prism-http.js');
-require('prismjs/components/prism-scss.js');
-require('prismjs/components/prism-sql.js');
-require('prismjs/components/prism-java.js');
-
-Prism.tokenTag = 'code'; // for iBooks to use monospace font
+require('./core');
 
 let CodeBox = require('./codeBox');
 let CodeTabsBox = require('./codeTabsBox');
 
 function initCodeBoxes(container) {
-
   // highlight inline
-  let codeExampleElems = container.querySelectorAll('.code-example:not([data-prism-done])');
+  let elems = container.querySelectorAll('.code-example:not([data-prism-highlighted])');
 
-  for (let i = 0; i < codeExampleElems.length; i++) {
-    let codeExampleElem = codeExampleElems[i];
-    new CodeBox(codeExampleElem);
-    codeExampleElem.setAttribute('data-prism-done', '1');
+  for (let elem of elems) {
+    new CodeBox(elem);
+    elem.setAttribute('data-prism-highlighted', '1');
   }
 
 }
@@ -34,17 +21,18 @@ function initCodeBoxes(container) {
 
 function initCodeTabsBox(container) {
 
-  let elems = container.querySelectorAll('div.code-tabs:not([data-prism-done])');
+  let elems = container.querySelectorAll('div.code-tabs:not([data-prism-highlighted])');
 
-  for (let i = 0; i < elems.length; i++) {
-    new CodeTabsBox(elems[i]);
-    elems[i].setAttribute('data-prism-done', '1');
+
+  for (let elem of elems) {
+    new CodeTabsBox(elem);
+    elem.setAttribute('data-prism-highlighted', '1');
   }
 
 }
 
-exports.init = function () {
 
+exports.init = function () {
   document.removeEventListener('DOMContentLoaded', Prism.highlightAll);
 
   document.addEventListener('DOMContentLoaded', function() {

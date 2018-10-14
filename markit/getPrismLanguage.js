@@ -13,7 +13,7 @@ let allSupported = Object.keys(ext2language).concat(languages);
 
 function getPrismLanguage(language) {
   language = ext2language[language] || language;
-  if (languages.indexOf(language) == -1) language = 'none';
+  if (!languages.includes(language)) language = 'none';
 
   return language;
 }

@@ -1,5 +1,5 @@
 let delegate = require('client/delegate');
-let addLineNumbers = require('./addLineNumbers');
+let makeLineNumbers = require('./makeLineNumbers');
 
 function CodeTabsBox(elem) {
   if (window.ebookType) {
@@ -70,7 +70,9 @@ CodeTabsBox.prototype.highlightTab = function(tab) {
   let preElem = tab.querySelector('pre');
   let codeElem = preElem.querySelector('code');
   Prism.highlightElement(codeElem);
-  addLineNumbers(preElem);
+
+  preElem.insertAdjacentHTML("beforeEnd", makeLineNumbers(preElem.innerHTML));
+
   tab.highlighted = true;
 };
 

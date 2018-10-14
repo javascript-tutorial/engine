@@ -1,18 +1,28 @@
 let resizeOnload = require('client/head/resizeOnload');
 let isScrolledIntoView = require('client/isScrolledIntoView');
-let addLineNumbers = require('./addLineNumbers');
+let makeLineNumbers = require('./makeLineNumbers');
+let makeHighlight = require('./makeHighlight');
 
 function CodeBox(elem) {
 
   let preElem = elem.querySelector('pre');
-  let codeElem = preElem.querySelector('code');
+  let codeElem = preElem.querySelector('code[class*="language-"]');
   let code = codeElem.textContent;
 
   Prism.highlightElement(codeElem);
-  addLineNumbers(preElem);
 
-  addBlockHighlight(preElem, elem.getAttribute('data-highlight-block'));
-  addInlineHighlight(preElem, elem.getAttribute('data-highlight-inline'));
+  let lineNumbersWrapper = makeLineNumbers(preElem.innerHTML);
+
+  /*
+  if (preElem.hasAttribute('data-start')) {
+    preElem.style.counterReset = 'linenumber ' + Number(preElem.dataset.start) - 1;
+  }
+  */
+
+  preElem.insertAdjacentHTML("beforeEnd", lineNumbersWrapper);
+
+  let masks = makeHighlight(JSON.parse(elem.getAttribute('data-highlight')));
+  preElem.insertAdjacentHTML("afterBegin", masks);
 
   let isJS = preElem.classList.contains('language-javascript');
   let isHTML = preElem.classList.contains('language-markup');
@@ -53,16 +63,17 @@ function CodeBox(elem) {
     } else {
       // timeout should be small, around 10ms, or remove it to make crawler process the autorun
       setTimeout(run, 100);
+      // run();
     }
   }
 
   function postJSFrame() {
     let win = jsFrame.contentWindow;
-    if (typeof win.postMessage != 'function') {
-      alert("Извините, запуск кода требует более современный браузер");
+    if (typeof win.postMessage !== 'function') {
+      alert("Sorry, your browser is too old");
       return;
     }
-    win.postMessage(code, 'https://ru.lookatcode.com/showjs');
+    win.postMessage(code, 'https://lookatcode.com/showjs');
   }
 
   function runHTML() {
@@ -109,20 +120,6 @@ function CodeBox(elem) {
       doc.write(normalizeHtml(code));
       doc.close();
 
-
-      if(window.ebookType == 'epub') {
-        setTimeout(function() {
-          // remove script from iframes
-          // firefox saves the file with full iframe content (including script-generated) and the scripts
-          // scripts must not execute and autogenerate content again
-          [].forEach.call(doc.querySelectorAll('script'), function(script) {
-            script.remove();
-          });
-
-          // do it after timeout to allow external scripts (if any) to execute
-        }, 2000);
-      }
-
       if (!elem.hasAttribute('data-demo-height')) {
         resizeOnload.iframe(frame);
       }
@@ -138,7 +135,7 @@ function CodeBox(elem) {
       form.style.display = 'none';
       form.method = 'POST';
       form.enctype = "multipart/form-data";
-      form.action = "https://ru.lookatcode.com/showhtml";
+      form.action = "https://lookatcode.com/showhtml";
       form.target = frame.name;
 
       let textarea = document.createElement('textarea');
@@ -190,7 +187,7 @@ function CodeBox(elem) {
       form.style.display = 'none';
       form.method = 'POST';
       form.enctype = "multipart/form-data";
-      form.action = "https://ru.lookatcode.com/showhtml";
+      form.action = "https://lookatcode.com/showhtml";
       form.target = 'js-global-frame';
 
       let textarea = document.createElement('textarea');
@@ -227,7 +224,7 @@ function CodeBox(elem) {
         // create iframe for js
         jsFrame = document.createElement('iframe');
         jsFrame.className = 'js-frame';
-        jsFrame.src = 'https://ru.lookatcode.com/showjs';
+        jsFrame.src = 'https://lookatcode.com/showjs';
         jsFrame.style.width = 0;
         jsFrame.style.height = 0;
         jsFrame.style.border = 'none';
@@ -323,52 +320,6 @@ function CodeBox(elem) {
 
 }
 
-
-function addBlockHighlight(pre, lines) {
-
-  if (!lines) {
-    return;
-  }
-
-  let ranges = lines.replace(/\s+/g, '').split(',');
-
-  /*jshint -W084 */
-  for (let i = 0, range; range = ranges[i++];) {
-    range = range.split('-');
-
-    let start = +range[0],
-        end = +range[1] || start;
-
-
-    let mask = '<code class="block-highlight" data-start="' + start + '" data-end="' + end + '">' +
-      new Array(start + 1).join('\n') +
-      '<code class="mask">' + new Array(end - start + 2).join('\n') + '</code></code>';
-
-    pre.insertAdjacentHTML("afterBegin", mask);
-  }
-
-}
-
-
-function addInlineHighlight(pre, ranges) {
-
-  // select code with the language text, not block-highlighter
-  let codeElem = pre.querySelector('code[class*="language-"]');
-
-  ranges = ranges ? ranges.split(",") : [];
-
-  for (let i = 0; i < ranges.length; i++) {
-    let piece = ranges[i].split(':');
-    let lineNum = +piece[0], strRange = piece[1].split('-');
-    let start = +strRange[0], end = +strRange[1];
-    let mask = '<code class="inline-highlight">' +
-      new Array(lineNum + 1).join('\n') +
-      new Array(start + 1).join(' ') +
-      '<code class="mask">' + new Array(end - start + 1).join(' ') + '</code></code>';
-
-    codeElem.insertAdjacentHTML("afterBegin", mask);
-  }
-}
 
 
 module.exports = CodeBox;

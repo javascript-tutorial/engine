@@ -9,14 +9,16 @@
 const parseAttrs = require('../utils/parseAttrs');
 const stripIndents = require('jsengine/text-utils/stripIndents');
 const extractHighlight = require('../utils/source/extractHighlight');
+const tokenUtils = require('../utils/token');
 
 const t = require('jsengine/i18n/t');
 const getPrismLanguage = require('../getPrismLanguage');
 
-const LANG = require('config').lang;
+const config = require('config');
 
+require('jsengine/prism/core');
 
-t.i18n.add('markit.code', require('../locales/code/' + LANG + '.yml'));
+t.i18n.add('markit.code', require('../locales/code/' + config.lang + '.yml'));
 
 
 function rewriteFenceToSource(state) {
@@ -28,7 +30,7 @@ function rewriteFenceToSource(state) {
 
       let langOrExt = attrs.blockName || '';
 
-      if (getPrismLanguage.allSupported.indexOf(langOrExt) == -1) continue;
+      if (!getPrismLanguage.allSupported.includes(langOrExt)) continue;
 
       state.tokens[idx].type = 'blocktag_source';
       state.tokens[idx].blockTagAttrs = attrs;
@@ -48,6 +50,7 @@ module.exports = function(md) {
     let attrs = token.blockTagAttrs;
 
     let lang = attrs.blockName;
+
     let prismLanguage = getPrismLanguage(lang);
 
     token.attrPush([ 'data-trusted', (options.html && !attrs.untrusted) ? 1 : 0]);
@@ -70,11 +73,6 @@ module.exports = function(md) {
       token.attrPush(['data-demo-height', height]);
     }
 
-    if (options.html && attrs.autorun) {
-      // autorun may have "no-epub" value meaning that it shouldn't run on epub (code not supported)
-      token.attrPush(['data-autorun', attrs.autorun]);
-    }
-
     if (attrs.refresh) {
       token.attrPush(['data-refresh', '1']);
     }
@@ -88,21 +86,18 @@ module.exports = function(md) {
 
     let highlight = extractHighlight(content);
 
-    if (highlight.block) {
-      token.attrPush(['data-highlight-block', highlight.block]);
-    }
-    if (highlight.inline) {
-      token.attrPush(['data-highlight-inline', highlight.inline]);
+    if (highlight.highlight.length) {
+      token.attrPush(['data-highlight', JSON.stringify(highlight.highlight)]);
     }
 
     content = highlight.text;
 
     let toolbarHtml = '';
-    if (attrs.run) {
+    if (attrs.run && !options.ebookType) {
       toolbarHtml = `
         <div class="toolbar codebox__toolbar">
           <div class="toolbar__tool">
-            <a href="#" title="${t(lang == 'js' ? 'markit.code.run' : 'markit.code.show')}" data-action="run" class="toolbar__button toolbar__button_run"></a>
+            <a href="#" title="${t(lang === 'js' ? 'markit.code.run' : 'markit.code.show')}" data-action="run" class="toolbar__button toolbar__button_run"></a>
           </div>
           <div class="toolbar__tool">
             <a href="#" title="${t('markit.code.open.sandbox')}" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
@@ -110,27 +105,54 @@ module.exports = function(md) {
         </div>`;
     }
 
+    if (options.html && attrs.autorun) {
+      // autorun may have "no-epub" value meaning that it shouldn't run on epub (code not supported)
+      token.attrPush(['data-autorun', attrs.autorun]);
+    }
+
     let codeResultHtml = '';
 
     //- iframe must be in HTML with the right height
     //- otherwise page sizes will be wrong and autorun leads to resizes/jumps
-    if (attrs.autorun && options.html && lang == 'html') {
-      //- iframes with about:html are saved to disk incorrectly by FF (1 iframe content for all)
-      //- @see https://bugzilla.mozilla.org/show_bug.cgi?id=1154167
-      codeResultHtml = `<div class="code-result code-example__result">
-        <iframe
-          class="code-result__iframe"
-          name="code-result-${(Math.random()*1e9^0).toString(36)}"
-          style="height:${height || 200}px"
-          src="${options.ebookType == 'epub' ? ("/bookify/blank.html?" + Math.random()) : 'about:blank'}"></iframe>
-      </div>`;
+    if (attrs.autorun && options.html && lang === 'html') {
+      if (options.ebookType  && typeof IS_CLIENT === 'undefined') {
+        tokenUtils.attrDel(token, 'data-autorun');
+
+        let name = (Math.random() * 1e9 ^ 0).toString(36);
+        let fs = require('fs-extra');
+
+        fs.ensureDirSync(config.publicRoot + '/autorun');
+        fs.writeFileSync(config.publicRoot + '/autorun/' + name + '.html', content);
+        //- iframes with about:html are saved to disk incorrectly by FF (1 iframe content for all)
+        //- @see https://bugzilla.mozilla.org/show_bug.cgi?id=1154167
+        codeResultHtml = `<div class="code-result code-example__result">
+          <iframe
+            class="code-result__iframe"
+            name="code-result-${name}"
+            style="height:${height || 200}px"
+            src="/autorun/${name}.html"></iframe>
+        </div>`;
+
+      } else {
+        //- iframes with about:html are saved to disk incorrectly by FF (1 iframe content for all)
+        //- @see https://bugzilla.mozilla.org/show_bug.cgi?id=1154167
+        codeResultHtml = `<div class="code-result code-example__result">
+          <iframe
+            class="code-result__iframe"
+            name="code-result-${(Math.random() * 1e9 ^ 0).toString(36)}"
+            style="height:${height || 200}px"
+            src="${options.ebookType == 'epub' ? ("/bookify/blank.html?" + Math.random()) : 'about:blank'}"></iframe>
+        </div>`;
+      }
     }
+
+    content = md.utils.escapeHtml(content);
 
     return `<div${slf.renderAttrs(token)}>
       <div class="codebox code-example__codebox">
         ${toolbarHtml}
         <div class="codebox__code" data-code="1">
-          <pre class="line-numbers language-${prismLanguage}"><code class="language-${prismLanguage}">${md.utils.escapeHtml(content)}</code></pre>
+          <pre class="line-numbers language-${prismLanguage}"><code class="language-${prismLanguage}">${content}</code></pre>
         </div>
       </div>
       ${codeResultHtml}

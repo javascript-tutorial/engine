@@ -8,7 +8,6 @@ function init() {
   initFolderList();
 
   prism.init();
-
 }
 
 function initTaskButtons() {

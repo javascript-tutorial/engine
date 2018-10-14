@@ -17,7 +17,8 @@ module.exports = function(md) {
     let token = tokens[idx];
 
     if (options.ebookType) {
-      return `<p><a target="_blank" href="http://plnkr.co/edit/${token.plunk.plunkId}?p=preview"></a></p>`;
+      let plunkUrl = `http://plnkr.co/edit/${token.plunk.plunkId}?p=preview`;
+      return `<p><a target="_blank" href="${plunkUrl}">${plunkUrl}</a></p>`;
     }
 
     let files = token.plunk.files;

@@ -60,7 +60,7 @@ describe('MarkIt', function() {
       result.should.be.html(`<div data-trusted="1" class="code-example" data-demo-height="300">
       <div class="codebox code-example__codebox">
         <div class="codebox__code" data-code="1">
-        <pre class="line-numbers language-javascript"><code class="language-javascript">let a = 5</code></pre>
+        <pre class="line-numbers language-javascript"><code class="language-javascript">let a = 5</code><span class="line-numbers-rows"><span></span></span></pre>
         </div>
       </div>
     </div>`);
@@ -73,7 +73,7 @@ describe('MarkIt', function() {
       result.should.be.html(`<div data-trusted="1" class="code-example">
         <div class="codebox code-example__codebox">
           <div class="codebox__code" data-code="1">
-            <pre class="line-numbers language-none"><code class="language-none">code</code></pre>
+            <pre class="line-numbers language-none"><code class="language-none">code</code><span class="line-numbers-rows"><span></span></span></pre>
           </div>
         </div>
       </div>`);
@@ -85,7 +85,7 @@ describe('MarkIt', function() {
       result.should.be.html(`<div data-trusted="1" class="code-example">
       <div class="codebox code-example__codebox">
         <div class="codebox__code" data-code="1">
-          <pre class="line-numbers language-javascript"><code class="language-javascript">a = 5</code></pre>
+          <pre class="line-numbers language-javascript"><code class="language-javascript">a = 5</code><span class="line-numbers-rows"><span></span></span></pre>
         </div>
       </div>
      </div>`

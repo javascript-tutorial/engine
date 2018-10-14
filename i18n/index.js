@@ -1,10 +1,8 @@
-const LANG = require('config').lang;
 const log = require('jsengine/log')();
 const path = require('path');
 const fs = require('fs');
 const glob = require('glob');
 let yaml = require('js-yaml');
-let config = require('config');
 
 let t = require('./t');
 
@@ -14,8 +12,8 @@ t.requireHandlerLocales = function () {
 
   let translationPath = path.join(config.projectRoot, 'locales');
 
-  if (fs.existsSync(path.join(translationPath, LANG + '.yml'))) {
-    translationPath = path.join(translationPath, LANG + '.yml');
+  if (fs.existsSync(path.join(translationPath, config.lang + '.yml'))) {
+    translationPath = path.join(translationPath, config.lang + '.yml');
   } else {
     translationPath = path.join(translationPath, 'en.yml');
   }
@@ -53,8 +51,8 @@ t.requirePhrase = function (moduleName) {
 
   for(let packageDir of packageDirs) {
 
-    if (fs.existsSync(path.join(localesPath, packageDir, LANG + '.yml'))) {
-      translationPath = path.join(localesPath, packageDir, LANG + '.yml');
+    if (fs.existsSync(path.join(localesPath, packageDir, config.lang + '.yml'))) {
+      translationPath = path.join(localesPath, packageDir, config.lang + '.yml');
     } else {
       translationPath = path.join(localesPath, packageDir, 'en.yml');
     }
@@ -68,8 +66,8 @@ t.requirePhrase = function (moduleName) {
   // require locales/en.yml
   translationPath = null;
 
-  if (fs.existsSync(path.join(localesPath, LANG + '.yml'))) {
-    translationPath = path.join(localesPath, LANG + '.yml');
+  if (fs.existsSync(path.join(localesPath, config.lang + '.yml'))) {
+    translationPath = path.join(localesPath, config.lang + '.yml');
   } else if (fs.existsSync(path.join(localesPath, 'en.yml')))  {
     translationPath = path.join(localesPath, 'en.yml');
   }
@@ -82,5 +80,6 @@ t.requirePhrase = function (moduleName) {
 
 };
 
+let config = require('config');
 
 module.exports = t;

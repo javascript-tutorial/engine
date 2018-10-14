@@ -4,8 +4,6 @@ const BabelFish = require('babelfish');
 
 const i18n = new BabelFish('en');
 
-const LANG = require('config').lang;
-
 let err = console.error;
 
 if (typeof IS_CLIENT === 'undefined') {
@@ -22,6 +20,10 @@ function t(phrase) {
   return i18n.t(LANG, ...arguments);
 }
 
+module.exports = t;
+
+const LANG = require('config').lang;
+
 if (LANG !== 'en') {
   i18n.setFallback(LANG, 'en');
 }
@@ -30,4 +32,3 @@ i18n.add = (...args) => i18n.addPhrase(LANG, ...args);
 
 t.i18n = i18n;
 
-module.exports = t;
