@@ -11,7 +11,7 @@ async function boot() {
     return;
   }
   if (!await fs.exists(path.join(config.cacheRoot, 'tutorialTree.json'))) {
-    throw new Error("Tutorial not imported into cache? No tutorialTree.json");
+    throw new Error("FATAL: Tutorial not imported into cache. No tutorialTree.json");
   }
 
   await TutorialTree.instance().loadFromCache();
