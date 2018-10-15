@@ -31,7 +31,6 @@ describe("source", function() {
     beforeEach(function() {
       this.currentTest.in = readIn(this.currentTest.title);
       this.currentTest.result = extractHighlight(this.currentTest.in);
-      console.log(this.currentTest.result);
       this.currentTest.out = readOut(this.currentTest.title);
     });
 
