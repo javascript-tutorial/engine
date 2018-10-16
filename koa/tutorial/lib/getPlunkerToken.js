@@ -8,6 +8,9 @@ const getChromeLocation = require('getChromeLocation');
 module.exports = async function getPlunkerToken() {
 
   const browser = await puppeteer.launch({
+    // todo: run not from root
+    // remove this
+    args: ['--no-sandbox']
     // headless: false,
     // devtools: true,
     // slowMo: 250,
