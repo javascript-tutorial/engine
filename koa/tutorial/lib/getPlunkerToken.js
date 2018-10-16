@@ -1,114 +1,130 @@
 let config = require('config');
 let log = require('jsengine/log')();
 let request = require('request-promise');
-
-const puppeteer = require('puppeteer-core');
+const assert = require('assert');
+const puppeteer = require('puppeteer');
 const getChromeLocation = require('getChromeLocation');
 
 module.exports = async function getPlunkerToken() {
 
   const browser = await puppeteer.launch({
-    executablePath: getChromeLocation()
+    headless: false,
+    // devtools: true,
+    // slowMo: 250,
+    //executablePath: getChromeLocation()
   });
 
   const page = await browser.newPage();
 
-  await page.goto('http://javascript.local:3000/bookify/pdf/' + args.slug);
+  await page.setRequestInterception(true);
 
-  let response = await request({
-    method: 'GET',
-    url: 'https://github.com/login?client_id=7e377e5657c4d5c332db&return_to=%2Flogin%2Foauth%2Fauthorize%3Fclient_id%3D7e377e5657c4d5c332db%26redirect_uri%3Dhttps%253A%252F%252Fplnkr.co%252Fauth%252Fgithub%26scope%3Dgist%26state%3D',
-    jar: j
+  let urls = [];
+  page.on('request', (request) => {
+    if (
+      ['image', 'font'].includes(request.resourceType()) ||
+      request.url().endsWith('.ico') ||
+      request.url().includes('/trending?') ||
+      !request.url().match(/plnkr|github|ajax.googleapis.com/)
+    ) {
+      log.debug("aborted", request.resourceType(), request.url());
+      request.abort();
+    } else {
+      log.debug("loaded", request.url());
+
+      urls.push(request.url());
+      request.continue();
+    }
   });
 
-  let token = response.match(/ name="authenticity_token"[\s\S]*?value="(.*?)"/);
-  if (!token) {
-    log.error("Failed to parse plnkr oauth", response);
-    throw new Error("Failed to get token from github plnkr oauth page");
-  }
-  
-  token = token[1];
+  await page.goto('https://plnkr.co/');
 
-  log.debug("got github token", token);
-  
-  response = await request({
-    method: "POST",
-    url: "https://github.com/session",
-    followAllRedirects: true,
-    form: {
-      commit:'Sign in',
-      utf8: '"✓"',
-      authenticity_token: token,
-      login: config.plnkr.login,
-      password: config.plnkr.pass
-    },
-    jar: j
-  });
+  if (page.url().startsWith('https://next.plnkr.co')) {
 
-  log.debug("github session response", response);
-  
-  let redirectToPlnkrUrl = response.match(/url=(https:\/\/plnkr.co\/auth\/github\?code=\w+)/);
-
-  log.debug("redirectToPlnkrUrl", redirectToPlnkrUrl);
-
-  if (!redirectToPlnkrUrl) {
-    log.error("Failed to parse plnkr oauth success", response);
-    throw new Error("Failed to parse plnkr oauth success");
+    log.debug("wait for old plnkr button");
+    await page.waitForSelector('[ng-href^="https://plnkr.co"]');
+    log.debug("clicked it");
+    await page.click('[ng-href^="https://plnkr.co"]');
+    // prevent redirects to
+    // https://next.plnkr.co/?utm_source=legacy&utm_medium=worker&utm_campaign=next
   }
 
-  redirectToPlnkrUrl = redirectToPlnkrUrl[1];
+  log.debug("wait for login button");
+  await page.waitForSelector('button[ng-click="visitor.login()"]');
 
-  response = await request({
-    method: "GET",
-    url: redirectToPlnkrUrl,
-    followAllRedirects: true,
-    simple: false,
-    resolveWithFullResponse: true,
-    jar: j
-  });
+  log.debug("Pages: ", (await browser.pages()).length);
 
-  // debug headers, session is not always in body
-  log.debug("response", response.statusCode, response.rawHeaders, response.body);
+  await new Promise(r => setTimeout(r, 1000));
 
-  let session = response.body.match(/root\._plunker\.session = (.*?);/);
+  const loginButton = await page.$('button[ng-click="visitor.login()"]');
 
-  log.debug("session match", session);
+  const nav = new Promise(res => browser.on('targetcreated', res));
 
-  if (!session) {
-    log.debug("repeat auth with same cookie jar");
-    return getPlunkerToken(j);
+  await loginButton.click();
+
+  log.debug("PLNKR LOGIN CLICKED");
+
+  await nav;
+
+  let pages = await browser.pages();
+
+  log.debug("Pages", pages.map(page => page.url()));
+
+  let githubPage = pages.find(page => page.url().startsWith('https://github.com/login'));
+
+  assert(githubPage);
+
+  // await page.goto('https://github.com/login?client_id=7e377e5657c4d5c332db&return_to=%2Flogin%2Foauth%2Fauthorize%3Fclient_id%3D7e377e5657c4d5c332db%26redirect_uri%3Dhttps%253A%252F%252Fplnkr.co%252Fauth%252Fgithub%26scope%3Dgist%26state%3D');
+
+  await githubPage.type('#login_field', config.plnkr.login);
+  await githubPage.type('#password', config.plnkr.pass);
+
+  let githubPageClose = new Promise(resolve => githubPage.on('close', resolve));
+
+  const submitElem = await githubPage.$('input[type=submit]');
+  await submitElem.click();
+
+  // I'll click on github login, and AFTER THAT we'll wait till plunker created session on server for that user
+  let waitForResponse = page.waitForResponse(response => response.url().match(/api.plnkr.co\/sessions\/\w+\/user/) && response.status() === 201);
+
+  let isClosed = false;
+
+  try {
+    log.debug("WAITING js-oauth-authorize-btn");
+    await Promise.race([
+      githubPage.waitFor('#js-oauth-authorize-btn:not([disabled])'),
+      githubPageClose
+    ]);
+    isClosed = githubPage.isClosed();
+  } catch (e) {
+    isClosed = true;
+    /* if no authorization needed, gighut popup just closes, may be error */
   }
 
-  session = session[1];
-  session = JSON.parse(session);
+  if (!isClosed) {
 
-  let auth = response.body.match(/root\._plunker\.auth = (.*?);/);
+    log.debug("CLICK js-oauth-authorize-btn", await githubPage.evaluate(() => document.querySelector('#js-oauth-authorize-btn').outerHTML));
 
-  log.debug("auth match", auth);
+    await new Promise(r => setTimeout(r, 1000));
 
-  auth = auth[1];
-  auth = JSON.parse(auth);
-
-  log.debug("got plunker auth: ", auth);
-
-  log.debug("cookie jar", j);
-
-  response = await request({
-    method: "POST",
-    url: "http://api.plnkr.co/sessions/" + session.id + "/user",
-    json: true,
-    body: {
-      service: 'github',
-      token: auth.token
-    },
-    jar: j
-  });
-
-  if (!response.auth || !response.user) {
-    log.error("getPlunkerToken failed: no auth or user in response", response);
-    throw new Error("getPlunkerToken failed: no auth or user in response");
+    await githubPage.click('#js-oauth-authorize-btn');
+    log.debug("CLICKED js-oauth-authorize-btn");
   }
 
-  log.debug("got plunker token:", session.id);
-  return session.id;
+
+  await page.waitFor(() => !document.querySelector('[ng-click="visitor.login()"]'));
+
+  log.debug("Visitor is logged in");
+
+  await waitForResponse;
+
+
+  await new Promise(r => setTimeout(r, 3000));
+
+  let sessionId = await page.evaluate(() => window._plunker.session.id);
+
+
+  log.debug("SID", sessionId);
+
+  log.debug(urls.sort());
+  return sessionId;
 };

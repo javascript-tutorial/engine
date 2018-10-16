@@ -141,7 +141,10 @@ module.exports = class TutorialView {
 
     let result = await this.requestPlunk(data);
 
+    log.debug("plunk createdRemote", result.body);
+
     assert.equal(result.statusCode, 201);
+    assert(result.body.user); 
 
     return result.body.id;
 
