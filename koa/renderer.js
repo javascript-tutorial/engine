@@ -115,6 +115,32 @@ module.exports = class Renderer {
 
     locals.pack = this.pack.bind(this);
 
+
+    if (!locals.schema) {
+      locals.schema = {};
+    }
+
+    if (!locals.canonicalPath) {
+      // strip query
+      locals.canonicalPath = ctx.request.originalUrl.replace(/\?.*/, '');
+      // /intro/   -> /intro
+      locals.canonicalPath = locals.canonicalPath.replace(/\/+$/, '');
+    }
+
+    locals.canonicalUrl = new URL(locals.canonicalPath, config.urlBase.main).href;
+
+    if (ctx.templateDir) {
+      locals.roots = [ctx.templateDir];
+    }
+
+    if (locals.sitetoolbar === undefined) {
+      locals.sitetoolbar = true;
+    }
+
+    locals.plugins = [{
+      resolve: pug.pugResolve
+    }];
+
   }
 
   render(templatePath, locals) {
@@ -128,38 +154,12 @@ module.exports = class Renderer {
       ctx.locals[addedFlag] = true;
     }
 
-
     // warning!
     // Object.assign does NOT copy defineProperty
     // so I use ctx.locals as a root and merge all props in it, instead of cloning ctx.locals
     let loc = Object.create(ctx.locals);
 
     Object.assign(loc, locals);
-
-    if (!loc.schema) {
-      loc.schema = {};
-    }
-
-    if (!loc.canonicalPath) {
-      // strip query
-      loc.canonicalPath = ctx.request.originalUrl.replace(/\?.*/, '');
-      // /intro/   -> /intro
-      loc.canonicalPath = loc.canonicalPath.replace(/\/+$/, '');
-    }
-
-    loc.canonicalUrl = new URL(loc.canonicalPath, config.urlBase.main).href;
-
-    if (ctx.templateDir) {
-      loc.roots = [ctx.templateDir];
-    }
-
-    if (loc.sitetoolbar === undefined) {
-      loc.sitetoolbar = true;
-    }
-
-    loc.plugins = [{
-      resolve: pug.pugResolve
-    }];
 
     log.debug("render template", templatePath);
 
