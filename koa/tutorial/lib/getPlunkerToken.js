@@ -58,16 +58,30 @@ module.exports = async function getPlunkerToken() {
   });
 
   // debug headers, session is not always in body
-  log.debug("response", response);
+  log.debug("response", response.statusCode, response.rawHeaders, response.body);
 
   let session = response.body.match(/root\._plunker\.session = (.*?);/);
 
   log.debug("session match", session);
+/*
+  if (session) {
+    // Got "Plunker loading" page with status 307 and plnkr.access_token
+    // let's reload
+
+    response = await request({
+      method: "GET",
+      url: "https://plnkr.co/edit/",
+      followAllRedirects: true,
+      jar: j
+    });
+
+    let session = response.match(/root\._plunker\.session = (.*?);/);
+  }*/
 
   session = session[1];
   session = JSON.parse(session);
 
-  let auth = response.match(/root\._plunker\.auth = (.*?);/);
+  let auth = response.body.match(/root\._plunker\.auth = (.*?);/);
 
   log.debug("auth match", auth);
 
