@@ -89,13 +89,13 @@ module.exports = class TutorialView {
       log.debug("plunk " + this.plunkId + " changes", changes);
     }
 
-    if (this.plunkId && !this.plunkId.startsWith(DEV_PREFIX)) {
-      log.debug("update remotely", this.webPath, this.plunkId);
-      await this.updatePlunk(this.plunkId, changes, plunkerToken);
-    } else {
+    // if (this.plunkId && !this.plunkId.startsWith(DEV_PREFIX)) {
+    //   log.debug("update remotely", this.webPath, this.plunkId);
+    //   await this.updatePlunk(this.plunkId, changes, plunkerToken);
+    // } else {
       log.debug("create plunk remotely", this.webPath);
       this.plunkId = await this.createPlunk(this.description, this.files, plunkerToken);
-    }
+    // }
 
     // console.error("TEST PLUNK UPLOAD")
     // process.exit(1);
@@ -143,8 +143,7 @@ module.exports = class TutorialView {
 
     log.debug("plunk createdRemote", result.body);
 
-    assert.equal(result.statusCode, 201);
-    assert(result.body.user); 
+    assert.strictEqual(result.statusCode, 201);
 
     return result.body.id;
 

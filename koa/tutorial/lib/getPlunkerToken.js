@@ -8,7 +8,7 @@ const getChromeLocation = require('getChromeLocation');
 module.exports = async function getPlunkerToken() {
 
   const browser = await puppeteer.launch({
-    headless: false,
+    // headless: false,
     // devtools: true,
     // slowMo: 250,
     //executablePath: getChromeLocation()
@@ -47,6 +47,15 @@ module.exports = async function getPlunkerToken() {
     // prevent redirects to
     // https://next.plnkr.co/?utm_source=legacy&utm_medium=worker&utm_campaign=next
   }
+
+
+  // return anon session
+  let sid = await page.evaluate(() => window._plunker.session.id);
+  await browser.close();
+  return sid;
+
+
+
 
   log.debug("wait for login button");
   await page.waitForSelector('button[ng-click="visitor.login()"]');
