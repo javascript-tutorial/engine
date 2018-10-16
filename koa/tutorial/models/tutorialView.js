@@ -4,7 +4,7 @@ let log = require('jsengine/log')();
 let Zip = require('node-zip');
 
 // we create fake plunk ids with this prefix
-// so that when updating for real, we know they do not exist
+// so that when updating for real, we know they do not exist and don't send updates to https://plnkr.co server
 const DEV_PREFIX = '_dev';
 
 let request = require('request-promise').defaults({
@@ -184,7 +184,7 @@ module.exports = class TutorialView {
 
     let result = await this.requestPlunk(options);
 
-    assert.equal(result.statusCode, 200);
+    assert.strictEqual(result.statusCode, 200);
   };
 
 };
