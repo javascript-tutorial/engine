@@ -3,6 +3,9 @@ let _ = require('lodash');
 let log = require('jsengine/log')();
 let Zip = require('node-zip');
 
+// we create fake plunk ids with this prefix
+// so that when updating for real, we know they do not exist
+const DEV_PREFIX = '_dev';
 
 let request = require('request-promise').defaults({
   simple: false,
@@ -86,7 +89,7 @@ module.exports = class TutorialView {
       log.debug("plunk " + this.plunkId + " changes", changes);
     }
 
-    if (this.plunkId) {
+    if (this.plunkId && !this.plunkId.startsWith(DEV_PREFIX)) {
       log.debug("update remotely", this.webPath, this.plunkId);
       await this.updatePlunk(this.plunkId, changes, plunkerToken);
     } else {
@@ -101,7 +104,7 @@ module.exports = class TutorialView {
   async createPlunk(description, files, plunkerToken) {
 
     if (!process.env.PLNKR_ENABLED) {
-      return Math.random().toString(36).slice(2);
+      return DEV_PREFIX + Math.random().toString(36).slice(2);
     }
 
     let filesObj = {};
