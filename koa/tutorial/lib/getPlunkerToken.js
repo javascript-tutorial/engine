@@ -2,9 +2,19 @@ let config = require('config');
 let log = require('jsengine/log')();
 let request = require('request-promise');
 
+const puppeteer = require('puppeteer-core');
+const getChromeLocation = require('getChromeLocation');
+
 module.exports = async function getPlunkerToken() {
-  let j = request.jar();
-  
+
+  const browser = await puppeteer.launch({
+    executablePath: getChromeLocation()
+  });
+
+  const page = await browser.newPage();
+
+  await page.goto('http://javascript.local:3000/bookify/pdf/' + args.slug);
+
   let response = await request({
     method: 'GET',
     url: 'https://github.com/login?client_id=7e377e5657c4d5c332db&return_to=%2Flogin%2Foauth%2Fauthorize%3Fclient_id%3D7e377e5657c4d5c332db%26redirect_uri%3Dhttps%253A%252F%252Fplnkr.co%252Fauth%252Fgithub%26scope%3Dgist%26state%3D',
@@ -63,20 +73,11 @@ module.exports = async function getPlunkerToken() {
   let session = response.body.match(/root\._plunker\.session = (.*?);/);
 
   log.debug("session match", session);
-/*
-  if (session) {
-    // Got "Plunker loading" page with status 307 and plnkr.access_token
-    // let's reload
 
-    response = await request({
-      method: "GET",
-      url: "https://plnkr.co/edit/",
-      followAllRedirects: true,
-      jar: j
-    });
-
-    let session = response.match(/root\._plunker\.session = (.*?);/);
-  }*/
+  if (!session) {
+    log.debug("repeat auth with same cookie jar");
+    return getPlunkerToken(j);
+  }
 
   session = session[1];
   session = JSON.parse(session);
