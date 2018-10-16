@@ -38,7 +38,7 @@ function requireModuleTasks(moduleName) {
 
     let taskNameFull = moduleName.replace(/\//g, ':') + ':' + taskName;
 
-    // console.log(taskNameFull, );
+    // gulp.task(name, task to run before, working function of the task)
     gulp.task(taskNameFull, deps[taskName] || [], lazyRequireTask(path.join(dir, taskFile)) );
   }
 

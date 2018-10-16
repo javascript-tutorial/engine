@@ -52,12 +52,15 @@ module.exports = async function getPlunkerToken() {
     method: "GET",
     url: redirectToPlnkrUrl,
     followAllRedirects: true,
+    simple: false,
+    resolveWithFullResponse: true,
     jar: j
   });
 
+  // debug headers, session is not always in body
   log.debug("response", response);
 
-  let session = response.match(/root\._plunker\.session = (.*?);/);
+  let session = response.body.match(/root\._plunker\.session = (.*?);/);
 
   log.debug("session match", session);
 

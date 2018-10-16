@@ -85,14 +85,6 @@ module.exports = class TutorialImporter {
 
   }
 
-  /**
-   * Call this after all import is complete to generate caches/searches for ElasticSearch to consume
-   */
-  async generateCaches() {
-    await ArticleRenderer.regenerateCaches();
-    await TaskRenderer.regenerateCaches();
-  }
-
   async syncFolder(sourceFolderPath, parent) {
     log.info("syncFolder", sourceFolderPath);
 

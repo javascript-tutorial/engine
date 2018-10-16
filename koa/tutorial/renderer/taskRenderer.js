@@ -135,16 +135,7 @@ module.exports = class TaskRenderer {
   }
 };
 
-/*
-TaskRenderer.regenerateCaches = async function() {
-  let tasks = await Task.find({});
 
-  for (let i = 0; i < tasks.length; i++) {
-    let task = tasks[i];
-    log.debug("regenerate task", task._id);
-    await (new TaskRenderer()).renderWithCache(task, {refreshCache: true});
-  }
-};*/
 
 
 function stripTags(text) {

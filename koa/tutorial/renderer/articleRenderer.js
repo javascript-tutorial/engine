@@ -169,14 +169,4 @@ module.exports = class ArticleRenderer {
   }
 };
 
-/*
-ArticleRenderer.regenerateCaches = async function() {
-  let articles = await Article.find({});
-
-  for (let i = 0; i < articles.length; i++) {
-    let article = articles[i];
-    log.debug("regenerate article", article._id);
-    await (new ArticleRenderer()).renderWithCache(article, {refreshCache: true});
-  }
-};*/
 
