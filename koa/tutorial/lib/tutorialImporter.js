@@ -1,3 +1,4 @@
+
 'use strict';
 
 const fs = require('fs');
@@ -7,8 +8,6 @@ const config = require('config');
 
 const Article = require('../models/article');
 const Task = require('../models/task');
-const ArticleRenderer = require('../renderer/articleRenderer');
-const TaskRenderer = require('../renderer/taskRenderer');
 const log = require('jsengine/log')();
 
 const TutorialTree = require('../models/tutorialTree');

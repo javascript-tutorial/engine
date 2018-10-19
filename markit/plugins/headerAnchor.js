@@ -53,7 +53,7 @@ function readHeadingAnchor(state) {
       }
 
     } else {
-      anchor = makeAnchor(inlineToken.content, state.md.options.translitAnchors);
+      anchor = makeAnchor(inlineToken.content);
 
       if (env.headingsMap.has(anchor)) {
         // иначе просто добавляю -2, -3 ...
