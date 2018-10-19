@@ -34,7 +34,7 @@ module.exports = class Application extends KoaApplication {
     for (let path in this.handlers) {
       let handler = this.handlers[path];
       if (!handler.boot) continue;
-      await handler.boot();
+      await handler.boot(this);
     }
 
   }

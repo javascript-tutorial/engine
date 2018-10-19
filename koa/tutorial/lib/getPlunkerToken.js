@@ -39,7 +39,7 @@ module.exports = async function getPlunkerToken() {
     }
   });
 
-  await page.goto('https://plnkr.co/');
+  await page.goto('https://plnkr.co/?plnkr=legacy');
 
   if (page.url().startsWith('https://next.plnkr.co')) {
 
@@ -58,7 +58,8 @@ module.exports = async function getPlunkerToken() {
   return sid;
 
 
-
+  // The code below authenticates user
+  // it doesn't work well
 
   log.debug("wait for login button");
   await page.waitForSelector('button[ng-click="visitor.login()"]');

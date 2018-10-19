@@ -8,7 +8,7 @@ module.exports = function(title, translitAnchors) {
     .replace(/-+/gi, '-') // слить дефисы вместе
     .replace(/^-|-$/g, ''); // убрать дефисы с концов
 
-  if (translitAnchors) {
+  if (translitAnchors && process.env.NODE_LANG === 'ru') {
     anchor = transliterate(anchor);
   }
   anchor = anchor.toLowerCase();

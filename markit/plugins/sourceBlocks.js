@@ -53,13 +53,13 @@ module.exports = function(md) {
 
     let prismLanguage = getPrismLanguage(lang);
 
-    token.attrPush([ 'data-trusted', (options.html && !attrs.untrusted) ? 1 : 0]);
+    token.attrPush(['data-trusted', (options.html && !attrs.untrusted) ? 1 : 0]);
 
     if (attrs.global) {
       token.attrPush(['data-global', 1]);
     }
 
-    token.attrPush([ 'class', 'code-example' ]);
+    token.attrPush(['class', 'code-example']);
 
     if (attrs['no-strict']) {
       token.attrPush(['data-no-strict', 1]);
@@ -115,7 +115,7 @@ module.exports = function(md) {
     //- iframe must be in HTML with the right height
     //- otherwise page sizes will be wrong and autorun leads to resizes/jumps
     if (attrs.autorun && options.html && lang === 'html') {
-      if (options.ebookType  && typeof IS_CLIENT === 'undefined') {
+      if (options.ebookType === 'epub' && typeof IS_CLIENT === 'undefined') {
         tokenUtils.attrDel(token, 'data-autorun');
 
         let name = (Math.random() * 1e9 ^ 0).toString(36);

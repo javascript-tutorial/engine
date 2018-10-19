@@ -60,6 +60,24 @@ module.exports = class TutorialTree {
     }
   }
 
+  getDescendantsList(slug) {
+    let results = [];
+
+    let find = (slug) => {
+      let entry = this.bySlug(slug);
+      if (!entry.children) return;
+      for(let childSlug of entry.children) {
+        results.push(childSlug);
+        find(childSlug);
+      }
+    };
+
+    find(slug);
+
+    return results;
+
+  }
+
   getNext(slug, canGoDown = true) {
     let entry = this.bySlug(slug);
     if (entry.isFolder && entry.children[0] && canGoDown) {
@@ -183,11 +201,9 @@ module.exports = class TutorialTree {
 
 
   async loadFromCache() {
-
     let tree = await fs.readFile(path.join(config.cacheRoot, 'tutorialTree.json'));
     tree = JSON.parse(tree);
     this.load(tree);
-
   }
 
   async saveToCache() {
