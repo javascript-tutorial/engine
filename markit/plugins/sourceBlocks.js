@@ -39,7 +39,6 @@ function rewriteFenceToSource(state) {
 
 }
 
-
 module.exports = function(md) {
 
   md.core.ruler.push('rewrite_fence_to_source', rewriteFenceToSource);
@@ -91,6 +90,17 @@ module.exports = function(md) {
     }
 
     content = highlight.text;
+
+    /*
+    if (!global.maxLen) global.maxLen = 0;
+
+    let maxLen = Math.max(...content.split("\n").map(s => s.length));
+    if (global.maxLen < maxLen) {
+      global.maxLen = maxLen;
+      console.log(maxLen);
+      console.log("MAXLEN", content);
+    }
+    */
 
     let toolbarHtml = '';
     if (attrs.run && !options.ebookType) {

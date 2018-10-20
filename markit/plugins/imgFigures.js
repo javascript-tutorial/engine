@@ -54,6 +54,9 @@ module.exports = function(md) {
     let height = tokenUtils.attrGet(token, 'height');
 
     if (options.ebookType || !width || !height) {
+      tokenUtils.attrDel(token, 'width'); // for epub, it's better to autocalc width/height
+      tokenUtils.attrDel(token, 'height');
+
       return `<figure><img${slf.renderAttrs(token)}></figure>`;
     }
 
