@@ -85,6 +85,7 @@ module.exports = class Renderer {
     locals.env = config.env;
 
     locals.urlBase = config.urlBase;
+    locals.urlBaseProduction = config.urlBaseProduction;
 
     // replace lone surrogates in json, </script> -> <\/script>
     locals.escapeJSON = this.escapeJSON;

@@ -68,11 +68,6 @@ module.exports = async function (tokens) {
     if (prevUrlParsed.query) url += '?' + prevUrlParsed.query;
     if (prevUrlParsed.hash) url += prevUrlParsed.hash;
 
-
-    if (process.env.NODE_ENV == 'ebook') {
-      url = '#' + url;
-    }
-
     tokenUtils.attrReplace(children[linkOpenIdx], 'href', url);
 
     // for empty & autolinks also replace children
