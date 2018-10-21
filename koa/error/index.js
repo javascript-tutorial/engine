@@ -50,7 +50,8 @@ function renderError(ctx, err) {
         errors: errors
       };
     } else {
-      ctx.body = ctx.render(path.join(__dirname, "templates/400"), {
+      ctx.body = ctx.render(`${__dirname}/templates/400.pug`, {
+        useAbsoluteTemplatePath: true,
         error: err
       });
     }
@@ -81,7 +82,7 @@ function renderError(ctx, err) {
     return;
   }
 
-  ctx.status = err.expose ? err.status : 500;
+  ctx.status = err.expose ? +err.status : 500;
 
   if (preferredType == 'json') {
     ctx.body = {
@@ -92,8 +93,8 @@ function renderError(ctx, err) {
       ctx.body.description = err.description;
     }
   } else {
-    let templateName = [503, 500, 401, 404, 403].includes(ctx.status) ? ctx.status : 500;
-    ctx.body = ctx.render(`${__dirname}/templates/${templateName}`, {
+    let templateName = [503, 500, 400, 401, 404, 403].includes(ctx.status) ? ctx.status : 500;
+    ctx.body = ctx.render(`${__dirname}/templates/${templateName}.pug`, {
       useAbsoluteTemplatePath: true,
       error: err,
       supportEmail: config.supportEmail,

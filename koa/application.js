@@ -60,6 +60,7 @@ module.exports = class Application extends KoaApplication {
     if (this.server) {
       // Maybe killed while booting, so no server
       this.log.info("Closing app server...");
+
       await new Promise(resolve => {
         this.server.close(resolve);
       });

@@ -8,10 +8,10 @@ block content
   +b.error
     +e('h1').type= headTitle
     +e.code 400
-    if error.errors
 
-    +e.text
-      dl
-        each value, key in error.errors
-          dt= key
-          dd= value.message
+    if error.errors
+      +e.text
+        dl
+          each value, key in error.errors
+            dt= key
+            dd= value.message
