@@ -57,12 +57,18 @@ module.exports = class Application extends KoaApplication {
   }
 
   async close() {
-    this.log.info("Closing app server...");
-    await new Promise(resolve => {
-      this.server.close(resolve);
-    });
+    if (this.server) {
+      // Maybe killed while booting, so no server
+      this.log.info("Closing app server...");
+      await new Promise(resolve => {
+        this.server.close(resolve);
+      });
 
-    this.log.info("App connections are closed");
+      this.log.info("App connections are closed");
+
+    } else {
+      this.log.info("App server is not running");
+    }
 
     for (let path in this.handlers) {
       let handler = this.handlers[path];
