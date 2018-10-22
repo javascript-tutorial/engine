@@ -2,10 +2,12 @@ let config = require('config');
 let log = require('jsengine/log')();
 let request = require('request-promise');
 const assert = require('assert');
-const puppeteer = require('puppeteer');
-const getChromeLocation = require('getChromeLocation');
 
 module.exports = async function getPlunkerToken() {
+
+  // require here, not need to instal these in javascript-tutorial-server
+  const puppeteer = require('puppeteer');
+  const getChromeLocation = require('getChromeLocation');
 
   const browser = await puppeteer.launch({
     // todo: run not from root
