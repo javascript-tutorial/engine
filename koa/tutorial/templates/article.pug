@@ -50,9 +50,5 @@ block content
             +e.header-note
               if task.importance
                 +e('span').importance(title=t("tutorial.task.importance_help")) #{t('tutorial.task.importance')}: #{task.importance}
-              +e('button').solution(type="button")= t('tutorial.task.solution')
 
             include _task_content
-
-
-

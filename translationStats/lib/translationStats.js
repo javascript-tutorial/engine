@@ -104,6 +104,12 @@ module.exports = class TranslationStats {
   getLangByCode(lang) {
     return config.supportedLangs.filter(l => l.code === lang).pop();
   }
+
+  getLangStats(lang) {
+    const langData = config.supportedLangs.filter(l => l.code === lang).pop();
+    const { progress } = this.stats[lang] || {};
+    return { ...langData, progress };
+  }
 };
 
 function removeEngIn(langs) {
