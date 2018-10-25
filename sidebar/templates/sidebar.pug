@@ -1,9 +1,3 @@
-include /blocks/profile-brief/index
-
-if profileUser
-  +e.profile
-    +profile-brief()
-
 each section in sidebar.sections
   +e.section
     if section.title
