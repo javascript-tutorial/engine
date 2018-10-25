@@ -151,7 +151,7 @@ module.exports = function(md) {
             class="code-result__iframe"
             name="code-result-${(Math.random() * 1e9 ^ 0).toString(36)}"
             style="height:${height || 200}px"
-            src="${options.ebookType == 'epub' ? ("/bookify/blank.html?" + Math.random()) : 'about:blank'}"></iframe>
+            src="${options.ebookType == 'epub' ? ("/ebook/blank.html?" + Math.random()) : 'about:blank'}"></iframe>
         </div>`;
       }
     }
