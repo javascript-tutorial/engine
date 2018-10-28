@@ -6,6 +6,7 @@ function init() {
 
   initTaskButtons();
   initFolderList();
+  initViewMoreButton();
 
   prism.init();
 }
@@ -25,6 +26,17 @@ function initTaskButtons() {
   delegate(document, '.task__step-show', 'click', function(event) {
     event.target.closest('.task__step').classList.toggle('task_step_open');
   });
+}
+
+function initViewMoreButton() {
+  delegate(document, 'a.list-sub__more', 'click', function(event) {
+    event.preventDefault();
+    const target = event.target;
+    for (let item of target.closest('.list-sub').querySelectorAll('.list-sub__item_phone_hidden')) {
+      item.classList.remove('list-sub__item_phone_hidden');
+    }
+    target.style.display = 'none';
+  })
 }
 
 function initFolderList() {
