@@ -1,12 +1,13 @@
-
-let delegate = require('client/delegate');
-let prism = require('jsengine/prism');
+const delegate = require('client/delegate');
+const prism = require('jsengine/prism');
+const ItemSlider = require('./itemSlider');
 
 function init() {
 
   initTaskButtons();
   initFolderList();
   initViewMoreButton();
+  initCoursesSlider();
 
   prism.init();
 }
@@ -50,6 +51,11 @@ function initFolderList() {
     link.parentNode.classList.toggle('lessons-list__lesson_open');
     event.preventDefault();
   });
+}
+
+function initCoursesSlider() {
+  const slider = document.querySelector('[data-courses-slider]');
+  if (slider) new ItemSlider({el: slider, class: 'slider_frontpage'});
 }
 
 window.runDemo = function(button) {
