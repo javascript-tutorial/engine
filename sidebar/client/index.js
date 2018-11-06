@@ -13,15 +13,11 @@ function toggle() {
 
   pageWrapper && pageWrapper.classList.toggle('page-wrapper_sidebar_on');
 
-  window.acceptGdpr(accepted => {
-    if (document.querySelector('.page').classList.contains('page_sidebar_on')) {
-      delete localStorage.noSidebar;
-    } else {
-      if (accepted) {
-        localStorage.noSidebar = 1;
-      }
-    }
-  });
+  if (document.querySelector('.page').classList.contains('page_sidebar_on')) {
+    delete localStorage.noSidebar;
+  } else {
+    localStorage.noSidebar = 1;
+  }
 
 }
 
