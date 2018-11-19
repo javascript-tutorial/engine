@@ -1,4 +1,5 @@
 const RequestCaptureStream = require('./requestCaptureStream');
+const DebugStream = require('./debugStream');
 
 let streams;
 
@@ -14,6 +15,9 @@ if (process.env.LOG_LEVEL) {
     streams = [{
       level:  'debug',
       stream: process.stdout
+    }, {
+      level:  'debug',
+      stream: new DebugStream()
     }];
     break;
   case 'test':
@@ -21,7 +25,6 @@ if (process.env.LOG_LEVEL) {
     break;
   case 'ebook':
   case 'production':
-
     // normally I see only info, but look in error in case of problems
     streams = [
       {
@@ -37,7 +40,12 @@ if (process.env.LOG_LEVEL) {
           maxRequestIds: 2000,
           stream:        process.stderr
         })
-      }
+      },
+      {
+        level:  'debug',
+        type:   'raw',
+        stream: new DebugStream()
+      },
     ];
   }
 }
