@@ -23,6 +23,10 @@ module.exports = class DebugStream extends Stream {
 
     if (!hasFile) return;
 
+    // if (typeof record === 'object') {
+    //   record = JSON.stringify(record, bunyan.safeCycles()) + '\n';
+    // }
+
     fs.writeFile(logFilePath, record, {flag:'a'}, function(err) {
       if (err) console.error("LOG ERROR", err);
     });

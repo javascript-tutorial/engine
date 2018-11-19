@@ -43,7 +43,6 @@ if (process.env.LOG_LEVEL) {
       },
       {
         level:  'debug',
-        type:   'raw',
         stream: new DebugStream()
       },
     ];
