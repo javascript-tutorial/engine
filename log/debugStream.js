@@ -1,15 +1,14 @@
-"use strict";
+// Create file 'log-debug' in tmpRoot, and then all logs go to it
 
-// Adapted and rewritten, from restify by Ilya Kantor
-// initial Copyright 2012 Mark Cavage, Inc.  All rights reserved.
 let Stream = require('stream').Stream;
 let fs = require('fs');
-
 let bunyan = require('bunyan');
 let path = require('path');
 let config = require('config');
+
 let lastCache = 0;
 let hasFile = false;
+
 module.exports = class DebugStream extends Stream {
 
   write(record) {
