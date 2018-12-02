@@ -5,7 +5,11 @@ switch(lang) {
     module.exports = require('./ru');
     break;
   case 'en':
-    module.exports = str => str;
+    // I must transliterate at least cyrillic, because
+    // of  .replace(/[^a-zа-яё0-9-]/gi, '')
+    // in user.js model
+    // so it leaves cyriliic chars "as is" in the profile
+    module.exports = require('./ru'); // not sure what to use here
     break;
   case 'ja':
     module.exports = require('./ja');

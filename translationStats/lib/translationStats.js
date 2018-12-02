@@ -22,7 +22,16 @@ module.exports = class TranslationStats {
     let supportedLangs = config.supportedLangs.map(lang => lang.code);
     supportedLangs = supportedLangs.join(',');
     const uri = `${config.translateHook}/stats?langs=${supportedLangs}`;
-    this.stats = await request({ uri, json: true });
+    try {
+      this.stats = await request({uri, json: true});
+    } catch(e) {
+      if (config.env === 'development') {
+        log.debug("ranslation Stats update error", e);
+        return;
+      } else {
+        throw e;
+      }
+    }
     await this.write();
     log.debug('Translation Stats is updated');
   }

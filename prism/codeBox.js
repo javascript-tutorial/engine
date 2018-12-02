@@ -229,6 +229,7 @@ function CodeBox(elem) {
         jsFrame.style.height = 0;
         jsFrame.style.border = 'none';
         jsFrame.onload = function() {
+          // error with "null" target if fails to load jsFrame
           postJSFrame();
         };
         document.body.appendChild(jsFrame);
