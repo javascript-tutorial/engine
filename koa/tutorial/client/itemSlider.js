@@ -1,4 +1,4 @@
-let throttle = require('lib/throttle');
+let throttle = require('lodash/throttle');
 
 class itemSlider {
   constructor(options) {
