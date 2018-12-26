@@ -1,12 +1,13 @@
-each section in sidebar.sections
-  +e.section
-    if section.title
-      +e('h4').section-title!= section.title
-    +e('nav').navigation
-      +e('ul').navigation-links
-        each link in section.links
-          +e('li').navigation-link
-            +e('a').link(href=link.url)!= link.title
+if sidebar.sections
+  each section in sidebar.sections
+    +e.section
+      if section.title
+        +e('h4').section-title!= section.title
+      +e('nav').navigation
+        +e('ul').navigation-links
+          each link in section.links
+            +e('li').navigation-link
+              +e('a').link(href=link.url)!= link.title
 
 if share
   +e.section
