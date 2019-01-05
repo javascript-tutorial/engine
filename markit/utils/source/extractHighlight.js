@@ -17,7 +17,8 @@ function deTab(text) {
       let numSpaces = 2 - leadingText.length % 2;  // attacklab: g_tab_width
 
       // there *must* be a better way to do this:
-      for (let i = 0; i < numSpaces; i++) leadingText += " ";
+      // for (let i = 0; i < numSpaces; i++) leadingText += " ";
+      leadingText += " ".repeat(numSpaces);
 
       return leadingText;
     }

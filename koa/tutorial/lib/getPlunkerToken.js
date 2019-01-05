@@ -4,7 +4,6 @@ let request = require('request-promise');
 const assert = require('assert');
 
 module.exports = async function getPlunkerToken() {
-
   // require here, not need to instal these in javascript-tutorial-server
   const puppeteer = require('puppeteer');
   const getChromeLocation = require('getChromeLocation');
@@ -43,7 +42,7 @@ module.exports = async function getPlunkerToken() {
 
   await page.goto('https://plnkr.co/?plnkr=legacy');
 
-  if (page.url().startsWith('https://next.plnkr.co')) {
+  if (page.url().startsWith('http://next.plnkr.co') || page.url().startsWith('https://next.plnkr.co')) {
 
     log.debug("wait for old plnkr button");
     await page.waitForSelector('[ng-href^="https://plnkr.co"]');

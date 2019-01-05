@@ -34,7 +34,7 @@ class RequestCaptureStream extends Stream {
     this.limit = opts.maxRecords || 100;
     this.maxRequestIds = opts.maxRequestIds || 1000;
 
-    this.requestMap = LRU({
+    this.requestMap = new LRU({
       max: this.maxRequestIds
     });
 

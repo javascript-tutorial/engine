@@ -251,7 +251,7 @@ function CodeBox(elem) {
     }
 
     let form = document.createElement('form');
-    form.action = "http://plnkr.co/edit/?p=preview";
+    form.action = "https://plnkr.co/edit/?p=preview";
     form.method = "POST";
     form.target = "_blank";
 

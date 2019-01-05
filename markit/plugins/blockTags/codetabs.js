@@ -17,7 +17,7 @@ module.exports = function(md) {
     let token = tokens[idx];
 
     if (options.ebookType) {
-      let plunkUrl = `http://plnkr.co/edit/${token.plunk.plunkId}?p=preview`;
+      let plunkUrl = `https://plnkr.co/edit/${token.plunk.plunkId}?p=preview`;
       return `<p><a target="_blank" href="${plunkUrl}">${plunkUrl}</a></p>`;
     }
 
@@ -69,7 +69,7 @@ module.exports = function(md) {
       };
     } else {
       locals.edit = {
-        href:    'http://plnkr.co/edit/' + token.plunk.plunkId + '?p=preview',
+        href:    'https://plnkr.co/edit/' + token.plunk.plunkId + '?p=preview',
         plunkId: token.plunk.plunkId
       };
     }

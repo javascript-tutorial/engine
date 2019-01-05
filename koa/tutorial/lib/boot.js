@@ -3,6 +3,7 @@ const fs = require('mz/fs');
 const config = require('config');
 const TutorialViewStorage = require('../models/tutorialViewStorage');
 const TutorialTree = require('../models/tutorialTree');
+const log = require('jsengine/log')();
 
 // pm2 trigger javascript tutorial_boot
 async function boot() {
@@ -20,19 +21,24 @@ async function boot() {
 }
 
 // add reboot action if pmx exists (for prod, not for local server)
-let pmx;
-try {
-  pmx = require('pmx');
-} catch(e) {
-  pmx = null;
-}
+process.on('message', function(packet) {
+  log.debug("process message", packet);
+  if (packet.topic === 'tutorial:reboot') {
+    log.debug("tutorial reboot initiated");
+    boot().then(function() { // if failed => uncaught promise && process dies?
+      log.debug("tutorial reboot complete")
+    });
+  }
+});
 
-if (pmx) {
-  pmx.action('tutorial_boot', function(reply) {
+/*
+
+if (io) {
+  io.action('tutorial_boot', function(reply) {
     boot().then(() => {
       reply({ answer : 'ok' });
     });
   });
 }
-
+*/
 module.exports = boot;

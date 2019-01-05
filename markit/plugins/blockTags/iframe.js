@@ -51,7 +51,7 @@ module.exports = function(md) {
 
     if (token.plunk && token.blockTagAttrs.edit) {
       toolbarHtml += `<div class="toolbar__tool">
-        <a href="http://plnkr.co/edit/${token.plunk.plunkId}?p=preview" target="_blank" title="${t('markit.iframe.open.sandbox')}"
+        <a href="https://plnkr.co/edit/${token.plunk.plunkId}?p=preview" target="_blank" title="${t('markit.iframe.open.sandbox')}"
         data-plunk-id="${token.plunk.plunkId}" class="toolbar__button toolbar__button_edit"></a>
       </div>
       `;

@@ -27,7 +27,7 @@ module.exports = class TutorialView {
 
   getUrl() {
     if (this.plunkId) {
-      return 'http://plnkr.co/edit/' + this.plunkId + '?p=preview';
+      return 'https://plnkr.co/edit/' + this.plunkId + '?p=preview';
     } else {
       return null;
     }
