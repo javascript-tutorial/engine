@@ -15,6 +15,13 @@ module.exports = class LocalStorage {
     return (key in this.storage);
   }
 
+  clear(regexp) {
+    for(let key in this.storage) {
+      if (!regexp  || regexp.test(key)) {
+        delete this.storage[key];
+      }
+    }
+  }
 
   static instance() {
     if (!this._instance) {

@@ -162,7 +162,7 @@ module.exports = class Renderer {
 
     Object.assign(loc, locals);
 
-    log.debug("render template", templatePath);
+    ctx.log.debug("render template", templatePath);
 
     return pug.renderFile(pug.pugResolve(templatePath, null, loc), loc);
   }

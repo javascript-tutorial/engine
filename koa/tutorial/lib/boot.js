@@ -3,6 +3,7 @@ const fs = require('mz/fs');
 const config = require('config');
 const TutorialViewStorage = require('../models/tutorialViewStorage');
 const TutorialTree = require('../models/tutorialTree');
+const localStorage = require('jsengine/local-storage').instance();
 const log = require('jsengine/log')();
 
 // pm2 trigger javascript tutorial_boot
@@ -18,6 +19,10 @@ async function boot() {
   await TutorialTree.instance().loadFromCache();
 
   await TutorialViewStorage.instance().loadFromCache();
+
+  // clear rendered articles
+  localStorage.clear(/^tutorial:/);
+
 }
 
 // add reboot action if pmx exists (for prod, not for local server)

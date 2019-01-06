@@ -14,7 +14,7 @@ const config = require('config');
 exports.get = async function(ctx, next) {
 
   let renderedArticle = await localStorage.getOrGenerate(
-    'tutorial:article:' + ctx.params.slug, 
+    'tutorial:article:' + ctx.params.slug,
     () => renderArticle(ctx),
     process.env.TUTORIAL_EDIT
   );
@@ -131,7 +131,7 @@ async function renderArticle(ctx) {
   }
 
   ctx.log.debug("article", article);
-  
+
   let renderer = new ArticleRenderer();
 
   let rendered = await renderer.render(article);
