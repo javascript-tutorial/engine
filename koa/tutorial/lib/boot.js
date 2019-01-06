@@ -21,6 +21,7 @@ async function boot() {
   await TutorialViewStorage.instance().loadFromCache();
 
   // clear rendered articles
+  // for re-boot
   localStorage.clear(/^tutorial:/);
 
 }
