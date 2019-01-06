@@ -22,11 +22,14 @@ async function boot() {
 
 // add reboot action if pmx exists (for prod, not for local server)
 process.on('message', function(packet) {
-  log.debug("process message", packet);
+  log.info("process message", packet);
   if (packet.topic === 'tutorial:reboot') {
-    log.debug("tutorial reboot initiated");
+    log.info("tutorial reboot initiated");
     boot().then(function() { // if failed => uncaught promise && process dies?
-      log.debug("tutorial reboot complete")
+      log.info("tutorial reboot complete")
+    }).catch((err) => {
+      log.error("tutorial reboot error", err);
+      throw err;
     });
   }
 });
