@@ -24,12 +24,9 @@ module.exports = function(options) {
 
       for(let proc of list) {
 
-        // only to javascript-en
-        if (args.only) {
-          if (proc.name !== args.only) {
-            log.debug("skip " + proc.name);
-            continue;
-          }
+        if (proc.name !== "javascript-" + config.lang) {
+          log.debug("skip " + proc.name);
+          continue;
         }
 
         log.debug(`Send to ${proc.name} id:${proc.pm_id}`);
