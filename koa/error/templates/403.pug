@@ -12,6 +12,6 @@ block content
       if error.info
         != error.info
       else if user
-        = t('error.403.wrong_user')
+        != t('error.403.wrong_user')
       else
-        = t('error.403.login')
+        != t('error.403.login')
