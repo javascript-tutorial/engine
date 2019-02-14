@@ -1,4 +1,4 @@
-/*
+  /*
 // kurishiro is async =((( unusable in md plugins =((
 // all other modules don't translate kanji
 // 私は ひらがな が大好き - OK

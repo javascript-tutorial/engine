@@ -126,9 +126,17 @@ module.exports = class TaskRenderer {
         if (files[i].filename == 'test.js') hasTest = true;
       }
 
+      let plnkFiles = files.filter(f => f.filename !== 'test.js').map(f => f.filename);
+
+      let plnkFileLines = files.map(f => f.content.trim().replace(/[^\n]/g, '').length);
+      let linesMax = Math.max(...plnkFileLines) + 1;
+
+      let height = Math.max(400, linesMax * 20 + 112); // 20 per line + ~header ~footer
+
       let title = hasTest ? t('tutorial.task.open_solution.sandbox.tests') : t('tutorial.task.open_solution.sandbox.no_tests');
 
-      solution += `<p><a href="${solutionPlunk.getUrl()}" target="_blank" data-plunk-id="${solutionPlunk.plunkId}">${title}</a></p>`;
+      solution += `<div><iframe frameborder="0" style="width:100%;height:${height}px" src="https://embed.plnkr.co/plunk/${solutionPlunk.plunkId}?show=${plnkFiles.join(',')}&deferRun"></iframe></div> `;
+      //solution += `<p><a href="${solutionPlunk.getUrl()}" target="_blank" data-plunk-id="${solutionPlunk.plunkId}">${title}</a></p>`;
     }
 
     return solution;

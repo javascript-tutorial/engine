@@ -18,10 +18,10 @@ module.exports = class TranslationStats {
 
   // can be called from CRON
   async update() {
-    log.debug('Translation Stats update start');
     let supportedLangs = config.supportedLangs.map(lang => lang.code);
     supportedLangs = supportedLangs.join(',');
     const uri = `${config.translateHook}/stats?langs=${supportedLangs}`;
+    log.debug('Translation Stats update start', uri);
     try {
       this.stats = await request({uri, json: true});
     } catch(e) {
@@ -75,7 +75,7 @@ module.exports = class TranslationStats {
   // returns null is no stats
   isTranslated(url) {
     if (config.lang === 'en') return true;
-    
+
     let stats = this.stats[config.lang];
 
     return stats ? stats.translated.includes(url) : null;
