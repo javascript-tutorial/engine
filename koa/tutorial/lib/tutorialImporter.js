@@ -320,6 +320,10 @@ module.exports = class TutorialImporter {
 
     await parser.parse(solution);
 
+    if (fs.existsSync(path.join(taskPath, '_js.view', 'solution.js'))) {
+      data.solutionJs = fs.readFileSync(path.join(taskPath, '_js.view', 'solution.js'), 'utf8');
+    }
+
     const task = new Task(data);
     this.tree.add(task);
 

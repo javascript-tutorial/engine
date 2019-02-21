@@ -7,7 +7,7 @@ const assert = require('assert');
 
 const TutorialParser = require('../lib/tutorialParser');
 const TutorialViewStorage = require('../models/tutorialViewStorage');
-
+const capitalize = require('lodash/capitalize');
 const t = require('jsengine/i18n');
 
 
@@ -57,7 +57,7 @@ module.exports = class TaskRenderer {
     this.solution = await this.renderSolution(task, options);
 
     return {
-      content: this.content,
+      content:  this.content,
       solution: this.solution
     };
   }
@@ -75,9 +75,9 @@ module.exports = class TaskRenderer {
 
     // if no #header at start
     // no parts, single solution
-    if (tokens.length == 0 || tokens[0].type != 'heading_open') {
+    if (tokens.length === 0 || tokens[0].type !== 'heading_open') {
       let solution = parser.render(tokens);
-      solution = await this.addSolutionPlunkLink(task, solution);
+      solution = await addSolutionPlunkLink(solution);
       return solution;
     }
 
@@ -85,15 +85,15 @@ module.exports = class TaskRenderer {
     let currentPart;
     for (let idx = 0; idx < tokens.length; idx++) {
       let token = tokens[idx];
-      if (token.type == 'heading_open') {
+      if (token.type === 'heading_open') {
 
         let i = idx + 1;
-        while (tokens[i].type != 'heading_close') i++;
+        while (tokens[i].type !== 'heading_close') i++;
 
         let headingTokens = tokens.slice(idx + 1, i);
 
         currentPart = {
-          title: stripTags(parser.render(headingTokens)),
+          title:   stripTags(parser.render(headingTokens)),
           content: []
         };
         solutionParts.push(currentPart);
@@ -110,40 +110,63 @@ module.exports = class TaskRenderer {
     }
 
     let solutionPartLast = solutionParts[solutionParts.length - 1];
-    solutionParts[solutionParts.length - 1].content = await this.addSolutionPlunkLink(task, solutionPartLast.content);
+    solutionParts[solutionParts.length - 1].content = await addSolutionPlunkLink(solutionPartLast.content);
+
+    async function addSolutionPlunkLink(solution) {
+
+      let solutionPlunk = TutorialViewStorage.instance().get(task.getResourceWebRoot() + '/solution');
+
+      if (solutionPlunk) {
+
+        if (config.lang === 'en') {
+          // append _js.view/solution.js to the solution UNLESS it has ```js demo in it
+          // English: all ok
+          // Other languages: not checked for duplicates
+
+          /*
+// script to gather all tasks with solutionJs
+var js = JSON.parse(require('fs').readFileSync('./tutorialTree.json', 'utf-8'));
+for(let key in js.bySlugMap) {
+  let entry = js.bySlugMap[key];
+  if (!entry.value.solutionJs) continue;
+  console.log('http://javascript.local/task/' + key);
+}
+// use it as: node ~/tasks.js | xargs open
+
+           */
+
+          if (!solution.match(/data-demo="1"/)) {
+            let solutionJs = `
+\`\`\`js
+${task.solutionJs}
+\`\`\`
+          `;
+
+            const tokens = await parser.parse(solutionJs);
+            solution += parser.render(tokens);
+          }
+        }
+
+        let files = solutionPlunk.files;
+        let hasTest = false;
+        for (let i = 0; i < files.length; i++) {
+          if (files[i].filename === 'test.js') hasTest = true;
+        }
+
+
+        let title = hasTest ? t('tutorial.task.open_solution.sandbox.tests') : t('tutorial.task.open_solution.sandbox.no_tests');
+
+        solution += `<p><a href="${solutionPlunk.getUrl()}" target="_blank" data-plunk-id="${solutionPlunk.plunkId}">${title}</a></p>`;
+      }
+
+      return solution;
+    }
 
     return solutionParts;
   }
 
-  async addSolutionPlunkLink(task, solution) {
 
-    let solutionPlunk = TutorialViewStorage.instance().get(task.getResourceWebRoot() + '/solution');
-
-    if (solutionPlunk) {
-      let files = solutionPlunk.files;
-      let hasTest = false;
-      for (let i = 0; i < files.length; i++) {
-        if (files[i].filename == 'test.js') hasTest = true;
-      }
-
-      let plnkFiles = files.filter(f => f.filename !== 'test.js').map(f => f.filename);
-
-      let plnkFileLines = files.map(f => f.content.trim().replace(/[^\n]/g, '').length);
-      let linesMax = Math.max(...plnkFileLines) + 1;
-
-      let height = Math.max(400, linesMax * 20 + 112); // 20 per line + ~header ~footer
-
-      let title = hasTest ? t('tutorial.task.open_solution.sandbox.tests') : t('tutorial.task.open_solution.sandbox.no_tests');
-
-      solution += `<div><iframe frameborder="0" style="width:100%;height:${height}px" src="https://embed.plnkr.co/plunk/${solutionPlunk.plunkId}?show=${plnkFiles.join(',')}&deferRun"></iframe></div> `;
-      //solution += `<p><a href="${solutionPlunk.getUrl()}" target="_blank" data-plunk-id="${solutionPlunk.plunkId}">${title}</a></p>`;
-    }
-
-    return solution;
-  }
 };
-
-
 
 
 function stripTags(text) {
