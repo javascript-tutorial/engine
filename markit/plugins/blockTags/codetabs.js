@@ -45,7 +45,7 @@ module.exports = function(md) {
         content: file.content
       });
 
-      if (file.filename == 'server.js') {
+      if (file.filename === 'server.js') {
         hasServerJs = true;
       }
     }
@@ -77,6 +77,8 @@ module.exports = function(md) {
     locals.external = {
       href: locals.src
     };
+
+    locals.current = token.blockTagAttrs.current;
 
     locals.t = t;
 

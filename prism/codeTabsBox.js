@@ -31,6 +31,11 @@ class CodeTabsBox {
       this.renderTranslate();
     };
 
+    let tabCurrent = this.elem.querySelector('.code-tabs__section_current');
+    if (tabCurrent !== tabCurrent.parentElement.firstElementChild) { // if not result tab
+      this.highlightTab(tabCurrent);
+    }
+
     this.delegate('.code-tabs__switch', 'click', this.onSwitchClick);
   }
 
@@ -45,7 +50,7 @@ class CodeTabsBox {
     for (let i = 0; i < siblings.length; i++) {
       let switchElem = siblings[i];
       let tabElem = tabs[i];
-      if (switchElem == e.delegateTarget) {
+      if (switchElem === e.delegateTarget) {
         selectedIndex = i;
         tabElem.classList.add('code-tabs__section_current');
         switchElem.classList.add('code-tabs__switch_current');

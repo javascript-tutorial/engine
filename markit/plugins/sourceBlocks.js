@@ -65,8 +65,8 @@ module.exports = function(md) {
     }
 
     let height;
-    // demo height of
-    if (+attrs.height) {
+
+    if (+attrs.height || attrs.height === "0") {
       height = +attrs.height;
       if (!options.html) height = Math.max(height, 800);
       token.attrPush(['data-demo-height', height]);

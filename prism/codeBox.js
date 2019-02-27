@@ -101,7 +101,7 @@ function CodeBox(elem) {
 
       if (elem.getAttribute('data-demo-height') === "0") {
         // this html has nothing to show
-        frame.style.display = 'none';
+        htmlResult.style.display = 'none';
       } else if (elem.hasAttribute('data-demo-height')) {
         let height = +elem.getAttribute('data-demo-height');
         frame.style.height = height + 'px';

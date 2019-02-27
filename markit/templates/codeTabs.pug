@@ -1,15 +1,15 @@
 include ~bemto.pug/lib/index
 
-+b.code-tabs._result_on
++b.code-tabs(class={_result_on: !current})
   +e.tools
     +e.scroll-wrap
       +e('button').scroll-button._left(title="&larr;", data-code-tabs-left)
     +e.switches-wrap
       +e.switches(data-code-tabs-switches)
         +e.switches-items
-          +e.switch._current= t('markit.codeTabs.result')
+          +e.switch(class={_current: !current})= t('markit.codeTabs.result')
           each tab in tabs
-            +e.switch #{tab.title}
+            +e.switch(class={_current: current === tab.title})= tab.title
     +e.scroll-wrap
       +e('button').scroll-button._right(title="&rarr;" data-code-tabs-right)
     +e.buttons
@@ -21,12 +21,12 @@ include ~bemto.pug/lib/index
         +e('a').button._download(target="_blank", href=zip.href)
 
   +e.content(data-code-tabs-content style=('height:' + height + 'px'))
-    +e.section._current
+    +e.section(class={_current: !current})
       //- assigning an attribute to false removes the attribute
       +e('iframe').result(src=src)
 
     each tab in tabs
       //- Chrome extension jsonview breaks language-json here
-      +e.section
+      +e.section(class={_current: current === tab.title})
         pre(class=tab.class)
           code= tab.content
