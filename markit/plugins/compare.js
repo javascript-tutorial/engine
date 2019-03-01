@@ -1,5 +1,7 @@
 'use strict';
 
+const tokenUtils = require('../utils/token');
+
 /**
  * Single:
   <div class="balance balance_single">   compare_single_open
@@ -56,6 +58,8 @@ module.exports = function(md) {
     for (let idx = 0; idx < tokens.length; idx++) {
 
       if (tokens[idx].type != 'container_compare_open') continue;
+      let compareToken = tokens[idx];
+      let compareAttrs = parseAttrs(compareToken.info, true);
 
       let listCount = 0;
       let i;
@@ -91,11 +95,18 @@ module.exports = function(md) {
           }
         }
 
+        if (tokens[idx].type == `compare_double_list_plus_open`) {
+          tokens[idx].attrPush(['title', compareAttrs['title-plus']]);
+        }
+
+        if (tokens[idx].type == `compare_double_list_minus_open`) {
+          tokens[idx].attrPush(['title', compareAttrs['title-minus']]);
+        }
+
         idx++;
       }
 
       tokens[idx].type = `compare_${subType}_close`;
-
     }
 
   });
@@ -128,8 +139,6 @@ module.exports = function(md) {
   };
 
   // Double
-
-
   md.renderer.rules.compare_double_open = function(tokens, idx, options, env, slf) {
     return '<div class="balance">';
   };
@@ -139,9 +148,12 @@ module.exports = function(md) {
   };
 
   md.renderer.rules.compare_double_list_plus_open = function(tokens, idx, options, env, slf) {
+
+    let title = tokenUtils.attrGet(tokens[idx], 'title') || t('markit.compare.merits');
+
     return `<div class="balance__pluses">
       <div class="balance__content">
-      <div class="balance__title">${t('markit.compare.merits')}</div><ul class="balance__list">`;
+      <div class="balance__title">${title}</div><ul class="balance__list">`;
   };
 
   md.renderer.rules.compare_double_list_plus_close = function(tokens, idx, options, env, slf) {
@@ -149,9 +161,12 @@ module.exports = function(md) {
   };
 
   md.renderer.rules.compare_double_list_minus_open = function(tokens, idx, options, env, slf) {
+
+    let title = tokenUtils.attrGet(tokens[idx], 'title') || t('markit.compare.demerits');
+
     return `<div class="balance__minuses">
       <div class="balance__content">
-      <div class="balance__title">${t('markit.compare.demerits')}</div><ul class="balance__list">`;
+      <div class="balance__title">${title}</div><ul class="balance__list">`;
   };
 
   md.renderer.rules.compare_double_list_minus_close = function(tokens, idx, options, env, slf) {
