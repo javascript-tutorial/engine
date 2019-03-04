@@ -1,0 +1,6 @@
+recent: A recent addition
+recent_addition: This is a recent addition to the language.
+browser:
+  value: "Examples work in the recent #{browser}."
+  none: "Not supported in JavaScript engines, or supported partially yet, requires polyfilling."
+  new: Old browsers may need polyfills.

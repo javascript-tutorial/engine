@@ -30,6 +30,7 @@ const markdownErrorPlugin = require('./plugins/markdownError');
 const blockTagsPlugin = require('./plugins/blockTags/plugin');
 const iframePlugin = require('./plugins/blockTags/iframe');
 const editPlugin = require('./plugins/blockTags/edit');
+const recentPlugin = require('./plugins/blockTags/recent');
 const cutPlugin = require('./plugins/blockTags/cut');
 const todoPlugin = require('./plugins/blockTags/todo');
 const codeTabsPlugin = require('./plugins/blockTags/codetabs');
@@ -47,7 +48,7 @@ module.exports = class ServerParser {
     this.env = options.env || {};
     this.md = new MarkdownIt(Object.assign({
       typographer:   true,
-      blockTags:     ['iframe', 'edit', 'cut', 'codetabs', 'demo'].concat(require('./getPrismLanguage').allSupported),
+      blockTags:     ['iframe', 'edit', 'recent', 'cut', 'codetabs', 'demo'].concat(require('./getPrismLanguage').allSupported),
       linkHeaderTag: true,
       html:          true,
       publicRoot:    config.publicRoot,
@@ -70,6 +71,7 @@ module.exports = class ServerParser {
     blockTagsPlugin(this.md);
     iframePlugin(this.md);
     editPlugin(this.md);
+    recentPlugin(this.md);
     cutPlugin(this.md);
     todoPlugin(this.md);
     codeTabsPlugin(this.md);
