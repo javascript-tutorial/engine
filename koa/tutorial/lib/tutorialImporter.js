@@ -485,32 +485,32 @@ module.exports = class TutorialImporter {
 
 
 function makeSource(sourceJs, testJs) {
-  let source = "<!DOCTYPE HTML>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n";
+  let source = "<!doctype html>\n";
   if (testJs) {
-    source += "  <script src=\"" + config.urlBase.static.href + "test/libs.js\"></script>\n";
-    source += "  <script src=\"test.js\"></script>\n";
+    source += "<script src=\"" + config.urlBase.static.href + "test/libs.js\"></script>\n";
+    source += "<script src=\"test.js\"></script>\n";
   }
-  source += "</head>\n<body>\n\n  <script>\n\n";
+  source += "<script>\n\n";
 
-  source += sourceJs.trim().replace(/^/gim, '    ');
-  source += "\n\n  </script>\n";
-  source += "\n</body>\n</html>";
+  source += sourceJs.trim().replace(/^/gim, '  ');
+  source += "\n\n</script>\n";
+  source += "\n</html>";
   return source;
 }
 
 
 function makeSolution(solutionJs, testJs) {
-  let solution = "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n";
+  let solution = "<!doctype html>\n";
   if (testJs) {
-    solution += "  <script src=\"" + config.urlBase.static.href + "test/libs.js\"></script>\n";
-    solution += "  <script src=\"test.js\"></script>\n";
+    solution += "<script src=\"" + config.urlBase.static.href + "test/libs.js\"></script>\n";
+    solution += "<script src=\"test.js\"></script>\n";
   }
-  solution += "</head>\n<body>\n\n  <script>\n\n";
+  solution += "<script>\n\n";
 
-  solution += solutionJs.trim().replace(/^/gim, '    ');
+  solution += solutionJs.trim().replace(/^/gim, '  ');
 
-  solution += "\n\n  </script>\n";
-  solution += "\n</body>\n</html>";
+  solution += "\n\n</script>\n";
+  solution += "\n</html>";
 
   return solution;
 }
