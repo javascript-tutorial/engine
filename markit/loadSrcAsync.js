@@ -89,7 +89,7 @@ module.exports = async function (tokens, options) {
 
     let sourcePath = srcUnderRoot(
       options.publicRoot,
-      path.join(options.resourceWebRoot, token.blockTagAttrs.src)
+      path.join(options.resourceWebRoot, token.blockTagAttrs.src.replace(/\.view/g, ''))
     );
 
     let content;
