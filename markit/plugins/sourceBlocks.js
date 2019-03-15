@@ -76,6 +76,10 @@ module.exports = function(md) {
       token.attrPush(['data-refresh', '1']);
     }
 
+    if (attrs.async) {
+      token.attrPush(['data-async', '1']);
+    }
+
     if (options.html && attrs.demo) {
       token.attrPush(['data-demo', '1']);
     }
@@ -119,6 +123,7 @@ module.exports = function(md) {
       // autorun may have "no-epub" value meaning that it shouldn't run on epub (code not supported)
       token.attrPush(['data-autorun', attrs.autorun]);
     }
+
 
     let codeResultHtml = '';
 

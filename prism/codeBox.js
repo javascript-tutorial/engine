@@ -9,6 +9,11 @@ function CodeBox(elem) {
   let codeElem = preElem.querySelector('code[class*="language-"]');
   let code = codeElem.textContent;
 
+  let runCode = code;
+  if (elem.hasAttribute('data-async')) {
+    runCode = `(async () => {\n${code}\n})()`;
+  }
+
   Prism.highlightElement(codeElem);
 
   let lineNumbersWrapper = makeLineNumbers(preElem.innerHTML);
@@ -73,7 +78,7 @@ function CodeBox(elem) {
       alert("Sorry, your browser is too old");
       return;
     }
-    win.postMessage(code, 'https://lookatcode.com/showjs');
+    win.postMessage(runCode, 'https://lookatcode.com/showjs');
   }
 
   function runHTML() {
@@ -192,7 +197,7 @@ function CodeBox(elem) {
 
       let textarea = document.createElement('textarea');
       textarea.name = 'code';
-      textarea.value = normalizeHtml('<script>\n' + code + '\n</script>');
+      textarea.value = normalizeHtml(`<script>\n${runCode}\n</script>`);
       form.appendChild(textarea);
 
       globalFrame.parentNode.insertBefore(form, globalFrame.nextSibling);
@@ -202,13 +207,13 @@ function CodeBox(elem) {
 
       if (elem.hasAttribute('data-autorun')) {
         // make sure functions from "autorun" go to global scope
-        globalEval(code);
+        globalEval(runCode);
         return;
       }
 
       try {
         /* jshint -W061 */
-        window["eval"].call(window, code);
+        window["eval"].call(window, runCode);
       } catch (e) {
         alert("Error: " + e.message);
       }
@@ -246,8 +251,8 @@ function CodeBox(elem) {
     if (isHTML) {
       html = normalizeHtml(code);
     } else {
-      let codeIndented = code.replace(/^/gim, '    ');
-      html = '<!DOCTYPE html>\n<html>\n\n<body>\n  <script>\n' + codeIndented + '\n  </script>\n</body>\n\n</html>';
+      // let codeIndented = code.replace(/^/gim, '    ');
+      html = `<!DOCTYPE html><script>\n${runCode}\n</script>`;
     }
 
     let form = document.createElement('form');
