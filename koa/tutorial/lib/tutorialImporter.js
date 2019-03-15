@@ -126,6 +126,7 @@ module.exports = class TutorialImporter {
     await parser.parse(content);
 
     data.githubLink = config.tutorialRepo.blob + sourceFolderPath.slice(this.root.length);
+    if (config.lang === 'ru') data.githubLink = config.tutorialRepo.blob;
 
     log.debug(data);
     const folder = new Article(data);
@@ -198,6 +199,7 @@ module.exports = class TutorialImporter {
     await parser.parse(content);
 
     data.githubLink = config.tutorialRepo.blob + articlePath.slice(this.root.length) + '/article.md';
+    if (config.lang === 'ru') data.githubLink = config.tutorialRepo.blob;
 
     try {
       data.headJs = fs.readFileSync(path.join(articlePath, 'head.js'), 'utf8');
@@ -283,6 +285,7 @@ module.exports = class TutorialImporter {
     data.slug = taskPathName.slice(taskPathName.indexOf('-') + 1);
 
     data.githubLink = config.tutorialRepo.blob + taskPath.slice(this.root.length);
+    if (config.lang === 'ru') data.githubLink = config.tutorialRepo.blob;
 
     //this.tree.destroyTree(data.slug);
 

@@ -292,6 +292,7 @@ function CodeBox(elem) {
 
     let result = code;
 
+    /*
     if (!hasHtmlStart) {
       result = '<html>\n' + result;
     }
@@ -306,9 +307,9 @@ function CodeBox(elem) {
 
     if (!hasBodyEnd) {
       result = result.replace('</html>', '\n</body>\n</html>');
-    }
+    }*/
 
-    result = '<!DOCTYPE HTML>\n' + result;
+    result = '<!doctype html>\n' + result;
 
     return result;
   }
