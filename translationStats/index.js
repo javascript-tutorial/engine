@@ -7,7 +7,9 @@ exports.init = function(app) {
 };
 
 exports.boot = async function() {
-  await TranslationStats.instance().update();
+  if (!process.env.TUTORIAL_EDIT) {
+    await TranslationStats.instance().update();
+  }
 };
 
 exports.TranslationStats = TranslationStats;

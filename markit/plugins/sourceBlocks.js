@@ -163,11 +163,16 @@ module.exports = function(md) {
 
     content = md.utils.escapeHtml(content);
 
+    if (process.env.TUTORIAL_EDIT) {
+      // for examples to work locally
+      content = content.replace(/https?:\/\/(.*?)javascript.info/g, 'http://$1javascript.local');
+    }
+
     return `<div${slf.renderAttrs(token)}>
       <div class="codebox code-example__codebox">
         ${toolbarHtml}
         <div class="codebox__code" data-code="1">
-          <pre class="line-numbers language-${prismLanguage}"><code class="language-${prismLanguage}">${content}</code></pre>
+          <pre class="line-numbers language-${prismLanguage}"><code>${content}</code></pre>
         </div>
       </div>
       ${codeResultHtml}

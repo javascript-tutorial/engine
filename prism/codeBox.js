@@ -6,7 +6,8 @@ let makeHighlight = require('./makeHighlight');
 function CodeBox(elem) {
 
   let preElem = elem.querySelector('pre');
-  let codeElem = preElem.querySelector('code[class*="language-"]');
+  let codeElem = Array.from(preElem.childNodes).find(n => n.tagName === 'CODE');
+
   let code = codeElem.textContent;
 
   let runCode = code;
@@ -122,6 +123,7 @@ function CodeBox(elem) {
       let doc = frame.contentDocument || frame.contentWindow.document;
 
       doc.open();
+      // console.log(code)
       doc.write(normalizeHtml(code));
       doc.close();
 
@@ -278,13 +280,7 @@ function CodeBox(elem) {
 
 
   function normalizeHtml(code) {
-    let codeLc = code.toLowerCase();
-    let hasBodyStart = codeLc.match('<body>');
-    let hasBodyEnd = codeLc.match('</body>');
-    let hasHtmlStart = codeLc.match('<html>');
-    let hasHtmlEnd = codeLc.match('</html>');
-
-    let hasDocType = codeLc.match(/^\s*<!doctype/);
+    let hasDocType = code.match(/^\s*<!doctype/i);
 
     if (hasDocType) {
       return code;
@@ -292,22 +288,9 @@ function CodeBox(elem) {
 
     let result = code;
 
-    /*
-    if (!hasHtmlStart) {
-      result = '<html>\n' + result;
+    if (!code.match(/<body/i)) {
+      result = `<body>\n${result}\n</body>`;
     }
-
-    if (!hasHtmlEnd) {
-      result = result + '\n</html>';
-    }
-
-    if (!hasBodyStart) {
-      result = result.replace('<html>', '<html>\n<head>\n  <meta charset="utf-8">\n</head><body>\n');
-    }
-
-    if (!hasBodyEnd) {
-      result = result.replace('</html>', '\n</body>\n</html>');
-    }*/
 
     result = '<!doctype html>\n' + result;
 
