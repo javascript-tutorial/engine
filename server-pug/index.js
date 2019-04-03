@@ -18,7 +18,11 @@ pug.pugConfig = Object.assign({}, config.pug, {
 });
 
 pug.serverRenderFile = function(file, options) {
-  return pug.renderFile(file, Object.assign({}, pug.pugConfig, options));
+  let opts = Object.create(options); // options may inherit from something else
+  for(let key in pug.pugConfig) {
+    if(!opts[key]) opts[key] = pug.pugConfig[key];
+  }
+  return pug.renderFile(file, opts);
 };
 
 /**
