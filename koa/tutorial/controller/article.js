@@ -8,7 +8,7 @@ const _ = require('lodash');
 const makeAnchor = require('jsengine/text-utils/makeAnchor');
 const t = require('jsengine/i18n');
 const localStorage = require('jsengine/local-storage').instance();
-const TranslationStats = require('jsengine/translationStats').TranslationStats;
+const TutorialStats = require('jsengine/tutorialStats').TutorialStats;
 const config = require('config');
 
 exports.get = async function(ctx, next) {
@@ -138,7 +138,7 @@ async function renderArticle(ctx) {
 
   // ctx.log.debug("rendered");
 
-  const translationStats = TranslationStats.instance();
+  const tutorialStats = TutorialStats.instance();
 
   rendered.isFolder = article.isFolder;
   rendered.modified = article.modified;
@@ -148,9 +148,9 @@ async function renderArticle(ctx) {
   rendered.canonicalPath = article.getUrl();
   rendered.githubLink = article.githubLink;
 
-  if (translationStats.isTranslated(article.getUrl()) === false && config.lang !== 'ru' && config.env !== 'development') {
-    const currentLang = translationStats.getLangByCode(config.lang);
-    const translatedLangs = translationStats.getMaterialLangs(article.getUrl());
+  if (tutorialStats.isTranslated(article.getUrl()) === false && config.lang !== 'ru' && config.env !== 'development') {
+    const currentLang = tutorialStats.getLangByCode(config.lang);
+    const translatedLangs = tutorialStats.getMaterialLangs(article.getUrl());
     rendered.translateNotification = t('tutorial.not_translated', {url: article.githubLink, translatedLangs, currentLang});
   }
 

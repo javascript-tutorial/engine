@@ -4,13 +4,13 @@ const path = require('path');
 const config = require('config');
 const log = require('jsengine/log')();
 
-const statsPath = path.join(config.tmpRoot, 'translationStats.json');
+const statsPath = path.join(config.tmpRoot, 'tutorialStats.json');
 
-module.exports = class TranslationStats {
+module.exports = class TutorialStats {
 
   static instance() {
     if (!this._instance) {
-      this._instance = new TranslationStats();
+      this._instance = new TutorialStats();
       this._instance.read();
     }
     return this._instance;
@@ -20,13 +20,17 @@ module.exports = class TranslationStats {
   async update() {
     let supportedLangs = config.supportedLangs.map(lang => lang.code);
     supportedLangs = supportedLangs.join(',');
-    const uri = `${config.translateHook}/stats?langs=${supportedLangs}`;
-    log.debug('Translation Stats update start', uri);
     try {
-      this.stats = await request({uri, json: true});
+      const translateUri = `${config.statsServiceUrl}/translate?langs=${supportedLangs}`;
+      log.debug('Translation Stats update start', translateUri);
+      this.translate = await request({uri: translateUri, json: true});
+
+      const contributorsUri = `${config.statsServiceUrl}/contributors?lang=${config.lang}`;
+      log.debug('Contributors update start', contributorsUri);
+      this.contributors = await request({uri: contributorsUri, json: true});
     } catch(e) {
       if (config.env === 'development') {
-        log.debug("ranslation Stats update error", e);
+        log.debug("Tutorial stats update error", e);
         return;
       } else {
         throw e;
@@ -37,11 +41,16 @@ module.exports = class TranslationStats {
   }
 
   async write() {
-    await fs.outputJson(statsPath, this.stats);
+    await fs.outputJson(statsPath, {translate: this.translate, contributors: this.contributors});
   }
 
   read() {
-    this.stats = fs.existsSync(statsPath) ? fs.readJsonSync(statsPath) : {};
+    let stats = fs.existsSync(statsPath) ? fs.readJsonSync(statsPath) : {
+      translate: {},
+      contributors: {}
+    };
+    this.translate = stats.translate;
+    this.contributors = stats.contributors;
   }
 
   getLinksBy(url) {
@@ -51,7 +60,7 @@ module.exports = class TranslationStats {
 
     // console.log(this.stats);
     for(let supportedLang of config.supportedLangs) {
-      let stats = this.stats[supportedLang.code];
+      let stats = this.translate[supportedLang.code];
 
       let translatedUrl;
 
@@ -67,8 +76,6 @@ module.exports = class TranslationStats {
       linksByLang[supportedLang.code] = this.buildLink(supportedLang.code, translatedUrl);
     }
 
-    //result.en = isNotAllowedUrl ? this.buildLink('en', '/') : this.buildLink('en', url);
-
     return linksByLang;
   }
 
@@ -76,7 +83,7 @@ module.exports = class TranslationStats {
   isTranslated(url) {
     if (config.lang === 'en') return true;
 
-    let stats = this.stats[config.lang];
+    let stats = this.translate[config.lang];
 
     return stats ? stats.translated.includes(url) : null;
   }
@@ -84,7 +91,7 @@ module.exports = class TranslationStats {
   getMaterialLangs(url) {
     let translatedLangs = [];
     for (let supportedLang of config.supportedLangs) {
-      let stats = this.stats[supportedLang.code];
+      let stats = this.translate[supportedLang.code];
       if (supportedLang.pages.find(pageReg => pageReg.test(url)) || (stats && stats.translated.includes(url))) {
         translatedLangs.push({
           url: this.buildLink(supportedLang.code, url),
@@ -98,7 +105,7 @@ module.exports = class TranslationStats {
   getLangsCtxBy(url) {
     const links = this.getLinksBy(url);
     const result = config.supportedLangs.map(lang => {
-      let { progress } = this.stats[lang.code] || {};
+      let { progress } = this.translate[lang.code] || {};
       let link = links[lang.code];
       return { ...lang, progress, link };
     });
@@ -116,7 +123,7 @@ module.exports = class TranslationStats {
 
   getLangStats(lang) {
     const langData = config.supportedLangs.filter(l => l.code === lang).pop();
-    const { progress } = this.stats[lang] || {};
+    const { progress } = this.translate[lang] || {};
     return { ...langData, progress };
   }
 };

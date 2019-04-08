@@ -5,7 +5,7 @@ const Article = require('../models/article');
 const TutorialTree = require('../models/tutorialTree');
 const TaskRenderer = require('../renderer/taskRenderer');
 const t = require('jsengine/i18n');
-const TranslationStats = require('jsengine/translationStats').TranslationStats;
+const TutorialStats = require('jsengine/tutorialStats').TutorialStats;
 const config = require('config');
 
 exports.get = async function(ctx, next) {
@@ -23,11 +23,11 @@ exports.get = async function(ctx, next) {
 
   ctx.locals.githubLink = task.githubLink;
 
-  const translationStats = TranslationStats.instance();
+  const tutorialStats = TutorialStats.instance();
 
-  if (translationStats.isTranslated(task.getUrl()) === false && config.lang !== 'ru' && config.env !== 'development') {
-    const currentLang = translationStats.getLangByCode(config.lang);
-    const translatedLangs = translationStats.getMaterialLangs(task.getUrl());
+  if (tutorialStats.isTranslated(task.getUrl()) === false && config.lang !== 'ru' && config.env !== 'development') {
+    const currentLang = tutorialStats.getLangByCode(config.lang);
+    const translatedLangs = tutorialStats.getMaterialLangs(task.getUrl());
     ctx.locals.translateNotification = t('tutorial.not_translated', {url: task.githubLink, translatedLangs, currentLang});
   }
 
