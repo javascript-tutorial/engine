@@ -28,6 +28,11 @@ module.exports = class TutorialStats {
       const contributorsUri = `${config.statsServiceUrl}/contributors?lang=${config.lang}`;
       log.debug('Contributors update start', contributorsUri);
       this.contributors = await request({uri: contributorsUri, json: true});
+
+      const repoUri = `${config.statsServiceUrl}/repo?lang=${config.lang}`;
+      log.debug('Repo update start', repoUri);
+      this.repo = await request({uri: repoUri, json: true});
+
     } catch(e) {
       if (config.env === 'development') {
         log.debug("Tutorial stats update error", e);
@@ -41,16 +46,18 @@ module.exports = class TutorialStats {
   }
 
   async write() {
-    await fs.outputJson(statsPath, {translate: this.translate, contributors: this.contributors});
+    await fs.outputJson(statsPath, {translate: this.translate, contributors: this.contributors, this: this.repo});
   }
 
   read() {
     let stats = fs.existsSync(statsPath) ? fs.readJsonSync(statsPath) : {
       translate: {},
-      contributors: {}
+      contributors: {},
+      repo: {}
     };
     this.translate = stats.translate;
     this.contributors = stats.contributors;
+    this.repo = stats.repo;
   }
 
   getLinksBy(url) {
