@@ -12,7 +12,7 @@ const path = require('path');
 module.exports = class TutorialTree {
 
   constructor() {
-    this.tree = [];
+    this.roots = [];
     this.bySlugMap = Object.create(null);
   }
 
@@ -22,7 +22,7 @@ module.exports = class TutorialTree {
 
   getSiblings(slug) {
     let entry = this.bySlug(slug);
-    return entry.parent ? this.bySlug(entry.parent).children : this.tree;
+    return entry.parent ? this.bySlug(entry.parent).children : this.roots;
   }
 
   getParents(slug) {
@@ -38,7 +38,7 @@ module.exports = class TutorialTree {
 
   getPrev(slug) {
     let entry = this.bySlug(slug);
-    let siblings = entry.parent ? this.bySlug(entry.parent).children : this.tree;
+    let siblings = entry.parent ? this.bySlug(entry.parent).children : this.roots;
     let idx = siblings.indexOf(slug);
     assert(idx >= 0);
 
@@ -83,7 +83,7 @@ module.exports = class TutorialTree {
     if (entry.isFolder && entry.children[0] && canGoDown) {
       return entry.children[0];
     }
-    let siblings = entry.parent ? this.bySlug(entry.parent).children : this.tree;
+    let siblings = entry.parent ? this.bySlug(entry.parent).children : this.roots;
     let idx = siblings.indexOf(slug);
     assert(idx >= 0);
 
@@ -117,7 +117,7 @@ module.exports = class TutorialTree {
 
     this.deleteFromSlugMap(slug);
 
-    let siblings = entry.parent ? this.bySlug(entry.parent).children : this.tree;
+    let siblings = entry.parent ? this.bySlug(entry.parent).children : this.roots;
     let idx = siblings.indexOf(slug);
 
     // if (idx == -1) console.log(entry, this.bySlug(entry.parent));
@@ -136,7 +136,7 @@ module.exports = class TutorialTree {
     }
 
     this.addToSlugMap(entry);
-    let siblings = entry.parent ? this.bySlug(entry.parent).children : this.tree;
+    let siblings = entry.parent ? this.bySlug(entry.parent).children : this.roots;
     let i = 0;
     while (i < siblings.length) {
       if (this.bySlug(siblings[i]).weight >= entry.weight) {
@@ -163,7 +163,7 @@ module.exports = class TutorialTree {
     for (let key in this.bySlugMap) {
       delete this.bySlugMap[key];
     }
-    this.tree.length = 0;
+    this.roots.length = 0;
   }
 
   static instance() {
@@ -180,14 +180,14 @@ module.exports = class TutorialTree {
       bySlugMap[slug] = {type: value.constructor.name, value};
     }
     return {
-      tree: this.tree,
+      roots: this.roots,
       bySlugMap
     };
   }
 
-  load({tree, bySlugMap}) {
-    this.tree.length = 0;
-    this.tree.push(...tree);
+  load({roots, bySlugMap}) {
+    this.roots.length = 0;
+    this.roots.push(...roots);
     for (let slug in this.bySlugMap) {
       delete this.bySlugMap[slug];
     }
