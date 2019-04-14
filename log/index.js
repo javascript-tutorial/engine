@@ -1,4 +1,4 @@
-// Usage: require('jsengine/log')()
+// Usage: require('engine/log')()
 // NB: this file is RELOADED for EVERY REQUIRE
 // (cleared from cache, to get parent filename every time)
 

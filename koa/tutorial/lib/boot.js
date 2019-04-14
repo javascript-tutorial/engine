@@ -3,8 +3,8 @@ const fs = require('mz/fs');
 const config = require('config');
 const TutorialViewStorage = require('../models/tutorialViewStorage');
 const TutorialTree = require('../models/tutorialTree');
-const localStorage = require('jsengine/local-storage').instance();
-const log = require('jsengine/log')();
+const localStorage = require('engine/local-storage').instance();
+const log = require('engine/log')();
 
 // pm2 trigger javascript tutorial_boot
 async function boot() {

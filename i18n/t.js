@@ -7,7 +7,7 @@ const i18n = new BabelFish('en');
 let err = console.error;
 
 if (typeof IS_CLIENT === 'undefined') {
-  const log = require('jsengine/log')();
+  const log = require('engine/log')();
   err = (...args) => log.error(...args);
 }
 

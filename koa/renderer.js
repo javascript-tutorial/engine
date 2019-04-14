@@ -1,17 +1,17 @@
 'use strict';
 
-const moment = require('jsengine/moment-with-locale');
+const moment = require('engine/moment-with-locale');
 const util = require('util');
 const path = require('path');
 const config = require('config');
 const fs = require('fs');
-const log = require('jsengine/log')();
-const pug = require('jsengine/server-pug');
-const t = require('jsengine/i18n');
+const log = require('engine/log')();
+const pug = require('engine/server-pug');
+const t = require('engine/i18n');
 const url = require('url');
-const BasicParser = require('jsengine/markit').BasicParser;
+const BasicParser = require('engine/markit').BasicParser;
 
-let addedFlag = Symbol("jsengine-koa-helpers");
+let addedFlag = Symbol("engine-koa-helpers");
 
 module.exports = class Renderer {
   constructor(ctx) {

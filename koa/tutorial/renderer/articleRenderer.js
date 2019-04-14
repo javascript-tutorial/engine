@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const config = require('config');
-const log = require('jsengine/log')();
+const log = require('engine/log')();
 const Article = require('../models/article');
 const TutorialParser = require('../lib/tutorialParser');
 

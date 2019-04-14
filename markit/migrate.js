@@ -2,7 +2,7 @@
 
 const parseAttrs = require('./utils/parseAttrs');
 const yaml = require('js-yaml');
-const stripIndents = require('jsengine/text-utils/stripIndents');
+const stripIndents = require('engine/text-utils/stripIndents');
 
 module.exports = function(text) {
 

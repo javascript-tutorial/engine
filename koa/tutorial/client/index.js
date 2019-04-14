@@ -1,5 +1,5 @@
 const delegate = require('client/delegate');
-const prism = require('jsengine/prism');
+const prism = require('engine/prism');
 const ItemSlider = require('./itemSlider');
 
 function init() {

@@ -4,9 +4,9 @@
  * Client/server plugin
  */
 
-const t = require('jsengine/i18n');
+const t = require('engine/i18n');
 
-t.requirePhrase('jsengine/markit');
+t.requirePhrase('engine/markit');
 
 module.exports = function(md) {
 

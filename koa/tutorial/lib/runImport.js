@@ -6,7 +6,7 @@ let TutorialViewStorage = require('../models/tutorialViewStorage');
 let config = require('config');
 let fs = require('mz/fs');
 let path = require('path');
-let log = require('jsengine/log')();
+let log = require('engine/log')();
 
 module.exports = async function() {
 

@@ -5,19 +5,19 @@ const config = require('config');
 
 const Article = require('../models/article');
 const Task = require('../models/task');
-const log = require('jsengine/log')();
+const log = require('engine/log')();
 
 const TutorialTree = require('../models/tutorialTree');
 const TutorialView = require('../models/tutorialView');
 const TutorialViewStorage = require('../models/tutorialViewStorage');
 const getPlunkerToken = require('../lib/getPlunkerToken');
 const TutorialParser = require('./tutorialParser');
-const stripTitle = require('jsengine/markit').stripTitle;
-const stripYamlMetadata = require('jsengine/markit').stripYamlMetadata;
+const stripTitle = require('engine/markit').stripTitle;
+const stripYamlMetadata = require('engine/markit').stripYamlMetadata;
 const mime = require('mime');
-const stripIndents = require('jsengine/text-utils/stripIndents');
+const stripIndents = require('engine/text-utils/stripIndents');
 
-const t = require('jsengine/i18n');
+const t = require('engine/i18n');
 
 module.exports = class TutorialImporter {
   constructor(options) {

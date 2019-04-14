@@ -1,4 +1,4 @@
-const mongoose = require('jsengine/mongoose');
+const mongoose = require('engine/mongoose');
 
 exports.boot = async function() {
 

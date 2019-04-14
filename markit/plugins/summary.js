@@ -6,7 +6,7 @@
 
 const markdownItContainer = require('markdown-it-container');
 const parseAttrs = require('../utils/parseAttrs');
-const t = require('jsengine/i18n');
+const t = require('engine/i18n');
 
 const LANG = require('config').lang;
 

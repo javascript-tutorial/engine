@@ -39,10 +39,10 @@ const tokenUtils = require('../utils/token');
  */
 
 const parseAttrs = require('../utils/parseAttrs');
-const t = require('jsengine/i18n');
+const t = require('engine/i18n');
 const markdownItContainer = require('markdown-it-container');
 
-t.requirePhrase('jsengine/markit');
+t.requirePhrase('engine/markit');
 
 module.exports = function(md) {
 

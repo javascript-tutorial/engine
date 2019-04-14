@@ -1,5 +1,5 @@
 let config = require('config');
-let log = require('jsengine/log')();
+let log = require('engine/log')();
 let request = require('request-promise');
 const assert = require('assert');
 

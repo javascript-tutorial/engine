@@ -7,16 +7,16 @@
  */
 
 const parseAttrs = require('../utils/parseAttrs');
-const stripIndents = require('jsengine/text-utils/stripIndents');
+const stripIndents = require('engine/text-utils/stripIndents');
 const extractHighlight = require('../utils/source/extractHighlight');
 const tokenUtils = require('../utils/token');
 
-const t = require('jsengine/i18n/t');
+const t = require('engine/i18n/t');
 const getPrismLanguage = require('../getPrismLanguage');
 
 const config = require('config');
 
-require('jsengine/prism/core');
+require('engine/prism/core');
 
 t.i18n.add('markit.code', require('../locales/code/' + config.lang + '.yml'));
 

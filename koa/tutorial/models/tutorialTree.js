@@ -3,7 +3,7 @@
 const assert = require('assert');
 const Article = require('./article');
 const Task = require('./task');
-const log = require('jsengine/log')();
+const log = require('engine/log')();
 
 const config = require('config');
 const fs = require('mz/fs');

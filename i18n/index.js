@@ -1,4 +1,4 @@
-const log = require('jsengine/log')();
+const log = require('engine/log')();
 const path = require('path');
 const fs = require('fs');
 const glob = require('glob');

@@ -7,7 +7,7 @@
  * If in the future it becomes non-tutorial-specific, then refactor
  */
 const resolveTutorialLinks = require('./resolveTutorialLinks');
-const ServerParser = require('jsengine/markit').ServerParser;
+const ServerParser = require('engine/markit').ServerParser;
 
 module.exports = class TutorialParser extends ServerParser {
 

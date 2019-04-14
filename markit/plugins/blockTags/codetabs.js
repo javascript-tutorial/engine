@@ -6,10 +6,10 @@ assert(typeof IS_CLIENT === 'undefined');
 
 const path = require('path');
 const getPrismLanguage = require('../../getPrismLanguage');
-const log = require('jsengine/log')();
-const t = require('jsengine/i18n');
+const log = require('engine/log')();
+const t = require('engine/i18n');
 
-const pug = require('jsengine/server-pug');
+const pug = require('engine/server-pug');
 
 module.exports = function(md) {
 

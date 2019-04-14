@@ -9,7 +9,7 @@ let FiguresImporter = require('../figuresImporter');
 
 let fs = require('fs');
 let path = require('path');
-let log = require('jsengine/log')();
+let log = require('engine/log')();
 
 module.exports = function(options) {
 

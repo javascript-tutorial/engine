@@ -2,7 +2,7 @@
 
 let filters = require('pug').filters;
 
-let BasicParser = require('jsengine/markit').BasicParser;
+let BasicParser = require('engine/markit').BasicParser;
 
 filters.markit = function(html) {
   let parser = new BasicParser({

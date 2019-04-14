@@ -1,5 +1,5 @@
 let path = require('path');
-let log = require('jsengine/log')();
+let log = require('engine/log')();
 
 let TutorialTree = require('../models/tutorialTree');
 let url = require('url');

@@ -5,10 +5,10 @@ const Task = require('../models/task');
 const ArticleRenderer = require('../renderer/articleRenderer');
 const TaskRenderer = require('../renderer/taskRenderer');
 const _ = require('lodash');
-const makeAnchor = require('jsengine/text-utils/makeAnchor');
-const t = require('jsengine/i18n');
-const localStorage = require('jsengine/local-storage').instance();
-const TutorialStats = require('jsengine/tutorialStats').TutorialStats;
+const makeAnchor = require('engine/text-utils/makeAnchor');
+const t = require('engine/i18n');
+const localStorage = require('engine/local-storage').instance();
+const TutorialStats = require('engine/tutorialStats').TutorialStats;
 const config = require('config');
 
 exports.get = async function(ctx, next) {

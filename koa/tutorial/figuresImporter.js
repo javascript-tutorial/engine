@@ -5,7 +5,7 @@ const path = require('path');
 const config = require('config');
 const glob = require("glob");
 
-const log = require('jsengine/log')();
+const log = require('engine/log')();
 
 const execSync = require('child_process').execSync;
 

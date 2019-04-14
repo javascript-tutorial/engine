@@ -2,7 +2,7 @@
 
 let fs = require('fs');
 let path = require('path');
-let log = require('jsengine/log')();
+let log = require('engine/log')();
 let glob = require('glob');
 let beautify = require('js-beautify');
 let readlineSync = require('readline-sync');

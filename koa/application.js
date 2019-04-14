@@ -14,7 +14,7 @@
 
 const KoaApplication = require('koa');
 
-const log = require('jsengine/log')();
+const log = require('engine/log')();
 const Cookies = require('cookies');
 
 

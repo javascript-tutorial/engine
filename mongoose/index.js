@@ -12,7 +12,7 @@ mongoose.Promise = Promise;
 
 let path = require('path');
 let fs = require('fs');
-let log = require('jsengine/log')();
+let log = require('engine/log')();
 let autoIncrement = require('mongoose-auto-increment');
 let ValidationError = require('mongoose/lib/error').ValidationError;
 let ValidatorError = require('mongoose/lib/error').ValidatorError;

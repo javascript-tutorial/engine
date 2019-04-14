@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const request = require('request-promise');
 const path = require('path');
 const config = require('config');
-const log = require('jsengine/log')();
+const log = require('engine/log')();
 
 const statsPath = path.join(config.tmpRoot, 'tutorialStats.json');
 
