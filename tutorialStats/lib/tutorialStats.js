@@ -21,7 +21,7 @@ module.exports = class TutorialStats {
     let supportedLangs = config.supportedLangs.map(lang => lang.code);
     supportedLangs = supportedLangs.join(',');
     try {
-      const translateUri = `${config.statsServiceUrl}/translate?langs=${supportedLangs}`;
+      const translateUri = `${config.statsServiceUrl}/translate/percent?langs=${supportedLangs}`;
       log.debug('Translation Stats update start', translateUri);
       this.translate = await request({uri: translateUri, json: true});
 
