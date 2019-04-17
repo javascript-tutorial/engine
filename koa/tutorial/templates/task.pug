@@ -23,7 +23,7 @@ block main
     +e('a').back(href=articleUrl)
       span= t('tutorial.task.back')
 
-    +b.task.__task(itemprop="articleBody")
+    +b.task.__task(itemprop="articleBody" class={task_answer_open: taskAnswerOpen})
       if translateNotification
         +b.notification._message._warning._article
           +e.content!= translateNotification

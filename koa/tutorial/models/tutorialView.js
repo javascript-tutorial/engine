@@ -5,7 +5,7 @@ let Zip = require('node-zip');
 
 // we create fake plunk ids with this prefix
 // so that when updating for real, we know they do not exist and don't send updates to https://plnkr.co server
-const DEV_PREFIX = '_dev';
+const DEV_PREFIX = '_[stub]_';
 
 let request = require('request-promise').defaults({
   simple: false,

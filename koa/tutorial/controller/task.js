@@ -21,6 +21,7 @@ exports.get = async function(ctx, next) {
 
   const rendered = await renderer.render(task);
 
+  ctx.locals.taskAnswerOpen = process.env.TUTORIAL_EDIT;
   ctx.locals.githubLink = task.githubLink;
 
   const tutorialStats = TutorialStats.instance();

@@ -40,7 +40,7 @@ block content
         +e('a').title-anchor.main__anchor.main__anchor_noicon(href="#tasks")= t('tutorial.article.tasks')
 
       each task, i in tasks
-        +b.task.__task
+        +b.task.__task(class={task_answer_open: task.taskAnswerOpen})
           +e.header
             +e.title-wrap
               +e('h3').title

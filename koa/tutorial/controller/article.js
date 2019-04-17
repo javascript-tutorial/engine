@@ -317,7 +317,8 @@ async function renderArticle(ctx) {
         anchor: makeAnchor(task.title),
         importance: task.importance,
         content: taskRendered.content,
-        solution: taskRendered.solution
+        solution: taskRendered.solution,
+        taskAnswerOpen: process.env.TUTORIAL_EDIT
       });
 
     }
