@@ -49,6 +49,8 @@ module.exports = class Application extends KoaApplication {
   async waitBootAndListen(host, port) {
     await this.waitBoot();
 
+    this.log.info("Boot complete");
+
     await new Promise((resolve) => {
       this.server = this.listen(port, host, resolve);
     });
