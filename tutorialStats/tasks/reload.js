@@ -12,6 +12,7 @@ module.exports = function(options) {
   return function() {
 
     let args = require('yargs')
+      .describe('all', 'Reload all tutorial processes')
       .argv;
 
     return (async function() {
@@ -24,18 +25,17 @@ module.exports = function(options) {
 
       for(let proc of list) {
 
-        if (proc.name !== "javascript-" + config.lang) {
-          log.debug("skip " + proc.name);
-          continue;
+        if (args.all && proc.name.startsWith('javascript-') ||
+          !args.all && proc.name === "javascript-" + config.lang) {
+          log.debug(`Send to ${proc.name} id:${proc.pm_id}`);
+
+          await pm2sendDataToProcessId(proc.pm_id, {
+            type:  'process:msg',
+            data:  {},
+            topic: 'tutorialStats:reboot'
+          });
         }
 
-        log.debug(`Send to ${proc.name} id:${proc.pm_id}`);
-
-        await pm2sendDataToProcessId(proc.pm_id, {
-          type: 'process:msg',
-          data: {},
-          topic: 'tutorialStats:reboot'
-        });
       }
 
       pm2.disconnect();
