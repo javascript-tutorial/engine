@@ -6,10 +6,6 @@ exports.init = function(app) {
   app.use(mountHandlerMiddleware('/tutorial-stats', __dirname));
 };
 
-exports.boot = async function() {
-  if (!process.env.TUTORIAL_EDIT) {
-    await TutorialStats.instance().update();
-  }
-};
+exports.boot = require('./lib/boot');
 
 exports.TutorialStats = TutorialStats;
