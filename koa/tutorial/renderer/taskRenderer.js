@@ -1,5 +1,3 @@
-'use strict';
-
 const config = require('config');
 const Task = require('../models/task');
 const log = require('engine/log')();
@@ -38,6 +36,7 @@ module.exports = class TaskRenderer {
     if (sourcePlunk) {
 
       let files = sourcePlunk.files;
+      // console.log(files);
       let hasTest = false;
       for (let file of files) {
         if (file.filename === 'test.js') hasTest = true;

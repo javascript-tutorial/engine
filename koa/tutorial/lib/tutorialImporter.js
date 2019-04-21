@@ -324,6 +324,8 @@ module.exports = class TutorialImporter {
       data.solutionJs = fs.readFileSync(path.join(taskPath, '_js.view', 'solution.js'), 'utf8');
     }
 
+    log.debug("task data", data);
+
     const task = new Task(data);
     this.tree.add(task);
 
@@ -439,12 +441,16 @@ module.exports = class TutorialImporter {
       'index.html': {
         content:  source,
         filename: 'index.html'
-      },
-      'test.js':    !testJs ? null : {
-        content:  testJs.trim(),
-        filename: 'test.js'
       }
     };
+
+    if (testJs) {
+      sourceFilesForView['test.js'] = {
+        content:  testJs.trim(),
+        filename: 'test.js'
+      };
+    }
+
 
     log.debug("save plunk for ", sourceWebPath);
     await sourceView.mergeAndSyncPlunk(sourceFilesForView, this.plunkerToken);
@@ -468,14 +474,18 @@ module.exports = class TutorialImporter {
       'index.html': {
         content:  solution,
         filename: 'index.html'
-      },
-      'test.js':    !testJs ? null : {
-        content:  testJs.trim(),
-        filename: 'test.js'
       }
     };
 
+    if (testJs) {
+      solutionFilesForView['test.js'] = {
+        content:  testJs.trim(),
+        filename: 'test.js'
+      };
+    }
+
     log.debug("save plunk for ", solutionWebPath);
+
     await solutionView.mergeAndSyncPlunk(solutionFilesForView, this.plunkerToken);
 
   };
