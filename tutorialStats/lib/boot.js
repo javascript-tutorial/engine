@@ -3,9 +3,9 @@ const log = require('engine/log')();
 const TutorialStats = require('./tutorialStats');
 
 async function boot() {
-  if (!process.env.TUTORIAL_EDIT) {
+  // if (!process.env.TUTORIAL_EDIT) {
     await TutorialStats.instance().update();
-  }
+  // }
 }
 
 // add reboot action if pmx exists (for prod, not for local server)
