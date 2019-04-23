@@ -4,7 +4,7 @@ let request = require('request-promise');
 const assert = require('assert');
 
 module.exports = async function getPlunkerToken() {
-  // require here, not need to instal these in javascript-tutorial-server
+  // require here, not need to instal these in server
   const puppeteer = require('puppeteer');
   const getChromeLocation = require('getChromeLocation');
 
