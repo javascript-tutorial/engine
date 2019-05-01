@@ -6,7 +6,9 @@ exports.get = async function(ctx, next) {
 
   // console.log(TutorialTree.instance().bySlugMap);
   for(let entry of TutorialTree.instance().getAll()) {
+    // console.log(entry);
     bySlugMap[entry.slug] = {
+      githubLink: entry.githubLink,
       type: entry.constructor.name,
       children: entry.children,
       isFolder: Boolean(entry.isFolder),
