@@ -197,7 +197,7 @@ module.exports = class TutorialImporter {
     // just make sure it parses
     await parser.parse(content);
 
-    data.githubLink = config.tutorialRepo.blob + articlePath.slice(this.root.length) + '/article.md';
+    data.githubLink = config.tutorialRepo.blob + articlePath.slice(this.root.length); // + '/article.md';
 
     try {
       data.headJs = fs.readFileSync(path.join(articlePath, 'head.js'), 'utf8');
