@@ -8,7 +8,7 @@ const _ = require('lodash');
 const makeAnchor = require('engine/text-utils/makeAnchor');
 const t = require('engine/i18n');
 const localStorage = require('engine/local-storage').instance();
-const TutorialStats = require('engine/tutorialStats').TutorialStats;
+const TutorialStats = require('translate').TutorialStats;
 const config = require('config');
 
 exports.get = async function(ctx, next) {
@@ -149,9 +149,8 @@ async function renderArticle(ctx) {
   rendered.githubLink = article.githubLink;
 
   if (tutorialStats.isTranslated(article.getUrl()) === false && config.lang !== 'ru' && config.env !== 'development') {
-    const currentLang = tutorialStats.getLangByCode(config.lang);
     const translatedLangs = tutorialStats.getMaterialLangs(article.getUrl());
-    rendered.translateNotification = t('tutorial.not_translated', {url: article.githubLink, translatedLangs, currentLang});
+    rendered.translateNotification = t('tutorial.not_translated', {url: article.githubLink, translatedLangs, currentLang: config.langFull});
   }
 
   await renderProgress();

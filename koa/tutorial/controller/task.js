@@ -5,7 +5,7 @@ const Article = require('../models/article');
 const TutorialTree = require('../models/tutorialTree');
 const TaskRenderer = require('../renderer/taskRenderer');
 const t = require('engine/i18n');
-const TutorialStats = require('engine/tutorialStats').TutorialStats;
+const TutorialStats = require('translate').TutorialStats;
 const config = require('config');
 
 exports.get = async function(ctx, next) {
@@ -27,9 +27,8 @@ exports.get = async function(ctx, next) {
   const tutorialStats = TutorialStats.instance();
 
   if (tutorialStats.isTranslated(task.getUrl()) === false && config.lang !== 'ru' && config.env !== 'development') {
-    const currentLang = tutorialStats.getLangByCode(config.lang);
     const translatedLangs = tutorialStats.getMaterialLangs(task.getUrl());
-    ctx.locals.translateNotification = t('tutorial.not_translated', {url: task.githubLink, translatedLangs, currentLang});
+    ctx.locals.translateNotification = t('tutorial.not_translated', {url: task.githubLink, translatedLangs, currentLang: config.langFull});
   }
 
   let breadcrumbs = [];
