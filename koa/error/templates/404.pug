@@ -12,14 +12,18 @@ block content
       if error.info
         p= error.info
 
-    p= t('error.404.use_search')
+    if handlerExists('search')
+      p= t('error.404.use_search')
 
-    +e.text
-      +e('form').search(action="/search")
-        +e.search-query-wrap
-          +b('span').text-input.__search-query
-            +e('input').control(autofocus type="text", name="query")
-        +e.search-submit-wrap
-          +b('button').button._action.__search-submit
-            +e('span').text= t('error.404.search')
-    +e.text= t('error.404.use_top')
+      +e.text
+        +e('form').search(action="/search")
+          +e.search-query-wrap
+            +b('span').text-input.__search-query
+              +e('input').control(autofocus type="text", name="query")
+          +e.search-submit-wrap
+            +b('button').button._action.__search-submit
+              +e('span').text= t('error.404.search')
+      +e.text= t('error.404.use_top')
+    else
+      +e.text
+        a(href="/") Go to main page
