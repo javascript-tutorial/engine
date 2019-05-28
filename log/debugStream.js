@@ -2,9 +2,10 @@
 
 let Stream = require('stream').Stream;
 let fs = require('fs');
-let bunyan = require('bunyan');
 let path = require('path');
-let config = require('config');
+
+// leads to circular dep when running mocha.sh
+// let config = require('config');
 
 let lastCache = 0;
 let hasFile = false;
@@ -13,7 +14,7 @@ module.exports = class DebugStream extends Stream {
 
   write(record) {
 
-    let logFilePath = path.join(config.tmpRoot, 'log-debug');
+    let logFilePath = '/tmp/log-debug';
 
     if (lastCache < Date.now() - 100) {
       hasFile = fs.existsSync(logFilePath);

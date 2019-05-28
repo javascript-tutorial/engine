@@ -10,7 +10,6 @@ let errSerializer = require('./errSerializer');
 let httpErrorSerializer = require('./httpErrorSerializer');
 let path = require('path');
 
-
 // log.debug({req: ...})
 // exported => new serializers can be added by other modules
 let serializers = exports.serializers = {
@@ -43,3 +42,4 @@ module.exports = function(name) {
 
 
 delete require.cache[__filename];
+
