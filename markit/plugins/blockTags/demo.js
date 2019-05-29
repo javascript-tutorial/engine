@@ -10,6 +10,7 @@ module.exports = function(md) {
 
     let src = tokens[idx].blockTagAttrs.src;
 
+    // need <p>, so that next inline-block [solution] button doesn't stick
     if (src) {
       let href = (src[0] == '/') ? src : (options.staticHost + options.resourceWebRoot + '/' + src);
       href += '/';
