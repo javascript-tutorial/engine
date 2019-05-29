@@ -7,39 +7,32 @@ let pm2connect = promisify(pm2.connect.bind(pm2));
 let pm2list = promisify(pm2.list.bind(pm2));
 let pm2sendDataToProcessId = promisify(pm2.sendDataToProcessId.bind(pm2));
 
-module.exports = function(options) {
+module.exports = async function() {
 
-  return function() {
+  let args = require('yargs')
+    .argv;
 
-    let args = require('yargs')
-      .argv;
+  await pm2connect();
 
-    return (async function() {
+  let list = await pm2list();
 
-      await pm2connect();
+  log.debug("Process list", list);
 
-      let list = await pm2list();
+  for (let proc of list) {
 
-      log.debug("Process list", list);
+    if (proc.name !== "javascript-" + config.lang) {
+      log.debug("skip " + proc.name);
+      continue;
+    }
 
-      for(let proc of list) {
+    log.debug(`Send to ${proc.name} id:${proc.pm_id}`);
 
-        if (proc.name !== "javascript-" + config.lang) {
-          log.debug("skip " + proc.name);
-          continue;
-        }
+    await pm2sendDataToProcessId(proc.pm_id, {
+      type:  'process:msg',
+      data:  {},
+      topic: 'tutorial:reboot'
+    });
+  }
 
-        log.debug(`Send to ${proc.name} id:${proc.pm_id}`);
-
-        await pm2sendDataToProcessId(proc.pm_id, {
-          type: 'process:msg',
-          data: {},
-          topic: 'tutorial:reboot'
-        });
-      }
-
-      pm2.disconnect();
-
-    })();
-  };
+  pm2.disconnect();
 };

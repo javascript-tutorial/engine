@@ -10,39 +10,36 @@ let chokidar = require('chokidar');
 let os = require('os');
 let config = require('config');
 
-module.exports = function(options) {
+module.exports = async function() {
 
-  return async function() {
+  let tree = TutorialTree.instance();
+  let viewStorage = TutorialViewStorage.instance();
 
-    let tree = TutorialTree.instance();
-    let viewStorage = TutorialViewStorage.instance();
+  await TutorialViewStorage.instance().loadFromCache();
 
-    await TutorialViewStorage.instance().loadFromCache();
+  let importer = new TutorialImporter({
+    root: config.tutorialRoot
+  });
 
-    let importer = new TutorialImporter({
-      root: config.tutorialRoot
-    });
+  tree.clear();
+  viewStorage.clear();
 
-    tree.clear();
-    viewStorage.clear();
+  let subRoots = fs.readdirSync(config.tutorialRoot);
 
-    let subRoots = fs.readdirSync(config.tutorialRoot);
+  for (let subRoot of subRoots) {
+    if (!parseInt(subRoot)) continue;
+    await importer.sync(path.join(config.tutorialRoot, subRoot));
+  }
 
-    for (let subRoot of subRoots) {
-      if (!parseInt(subRoot)) continue;
-      await importer.sync(path.join(config.tutorialRoot, subRoot));
-    }
+  log.info("Import complete");
 
-    log.info("Import complete");
+  watchTutorial();
 
-    watchTutorial();
+  watchFigures();
 
-    watchFigures();
+  livereload.listen();
 
-    livereload.listen();
-
-    await new Promise(resolve => {});
-  };
+  await new Promise(resolve => {});
 
 };
 

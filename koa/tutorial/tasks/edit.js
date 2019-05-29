@@ -5,62 +5,55 @@ let TutorialTree = require('../models/tutorialTree');
 let url = require('url');
 let execSync = require('child_process').execSync;
 
-module.exports = function(options) {
+module.exports = async function() {
 
-  return function() {
+  let args = require('yargs')
+    .usage("tutorial url is required.")
+    .example("gulp tutorial:edit --url http://javascript.local/memory-leaks-jquery")
+    .demand(['url', 'root'])
+    .argv;
 
-    return (async function() {
+  let urlPath = url.parse(args.url).pathname.split('/').filter(Boolean);
 
-      let args = require('yargs')
-        .usage("tutorial url is required.")
-        .example("gulp tutorial:edit --url http://javascript.local/memory-leaks-jquery")
-        .demand(['url', 'root'])
-        .argv;
+  await TutorialTree.instance().loadFromCache();
 
-      let urlPath = url.parse(args.url).pathname.split('/').filter(Boolean);
+  if (urlPath.length === 1) {
+    let article = TutorialTree.instance().bySlug(urlPath[0]);
+    if (!article) {
+      console.log("Not found!");
+      return;
+    }
 
-      await TutorialTree.instance().loadFromCache();
+    let weight = article.weight + '';
 
-      if (urlPath.length === 1) {
-        let article = TutorialTree.instance().bySlug(urlPath[0]);
-        if (!article) {
-          console.log("Not found!");
-          return;
-        }
+    let dirName = weight + '-' + article.slug;
+    let cmd = "find '" + args.root + "' -path '*" + dirName + "/article.md'";
+    console.log(cmd);
 
-        let weight = article.weight + '';
+    let result = execSync(cmd, {encoding: 'utf8'}).trim();
 
-        let dirName = weight + '-' + article.slug;
-        let cmd = "find '" + args.root + "' -path '*" + dirName + "/article.md'";
-        console.log(cmd);
+    if (!result) {
+      return;
+    }
 
-        let result = execSync(cmd, {encoding: 'utf8'}).trim();
+    console.log(path.dirname(result));
+    execSync('a -n ' + result);
+  }
 
-        if (!result) {
-          return;
-        }
+  if (urlPath[0] == 'task') {
+    let task = TutorialTree.instance().bySlug(urlPath[1]);
+    if (!task) {
+      return;
+    }
 
-        console.log(path.dirname(result));
-        execSync('a -n ' + result);
-      }
+    let dirName = task.weight + '-' + task.slug;
+    let result = execSync("find '" + args.root + "' -path '*/" + dirName + "/task.md'", {encoding: 'utf8'}).trim();
 
-      if (urlPath[0] == 'task') {
-        let task = TutorialTree.instance().bySlug(urlPath[1]);
-        if (!task) {
-          return;
-        }
+    if (!result) {
+      return;
+    }
 
-        let dirName = task.weight + '-' + task.slug;
-        let result = execSync("find '" + args.root + "' -path '*/" + dirName + "/task.md'", {encoding: 'utf8'}).trim();
-
-        if (!result) {
-          return;
-        }
-
-        console.log(path.dirname(result));
-        execSync('a -n ' + result + ' ' + result.replace('task.md', 'solution.md'));
-      }
-
-    })();
-  };
+    console.log(path.dirname(result));
+    execSync('a -n ' + result + ' ' + result.replace('task.md', 'solution.md'));
+  }
 };

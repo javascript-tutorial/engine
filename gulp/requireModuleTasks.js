@@ -2,16 +2,13 @@ const path = require('path');
 const fs = require('fs');
 const gulp = require('gulp');
 
-function lazyRequireTask(modulePath) {
-  let args = [].slice.call(arguments, 1);
-  return function(callback) {
-
+function lazyRequireTask(modulePath, ...args) {
+  return async function() {
     //console.log("PATH", path.join(process.cwd(), modulePath));
     //console.log(require.resolve(modulePath));
-    let task = require(path.resolve(process.cwd(), modulePath)).apply(this, args);
+    let task = require(path.resolve(process.cwd(), modulePath));
 
-    //console.log("DONE");
-    return task(callback);
+    return task(...args);
   };
 }
 
