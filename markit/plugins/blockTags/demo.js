@@ -14,10 +14,10 @@ module.exports = function(md) {
       let href = (src[0] == '/') ? src : (options.staticHost + options.resourceWebRoot + '/' + src);
       href += '/';
 
-      return `<a href="${href}" target="blank">${t('markit.demo.window')}</a>`;
+      return `<p><a href="${href}" target="blank">${t('markit.demo.window')}</a></p>`;
     }
 
-    return `<a href="#" onclick="event.preventDefault(); runDemo(this)">${t('markit.demo.run')}</a>`;
+    return `<p><a href="#" onclick="event.preventDefault(); runDemo(this)">${t('markit.demo.run')}</a></p>`;
 
   };
 
