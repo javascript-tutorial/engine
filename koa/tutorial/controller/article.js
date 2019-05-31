@@ -28,7 +28,7 @@ exports.get = async function(ctx, next) {
 
   locals.sitetoolbar = true;
 
-  locals.githubLink = renderedArticle.githubLink;
+  locals.githubLink = config.tutorialRepo.blob + renderedArticle.githubPath;
 
   locals.translateNotification = renderedArticle.translateNotification;
 
@@ -146,11 +146,11 @@ async function renderArticle(ctx) {
   rendered.isFolder = article.isFolder;
   rendered.weight = article.weight;
   rendered.canonicalPath = article.getUrl();
-  rendered.githubLink = article.githubLink;
+  rendered.githubLink = config.tutorialRepo.blob + article.githubPath;
 
   if (tutorialStats.isTranslated(article.getUrl()) === false && config.lang !== 'ru' && config.env !== 'development') {
     const translatedLangs = tutorialStats.getMaterialLangs(article.getUrl());
-    rendered.translateNotification = t('tutorial.not_translated', {url: article.githubLink, translatedLangs, currentLang: config.langFull});
+    rendered.translateNotification = t('tutorial.not_translated', {url: config.tutorialRepo.blob + article.githubLink, translatedLangs, currentLang: config.langFull});
   }
 
   await renderProgress();

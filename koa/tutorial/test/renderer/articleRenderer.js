@@ -11,7 +11,7 @@ describe("ArticleRenderer", function() {
       slug:    "test",
       isFolder: false,
       weight: 1,
-      githubLink: 'http://not.exists.com',
+      githubPath: '/',
       content: "## Title\n\n## Title\n\n"
     });
     const renderer = new ArticleRenderer();

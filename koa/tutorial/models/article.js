@@ -9,7 +9,7 @@ module.exports = class Article extends TutorialEntry {
   constructor(data) {
     super();
 
-    'title,slug,githubLink,isFolder,weight'.split(',').forEach(field => {
+    'title,slug,githubPath,isFolder,weight'.split(',').forEach(field => {
       if (!(field in data)) {
         throw new Error("No field in article " + field);
       }

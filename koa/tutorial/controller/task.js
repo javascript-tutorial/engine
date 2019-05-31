@@ -22,13 +22,13 @@ exports.get = async function(ctx, next) {
   const rendered = await renderer.render(task);
 
   ctx.locals.taskAnswerOpen = process.env.TUTORIAL_EDIT;
-  ctx.locals.githubLink = task.githubLink;
+  ctx.locals.githubLink = config.tutorialRepo.blob + task.githubPath;
 
   const tutorialStats = TutorialStats.instance();
 
   if (tutorialStats.isTranslated(task.getUrl()) === false && config.lang !== 'ru' && config.env !== 'development') {
     const translatedLangs = tutorialStats.getMaterialLangs(task.getUrl());
-    ctx.locals.translateNotification = t('tutorial.not_translated', {url: task.githubLink, translatedLangs, currentLang: config.langFull});
+    ctx.locals.translateNotification = t('tutorial.not_translated', {url: config.tutorialRepo.blob + task.githubPath, translatedLangs, currentLang: config.langFull});
   }
 
   let breadcrumbs = [];

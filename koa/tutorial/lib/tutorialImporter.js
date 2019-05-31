@@ -125,7 +125,7 @@ module.exports = class TutorialImporter {
 
     await parser.parse(content);
 
-    data.githubLink = config.tutorialRepo.blob + sourceFolderPath.slice(this.root.length);
+    data.githubPath = sourceFolderPath.slice(this.root.length);
 
     log.debug(data);
     const folder = new Article(data);
@@ -197,7 +197,7 @@ module.exports = class TutorialImporter {
     // just make sure it parses
     await parser.parse(content);
 
-    data.githubLink = config.tutorialRepo.blob + articlePath.slice(this.root.length); // + '/article.md';
+    data.githubPath = articlePath.slice(this.root.length); // + '/article.md';
 
     try {
       data.headJs = fs.readFileSync(path.join(articlePath, 'head.js'), 'utf8');
@@ -282,7 +282,7 @@ module.exports = class TutorialImporter {
     data.weight = parseInt(taskPathName);
     data.slug = taskPathName.slice(taskPathName.indexOf('-') + 1);
 
-    data.githubLink = config.tutorialRepo.blob + taskPath.slice(this.root.length);
+    data.githubPath = taskPath.slice(this.root.length);
 
     //this.tree.destroyTree(data.slug);
 

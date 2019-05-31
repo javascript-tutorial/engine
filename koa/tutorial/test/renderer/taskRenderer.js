@@ -13,7 +13,7 @@ describe("TaskRenderer", function() {
       title:      "Title",
       importance: 4,
       solution:   "...",
-      githubLink: 'http://not.exists.com',
+      githubPath: '/',
       weight: 1
     });
 
@@ -33,7 +33,7 @@ describe("TaskRenderer", function() {
       title:      "Title",
       importance: 4,
       solution:   "# Part 1\n\nContent 1\n\n# Part 2\n\nContent 2",
-      githubLink: 'http://not.exists.com',
+      githubPath: '/',
       weight: 1
     });
     const renderer = new TaskRenderer();

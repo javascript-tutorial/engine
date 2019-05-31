@@ -8,7 +8,7 @@ module.exports = class Task extends TutorialEntry {
   constructor(data) {
     super();
 
-    'title,slug,githubLink,weight'.split(',').forEach(field => {
+    'title,slug,githubPath,weight'.split(',').forEach(field => {
       if (!(field in data)) {
         throw new Error("No field in task: " + field);
       }
