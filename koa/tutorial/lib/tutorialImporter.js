@@ -19,6 +19,8 @@ const stripIndents = require('engine/text-utils/stripIndents');
 
 const t = require('engine/i18n');
 
+const execa = require('execa');
+
 module.exports = class TutorialImporter {
   constructor(options) {
     this.root = fs.realpathSync(options.root);
@@ -127,7 +129,6 @@ module.exports = class TutorialImporter {
 
     data.githubPath = sourceFolderPath.slice(this.root.length);
 
-    log.debug(data);
     const folder = new Article(data);
 
     this.tree.add(folder);
@@ -198,6 +199,12 @@ module.exports = class TutorialImporter {
     await parser.parse(content);
 
     data.githubPath = articlePath.slice(this.root.length); // + '/article.md';
+
+    let {stdout} = await execa('git', ['log' ,'-1', '--format=%at', articlePath], {cwd: this.root});
+
+    data.updatedAt = +stdout;
+
+    log.debug(data);
 
     try {
       data.headJs = fs.readFileSync(path.join(articlePath, 'head.js'), 'utf8');

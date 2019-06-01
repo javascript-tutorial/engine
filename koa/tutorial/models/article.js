@@ -30,7 +30,7 @@ module.exports = class Article extends TutorialEntry {
     this.children = data.children || [];
     this.isFolder = data.isFolder || false;
 
-    'headJs,headCss,headHtml,parent'.split(',').forEach(field => {
+    'headJs,headCss,headHtml,parent,updatedAt'.split(',').forEach(field => {
       if (field in data) {
         this[field] = data[field];
       }
