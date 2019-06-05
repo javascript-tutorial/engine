@@ -40,8 +40,10 @@ module.exports = class TutorialImporter {
 
     log.info("sync", directory);
     let dir = fs.realpathSync(directory);
+
     let type;
     while (true) {
+      console.log(dir, this.root);
       if (dir.endsWith('.view') && !dir.endsWith('/_js.view')) {
         type = 'View';
         break;
@@ -61,7 +63,8 @@ module.exports = class TutorialImporter {
 
       dir = path.dirname(dir);
 
-      if (directory === this.root || directory === '/') {
+      if (dir === this.root || dir === '/') {
+        console.error("Unknown directory type", directory)
         throw new Error("Unknown directory type: " + directory);
       }
     }
@@ -79,6 +82,7 @@ module.exports = class TutorialImporter {
       //console.log("DESTROY", slug);
       this.tree.destroyTree(slug);
     }
+
     await this['sync' + type](dir, parent);
 
   }
