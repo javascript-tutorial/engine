@@ -28,7 +28,7 @@ exports.get = async function(ctx, next) {
 
   locals.sitetoolbar = true;
 
-  locals.githubLink = config.tutorialRepo.blob + renderedArticle.githubPath;
+  locals.githubLink = renderedArticle.githubLink;
 
   locals.translateNotification = renderedArticle.translateNotification;
 
