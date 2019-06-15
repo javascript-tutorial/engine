@@ -148,8 +148,10 @@ async function renderArticle(ctx) {
   rendered.canonicalPath = article.getUrl();
   rendered.githubLink = config.tutorialRepo.blob + article.githubPath;
 
-  rendered.updatedAt = new Date(article.updatedAt * 1000);
-
+  if (article.updatedAt) {
+    rendered.updatedAt = new Date(article.updatedAt * 1000);
+  }
+  
   // console.log(article, rendered);
 
   if (tutorialStats.isTranslated(article.getUrl()) === false && config.lang !== 'ru' && config.env !== 'development') {
