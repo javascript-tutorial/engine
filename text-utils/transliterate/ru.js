@@ -45,7 +45,7 @@ function transliterate(str) {
   let reg = new RegExp(MULTI_KEYS.join('|') + '|\\w|.', 'g');
 
   let result = "";
-  let chars = str.match(reg);
+  let chars = str.match(reg) || "";
   for (let i = 0; i < chars.length; i++) {
     if (chars[i] in UPPER && chars[i + 1] in LOWER) {
       // combined case
