@@ -151,7 +151,7 @@ async function renderArticle(ctx) {
   if (article.updatedAt) {
     rendered.updatedAt = new Date(article.updatedAt * 1000);
   }
-  
+
   // console.log(article, rendered);
 
   if (tutorialStats.isTranslated(article.getUrl()) === false && config.lang !== 'ru' && config.env !== 'development') {
