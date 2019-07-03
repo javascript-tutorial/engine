@@ -1,0 +1,6 @@
+server_connection_error: Sunucuya bağlanılamadı
+server_request_timeout: Sunucu isteği zaman aşımına uğradı.
+request_aborted: İstek yarıda kesildi.
+no_response: Sunucudan cevap dönmedi.
+server_error: "Sunucu hatası : (code #{status}), lütfen daha sonra tekrar deneyiniz."
+invalid_format: Cevap formatı yanlış
