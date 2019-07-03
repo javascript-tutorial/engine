@@ -165,7 +165,7 @@ module.exports = function(md) {
 
     if (process.env.TUTORIAL_EDIT) {
       // for examples to work locally
-      content = content.replace(/https?:\/\/(.*?)javascript.info/g, 'http://$1javascript.local');
+      content = content.replace(/https?:\/\/(\w+\.)*javascript.info/g, 'http://$1javascript.local');
     }
 
     return `<div${slf.renderAttrs(token)}>

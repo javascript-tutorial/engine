@@ -67,7 +67,7 @@ function drawHtmlTree(json, nodeTarget, w, h) {
       .attr("dx", function(d) {
         return d.content ? 5.5 : 16.5;
       })
-      .style('font', '14px Consolas, monospace')
+      .style('font', '14px Consolas, Lucida Console, Menlo, Monaco, monospace')
       .style('fill', '#333')
       .style("pointer-events", "none")
       .text(function(d) {
