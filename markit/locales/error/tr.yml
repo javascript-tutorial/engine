@@ -1,0 +1,7 @@
+image_not_found: " \"#{src}\" görseli bulunamadı"
+image_invalid: " \"#{src}\" görseli bozulmuş"
+attr_required: "\"#{attr}\" özelliği gerekli"
+src_out_of_root: " \"#{src}\" kaynak yolu kökün dışında."
+read_file: " \"#{src}\" sayfasını okuyamıyor"
+no_such_plunk: " \"#{src}\" böyle bir plunk bulunmamakta"
+anchor_exists: " \"#{anchor}\" linki mevcuttur."
