@@ -1,0 +1,14 @@
+modern_javascript_tutorial: "Modern JavaScript Eğitimi"
+subtitle: "Kolay konulardan daha zora doğru, basit fakat detaylı bir anlatım"
+part: "#{num}. Bölüm"
+more: "Devamı…"
+contents: 'İçerik Tablosu'
+description: 'Ana eğitim iki bölümden oluşmaktadır. Bu bölümler JavaScript'i programlama dili olarak kapsamaktadır. Tarayıcı üzerinde çalışmaktadır. Bunun yanında konu ile ilgili makalelere de yer verilmiştir.'
+
+part3:
+  title: "Ek Makaleler"
+  content: "İlk iki bölümü bitirdiğinizi varsayarak bunlara ek konular üzerinden geçilmiştir. Burada herhangi bir sıra yoktur. İstediğiniz bölümü okuyabilirsiniz."
+
+tutorial: Eğitim
+tutorial_map: Eğitim haritası
+not_translated: 'Bu materyal This madde henüz sadece: #{translatedLangs} dillerinde mevcuttur. Lütfen bize bu bölümün çevirisini <strong>#{currentLang.title}</strong> çevirmek <a href="#{url}">için yardım ediniz</a>.'
