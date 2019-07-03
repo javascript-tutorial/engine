@@ -1,0 +1,17 @@
+open_task:
+  sandbox:
+    tests: Testler ile korunaklı olan aç.
+    no_tests: Görevler için korunaklı alan aç.
+
+open_solution:
+  sandbox:
+    tests: Çözümü testler korunaklı alanda olacak şekilde aç. 
+    no_tests: Çözümü korunaklı alanda aç.
+
+Importance: Önem
+importance: önem
+solution: çözüm
+back: Derse geri dön
+importance_help: Görevin önemi 1'den 5'e kadar hangisidir.
+
+task_not_found: "\"#{path}\" görevi bulunamadı"

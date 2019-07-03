@@ -1,0 +1,11 @@
+lesson:
+  next: Bir sonraki ders
+  prev: Önceki ders
+
+sibling_chapters: Alt bölümler
+lesson_navigation: Ders menüsü
+tasks: Görevler
+chapter: Bölüm
+lesson_of: "#{bookLeafCount}'in #{bookChildNumber}'i dersi"
+
+article_not_found: "\"#{path}\" adresindeki makale bulunamadı"
