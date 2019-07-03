@@ -3,7 +3,7 @@ subtitle: "Kolay konulardan daha zora doğru, basit fakat detaylı bir anlatım"
 part: "#{num}. Bölüm"
 more: "Devamı…"
 contents: 'İçerik Tablosu'
-description: 'Ana eğitim iki bölümden oluşmaktadır. Bu bölümler JavaScript'i programlama dili olarak kapsamaktadır. Tarayıcı üzerinde çalışmaktadır. Bunun yanında konu ile ilgili makalelere de yer verilmiştir.'
+description: "Ana eğitim iki bölümden oluşmaktadır. Bu bölümler JavaScript'i programlama dili olarak kapsamaktadır. Tarayıcı üzerinde çalışmaktadır. Bunun yanında konu ile ilgili makalelere de yer verilmiştir."
 
 part3:
   title: "Ek Makaleler"

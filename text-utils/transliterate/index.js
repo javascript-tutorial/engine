@@ -5,6 +5,7 @@ switch(lang) {
     module.exports = require('./ru');
     break;
   case 'en':
+  case 'tr':
     // I must transliterate at least cyrillic, because
     // of  .replace(/[^a-zа-яё0-9-]/gi, '')
     // in user.js model
