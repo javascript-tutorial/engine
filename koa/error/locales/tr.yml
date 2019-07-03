@@ -1,0 +1,25 @@
+400:
+  title: Geçersiz istek
+401:
+  title: Doğrulama gerekli
+  description: Muhtemelen <a href="#" data-action-login>giriş</a> yapmanız lazım.
+
+403:
+  title: Erişim yasaklandı
+  wrong_user: Yanlış bir kullanıcı ile giriş yapmış olabilir misiniz?
+  login: <a href="#" data-action-login>Giriş</a> yapmamış olabilir misin?
+
+404:
+  title: Sayfa bulunamadı
+  use_search:  'Sayfayı bulmak için aramayı kullanabilirsin:'
+  search: Search
+  use_top: …veya üst menüden erişebilirsin.
+
+500:
+  title: Sunucu Hatası
+  subject: "Error 500 at #{href}"
+  description: 'Hataları analiz ediyoruz, fakat bu işlemi daha hızlandırmak istiyorsanız lütfen <a href="mailto:#{email}?subject=#{subject}">#{email}</a>. mail atın'
+
+503:
+  title: Servise erişilemiyor
+  desc: Kusura bakmayın şu anda servise erişilemiyor. Lütfen daha sonra tekrar deneyin.
