@@ -1,0 +1,6 @@
+recent: Yeni eklendi
+recent_addition: Bu dile yeni eklenen bir özelliktir.
+browser:
+  value: "Örnekler sadece yeni #{browser} çalışır."
+  none: "JavaScript motoru tarafından henüz desteklenmemektedir. Pollyfill gerekmektedir."
+  new: Eski tarayıcılar pollyfill gerektirebilir
