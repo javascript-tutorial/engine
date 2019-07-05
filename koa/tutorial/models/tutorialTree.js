@@ -110,7 +110,8 @@ module.exports = class TutorialTree {
     // console.log("DESTROY", slug);
 
     if (entry.children) {
-      for (let childSlug of entry.children) {
+      // Working with an items list reference. Items keys should be detached
+      for (let childSlug of [...entry.children]) {
         this.destroyTree(childSlug);
       }
     }
