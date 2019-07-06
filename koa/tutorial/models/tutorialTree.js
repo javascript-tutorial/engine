@@ -111,7 +111,8 @@ module.exports = class TutorialTree {
 
     if (entry.children) {
       // Working with an items list reference. Items keys should be detached
-      for (let childSlug of [...entry.children]) {
+      let children = entry.children.slice(); // copy array, as for will modify it
+      for (let childSlug of children) {
         this.destroyTree(childSlug);
       }
     }
