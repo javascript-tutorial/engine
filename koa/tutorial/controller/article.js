@@ -97,11 +97,13 @@ exports.get = async function(ctx, next) {
 
   }
 
-  locals.sidebar = {
-    class: "sidebar_sticky-footer",
-    sections: sections,
-    toggle: true
-  };
+  if (!locals.archive) {
+    locals.sidebar = {
+      class:    "sidebar_sticky-footer",
+      sections: sections,
+      toggle:   true
+    };
+  }
 
   ctx.body = ctx.render(renderedArticle.isFolder ? "folder" : "article", locals);
 
@@ -148,6 +150,10 @@ async function renderArticle(ctx) {
   rendered.canonicalPath = article.getUrl();
   rendered.githubLink = config.tutorialRepo.blob + article.githubPath;
 
+  if (article.archive) {
+    rendered.archive = article.archive;
+  }
+
   if (article.updatedAt) {
     rendered.updatedAt = new Date(article.updatedAt * 1000);
   }
@@ -186,6 +192,10 @@ async function renderArticle(ctx) {
 
   async function renderPrevNext() {
 
+    if (article.archive) {
+      return;
+    }
+
     let prev = tree.getPrev(article.slug);
 
     if (prev) {
@@ -209,6 +219,10 @@ async function renderArticle(ctx) {
 
 
   async function renderProgress() {
+    if (article.archive) {
+      return;
+    }
+
     let parent = article;
     while (parent.parent) {
       parent = tree.bySlug(parent.parent);
@@ -249,8 +263,15 @@ async function renderArticle(ctx) {
   }
 
   async function renderBreadCrumb() {
+
     let path = [];
     let parent = article.parent;
+
+    if (article.archive) {
+      rendered.breadcrumbs = [];
+      return;
+    }
+
     while (parent) {
       let a = tree.bySlug(parent);
       path.push({
@@ -269,7 +290,7 @@ async function renderArticle(ctx) {
   }
 
   async function renderSiblings() {
-    let siblings = tree.getSiblings(article.slug);
+    let siblings = tree.getSiblings(article.slug).filter(s => s !== 'archive');
     rendered.siblings = siblings.map(slug => {
       let sibling = tree.bySlug(slug);
       return {

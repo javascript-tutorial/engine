@@ -1,0 +1,211 @@
+# add css as a whole
+# add intl
+
+stay:
+  - classes # refs chapter about classes
+  - settimeout-setinterval
+  - clickjacking
+  - intro
+  - devtools
+  - modules
+  - proxy
+  - ifelse
+  - while-for
+  - switch
+  - function-basics
+  - symbol
+  - hello-world
+  - javascript-specials
+  - recursion
+  - structure
+  - strict-mode
+  - variables
+  - operators
+  - comparison
+  - debugging-chrome
+  - coding-style
+  - number
+  - string
+  - object
+  - array
+  - array-methods
+  - global-object
+  - object-methods
+  - constructor-new
+  - bind
+  - json
+  - eval
+  - native-prototypes
+  - class-inheritance
+  - instanceof
+  - mixins
+  - regexp-introduction
+  - regexp-multiline-mode
+  - regexp-methods
+  - regexp-character-classes
+  - regexp-character-sets-and-ranges
+  - regexp-quantifiers
+  - regexp-greedy-and-lazy
+  - regexp-groups
+  - regexp-backreferences
+  - regexp-alternation
+  - regexp-infinite-backtracking-problem
+  - cookie
+  - browser-environment
+  - modifying-document
+  - styles-and-classes
+  - coordinates
+  - dom-nodes
+  - searching-elements-dom
+  - basic-dom-node-properties
+  - introduction-browser-events
+  - event-delegation
+  - js-animation
+  - fetch
+  - server-sent-events
+  - shadow-dom
+  - webcomponents-intro
+  - forms-submit
+  - focus-blur
+  - form-elements
+  - keyboard-events
+  - onscroll
+  - mousemove-mouseover-mouseout-mouseenter-mouseleave
+  - onload-onerror
+  - onload-ondomcontentloaded
+  - dispatch-events
+  - default-browser-action
+
+move:
+  - regexp-ahchors regexp-anchors
+  - behavior event-delegation#the-behavior-pattern
+  - mouse-clicks mouse-events-basics
+  - unselectable selection-range
+  - events-change events-change-input
+  - iterator iterable
+  - types-conversion type-conversions
+  - logical-ops logical-operators
+  - pre-coding manuals-specifications
+  - editor code-editors
+  - es-modern-usage polyfills
+  - set-map map-set-weakmap-weakset
+  - promise promise-basics
+  - generator generators
+  - destructuring destructuring-assignment
+  - es-object object
+  - es-class class
+  - uibasic alert-prompt-confirm
+  - function-declaration-expression function-expressions-arrows
+  - named-function-expression function-object
+  - variable-names variables#name-things-right
+  - types-intro types
+  - write-unmain-code ninja-code
+  - testing testing-mocha
+  - properties-and-methods object
+  - arguments-pseudoarray rest-parameters-spread-operator
+  - datetime date
+  - object-for-in object#the-for-in-loop
+  - object-reference object#copying-by-reference
+  - array-iteration array-methods
+  - closures closure
+  - scope-new-function new-function
+  - closures-usage closure
+  - memory-management garbage-collection
+  - object-conversion object-toprimitive
+  - descriptors-getters-setters object-properties
+  - static-properties-and-methods static-properties-methods
+  - call-apply call-apply-decorators
+  - decorators call-apply-decorators
+  - class-instanceof instanceof
+  - exception try-catch
+  - internal-external-interface private-protected-properties-methods
+  - getters-setters private-protected-properties-methods
+  - prototype prototype-inheritance
+  - new-prototype function-prototype
+  - oop-errors custom-errors
+  - regexp-lookahead regexp-lookahead-lookbehind
+  - multi-insert modifying-document#prepend-append-before-after
+  - document-write modifying-document#a-word-about-document-write
+  - metrics size-and-scroll
+  - metrics-window size-and-scroll-window
+  - coordinates-document coordinates#document-coordinates
+  - dom-console dom-nodes#interaction-with-console
+  - traversing-dom dom-navigation
+  - attributes-and-custom-properties dom-attributes-and-properties
+  - events-and-timing-depth event-loop
+  - obtaining-event-object introduction-browser-events#event-object
+  - event-bubbling bubbling-and-capturing
+  - cross-window-messaging-with-postmessage cross-window-communication
+  - iframes cross-window-communication
+  - same-origin-policy cross-window-communication
+  - window-methods popup-windows
+  - css-transitions css-animations
+  - bezier bezier-curve
+  - websockets websocket
+  - xhr-longpoll long-polling
+  - xhr-resume resume-upload
+  - xhr-onprogress xmlhttprequest
+  - xhr-crossdomain fetch-crossorigin
+  - xhr-forms xmlhttprequest
+  - ajax-xmlhttprequest xmlhttprequest
+  - ajax-intro fetch
+  - webcomponent-build web-components
+  - css-scoping shadow-dom-style
+  - template-tag template-element
+  - webcomponent-core custom-elements
+  - custom-events dispatch-events
+  - drag-and-drop mouse-drag-and-drop
+  - range-textrange-selection selection-range # todo: add ref to archive in new article
+
+archiveNoReplacement:
+  - mousewheel
+  - widgets-structure
+  - widgets-markup
+  - template-lodash
+  - what-next
+  - link-import
+  - architect-intro
+  - drag-and-drop-objects
+  - optimize-intro
+  - minification
+  - better-minification
+  - books
+  - templates
+  - csrf
+
+archive:
+  - fixevent
+  - ajax-jsonp
+  - ajax-iframe
+  - ajax-summary
+  - ajax-nodejs
+  - es-function
+  - let-const
+  - es-string
+  - bitwise-operators
+  - external-script
+  - closures-module
+  - with
+  - about-oop
+  - functional-inheritance
+  - regexp-specials
+  - setimmediate
+  - bind-late
+  - sublime
+  - drag-and-drop-plus
+  - compare-document-position
+  - dom-cheatsheet
+  - searching-elements-internals
+  - dom-polyfill
+  - memory-leaks
+  - memory-leaks-jquery
+  - memory-removechild-innerhtml
+  - gcc-advanced-optimization
+  - gcc-check-types
+  - gcc-closure-library
+  - tools-browser-extensions
+  - fiddler
+  - ie-http-analyzer
+  - window-focus
+
+

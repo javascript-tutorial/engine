@@ -190,6 +190,8 @@ module.exports = class TutorialImporter {
 
     if (meta.libs) data.libs = meta.libs;
 
+    if (meta.archive) data.archive = meta.archive;
+
     tmp = stripTitle(content);
 
     data.title = tmp.title;

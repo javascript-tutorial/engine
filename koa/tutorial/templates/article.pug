@@ -24,6 +24,12 @@ block append over-title
       +e.content!= translateNotification
 
 block content
+  if archive
+    +b.notification._message._warning
+      +e.content
+        p Материал на этой странице устарел, он скрыт из оглавления сайта.
+        if archive.ref
+          p Более новая информация по этой теме находится на странице <a href="/#{archive.ref}">https://learn.javascript.ru/#{archive.ref.replace(/#.*/, '')}</a>.
 
   article.formatted(itemscope itemtype="http://schema.org/TechArticle")
     meta(itemprop="name", content=title)
@@ -52,5 +58,3 @@ block content
                 +e('span').importance(title=t("tutorial.task.importance_help")) #{t('tutorial.task.importance')}: #{task.importance}
 
             include _task_content
-
-  //p Updated at #{moment(updatedAt).format('DD MMM YYYY')}.
