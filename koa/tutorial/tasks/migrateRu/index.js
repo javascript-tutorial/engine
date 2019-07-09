@@ -77,14 +77,7 @@ module.exports = async function() {
     console.log(slug, articles[slug]);
     let articlePath = `${rootNew}/99-archive/${articles[slug]}/article.md`;
     let content = fs.readFileSync(articlePath, 'utf-8');
-    if (content.match(/^---/m)) {
-      console.log("Has YAML", articlePath);
-      content = 'archive:\n  ref: false\n' + content;
-      fs.writeFileSync(articlePath, content);
-    } else {
-      content = 'archive:\n  ref: false\n\n---\n\n' + content;
-      fs.writeFileSync(articlePath, content);
-    }
+    content = processContent(articlePath, content, null);
   }
 
   for(let slugs of move) {
@@ -92,18 +85,28 @@ module.exports = async function() {
     console.log(from, articles[from]);
     let articlePath = `${rootNew}/99-archive/${articles[from]}/article.md`;
     let content = fs.readFileSync(articlePath, 'utf-8');
-    if (content.match(/^---/m)) {
-      console.log("Has YAML", articlePath);
-      content = `archive:\n  ref: "${to}"\n${content}`;
-      fs.writeFileSync(articlePath, content);
-    } else {
-      content = `archive:\n  ref: "${to}"\n\n---\n\n${content}`;
-      fs.writeFileSync(articlePath, content);
-    }
+    content = processContent(articlePath, content, to);
   }
 
 
 };
+
+function processContent(articlePath, content, ref = null) {
+  content = content
+    .replace(/Полифилл/g, 'Полифил')
+    .replace(/полифилл/g, 'полифил')
+    .replace(/Коллбэк/g, 'Колбэк')
+    .replace(/коллбэк/g, 'колбэк');
+
+  if (content.match(/^---/m)) {
+    console.log("Has YAML", articlePath);
+    content = `archive:\n  ref: ${ref}\n${content}`;
+    fs.writeFileSync(articlePath, content);
+  } else {
+    content = `archive:\n  ref: ${ref}\n\n---\n\n${content}`;
+    fs.writeFileSync(articlePath, content);
+  }
+}
 
 function findEntries(root, type) {
   let articles = glob.sync(`**/`, {cwd: root});
