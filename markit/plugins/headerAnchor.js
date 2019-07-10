@@ -11,6 +11,7 @@
 
 const parseAttrs = require('../utils/parseAttrs');
 const makeAnchor = require('engine/text-utils/makeAnchor');
+const escapeHtml = require('escape-html');
 
 const t = require('engine/i18n');
 
@@ -64,7 +65,6 @@ function readHeadingAnchor(state) {
       }
 
     }
-
 
     headingToken.anchor = anchor;
 

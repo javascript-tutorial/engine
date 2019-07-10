@@ -1,5 +1,3 @@
-'use strict';
-
 const assert = require('assert');
 
 assert(typeof IS_CLIENT === 'undefined');

@@ -161,6 +161,11 @@ describe('MarkIt', function() {
     result.trim().should.be.html('<h2><a class="main__anchor" name="my-header" href="#my-header">My header</a></h2>');
   });
 
+  0 && it(`## Tag <script>`, async function() {
+    let result = await render(this.test.title);
+    result.trim().should.be.html('<h2><a class="main__anchor" name="tag" href="#tag">Tag &lt;script&gt;</a></h2>');
+  });
+
   it(`\`\`\`compare
 - Полная интеграция с HTML/CSS.
 - Простые вещи делаются просто.
