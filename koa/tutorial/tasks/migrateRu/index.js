@@ -16,6 +16,8 @@ let articlesOld = findEntries(rootOld, 'article');
 
 module.exports = async function() {
 
+  // all ok with map-set and fetch, urls are same
+
   let {stay, move, archiveNoReplacement, archive} = migrate;
   archive.push(...archiveNoReplacement);
 
@@ -41,7 +43,7 @@ module.exports = async function() {
 
   fs.ensureDirSync(`${rootNew}/99-archive`);
   fs.emptyDirSync(`${rootNew}/99-archive`);
-  fs.writeFileSync(`${rootNew}/99-archive/index.md`, '# Архив\n')
+  fs.writeFileSync(`${rootNew}/99-archive/index.md`, '# Архив\n');
 
   let counter = 1;
 
