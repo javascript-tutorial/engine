@@ -5,20 +5,12 @@
 
   &__inner
     overflow auto
-    height 100%
+    max-height 100%
 
   &__content
-    margin 23px 30px 0
+    padding 23px 30px
+    height 100%
     position relative
-
-  //- модификатор _sticky-footer делает последнюю секцию всегда прижатой к низу сайдбара
-  &_sticky-footer &__content
-    min-height calc(100% - 85px)
-    padding-bottom 62px // резервируем место под «редактировать на github»
-
-  &_sticky-footer &__section:last-child
-    position absolute
-    bottom 0
 
   &_profile
     background #f7f7f7
