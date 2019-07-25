@@ -69,6 +69,17 @@
   &__toggle::before
     @extend $font-menu
 
+  #codefund
+    .cf-text
+      color #696664
+      text-decoration none
+      &:hover 
+        color #ba1000
+    .cf-header 
+      color #c4c2c0
+    .cf-powered-by
+      text-decoration none
+
   &__section
     margin 22px 0
     padding 0 2px
@@ -151,10 +162,5 @@
         display none
 
   @media short_window
-    &_sticky-footer &__content
-      padding-bottom 38px
-      min-height calc(100% - 62px)
-
-    &_compact&_sticky-footer &__section:last-child,
-    &_sticky-footer &__section:last-child
+    &_compact&_sticky-footer &__section:last-child
       margin 10px 0
