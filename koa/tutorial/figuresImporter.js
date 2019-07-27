@@ -7,7 +7,7 @@ const glob = require("glob");
 const yaml = require('js-yaml');
 const assert = require('assert');
 const log = require('engine/log')();
-
+const pixelWidth = require('string-pixel-width');
 const execSync = require('child_process').execSync;
 
 // TODO: use htmlhint/jslint for html/js examples
@@ -107,11 +107,13 @@ module.exports = class FiguresImporter {
 
       let content = fs.readFileSync(path.join(outputDir, image), 'utf-8');
 
-      let translatedContent = content.replace(/(<tspan.*?x=")(.*?)(".*?>)(.*?)(?=<\/tspan>)/g, (match, part1, x, part2, text) => {
+      let translatedContent = content.replace(/(<tspan.*?x=")(.*?)(".*?>)(.*?)(?=<\/tspan>)/g, (match, part1, x, part2, text, offset) => {
         if (!translation[text]) {
           // no such translation
           return match;
         }
+
+        x = +x;
 
         let translated = translation[text];
 
@@ -123,8 +125,37 @@ module.exports = class FiguresImporter {
         assert(typeof translated == 'object');
 
         if (translated.x) {
-          x = +x + +translated.x;
+          x += +translated.x;
         }
+
+        if (translated.center) {
+          // Get font family and font-size to calc width
+          let fontFamilyIndex = content.lastIndexOf('font-family="', offset);
+          let reg = /[^"]+/y;
+          reg.lastIndex = fontFamilyIndex + 'font-family="'.length;
+
+          let fontFamily = content.match(reg);
+
+          fontFamily = fontFamily && fontFamily[0];
+
+          let fontSizeIndex = content.lastIndexOf('font-size="', offset);
+          reg.lastIndex = fontSizeIndex + 'font-size="'.length;
+          let fontSize = content.match(reg);
+          fontSize = fontSize && fontSize[0];
+
+          if (fontFamily.match(/open\s*sans/i)) {
+            fontFamily = 'open sans'
+          } else {
+            throw new Error("Not supported fontFamily: " + fontFamily);
+          }
+
+          const widthBefore = pixelWidth(text, { font: fontFamily, size: fontSize });
+          const widthAfter = pixelWidth(translated.text, { font: fontFamily, size: fontSize });
+
+          x -= (widthAfter - widthBefore) / 2;
+        }
+
+
         return part1 + x + part2 + translated.text;
       });
 
