@@ -23,7 +23,7 @@ function imgFigures(state) {
     // prev token is paragraph open
 
     let isInParagraph = state.tokens[idx - 1].type == 'paragraph_open' &&
-        state.tokens[idx + 1].type == 'paragraph_close';
+        state.tokens[idx + 1].type == 'paragraph_ close';
 
     let hasFigureAttr = tokenUtils.attrGet(token.children[0], 'figure');
 

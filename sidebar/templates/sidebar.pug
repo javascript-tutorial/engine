@@ -23,7 +23,12 @@ if githubLink
   +e.section
     +e('a').link(href=githubLink rel="nofollow")= t('site.edit_on_github')
 
-if lang === 'en'
+
+if lang == 'en'
+  script(src="//m.servedby-buysellads.com/monetization.js")
+
+
+if lang === 'en' && 0
   +e.section
     #codefund
     script(src="https://codefund.io/properties/339/funder.js" async="async")
