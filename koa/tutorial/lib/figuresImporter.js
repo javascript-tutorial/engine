@@ -7,10 +7,42 @@ const glob = require("glob");
 const yaml = require('js-yaml');
 const assert = require('assert');
 const log = require('engine/log')();
-const pixelWidth = require('string-pixel-width');
 const execSync = require('child_process').execSync;
 
 // TODO: use htmlhint/jslint for html/js examples
+
+// png to svg
+// export NODE_LANG=ru
+// 1. Replace png->svg in tutorial glp engine:koa:tutorial:pngToSvg
+// 2. Update new svgs glp engine:koa:tutorial:figuresImport
+// 3. Get image.yaml glp engine:koa:tutorial:imageYaml
+// 4. Update translation
+// 5. Reimport: glp engine:koa:tutorial:figuresImport
+
+function pixelWidth({text, font, size}) {
+  let fontPath = path.join(__dirname, `../resources/${font}.ttf`);
+  if (!fs.existsSync(fontPath)) {
+    throw new Error("No font: " + fontPath);
+  }
+  let result = execSync(`convert -debug annotate xc: -font ${fontPath} -pointsize ${size} -annotate 0 "${text.replace(/"/g, '\\"')}" null: 2>&1`, {
+    encoding: 'utf-8'
+  });
+
+  if (result.includes('unable to read font')) {
+    throw new Error(result);
+  }
+
+  let width = result.match(/^\s+Metrics:.*?width: (\d+)/m);
+
+  width = width && width[1];
+  width = +width;
+
+  if (!width) {
+    throw new Error("No width in output: " + result);
+  }
+
+  return width;
+}
 
 module.exports = class FiguresImporter {
   constructor(options) {
@@ -128,7 +160,7 @@ module.exports = class FiguresImporter {
           x += +translated.x;
         }
 
-        if (translated.center) {
+        if (translated.position) {
           // Get font family and font-size to calc width
           let fontFamilyIndex = content.lastIndexOf('font-family="', offset);
           let reg = /[^"]+/y;
@@ -142,17 +174,31 @@ module.exports = class FiguresImporter {
           reg.lastIndex = fontSizeIndex + 'font-size="'.length;
           let fontSize = content.match(reg);
           fontSize = fontSize && fontSize[0];
+          fontSize = +fontSize;
 
-          if (fontFamily.match(/open\s*sans/i)) {
-            fontFamily = 'open sans'
+          fontFamily = fontFamily.split(',')[0];
+
+          const widthBefore = pixelWidth({text, font: fontFamily, size: fontSize });
+          const widthAfter = pixelWidth({text: translated.text, font: fontFamily, size: fontSize });
+
+          log.debug({
+            text,
+            fontSize,
+            widthBefore,
+            widthAfter,
+            x,
+            position: translated.position
+          });
+
+          if (translated.position === "center") {
+            x -= (widthAfter - widthBefore) / 2;
+          } else if (translated.position === "right") {
+            x -= (widthAfter - widthBefore);
           } else {
-            throw new Error("Not supported fontFamily: " + fontFamily);
+            throw new Error("Unsupported position: " + translated.position);
           }
 
-          const widthBefore = pixelWidth(text, { font: fontFamily, size: fontSize });
-          const widthAfter = pixelWidth(translated.text, { font: fontFamily, size: fontSize });
-
-          x -= (widthAfter - widthBefore) / 2;
+          log.debug("New x", x);
         }
 
 

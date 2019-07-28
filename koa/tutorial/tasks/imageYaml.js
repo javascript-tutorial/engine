@@ -4,39 +4,73 @@ let config = require('config');
 const util = require('util');
 const glob = util.promisify(require('glob'));
 let log = require('engine/log')();
+const yaml = require('js-yaml');
 
-// Left-pad translations with spaces if needed to make them "wide enough"
+
+async function getImageYaml(imageFile) {
+  let content = await fs.readFile(imageFile, 'utf-8');
+
+  let name = path.basename(imageFile);
+  let tspans = Array.from(content.matchAll(/<tspan.*?>(.*?)<\/tspan>/g));
+
+  let obj = {
+    [name] : Object.create(null)
+  };
+
+  for(let match of tspans) {
+    if (!match) continue; // empty strings sometimes
+    obj[name][match[1]] = "";
+  }
+
+  return obj;
+}
+
+
+// Get all strings from image
 module.exports = async function() {
 
   let args = require('yargs')
     .usage('NODE_LANG=en glp engine:koa:tutorial:imageYaml --image try-catch-flow')
-    .demand(['image'])
     .argv;
 
-  let image = args.image.endsWith('.svg') ? args.image : (args.image + '.svg');
 
-  let imageFile = await glob(`${config.tutorialRoot}/**/${image}`);
+  let imageFiles;
+  if (args.image) {
+    console.log(`Processing image ${image}`);
+    let image = args.image.endsWith('.svg') ? args.image : (args.image + '.svg');
 
-  if (!imageFile.length) {
-    throw new Error("No such image");
+    imageFiles = await glob(`${config.tutorialRoot}/**/${image}`);
+
+    if (!imageFiles.length) {
+      throw new Error("No such image");
+    }
+
+    if (imageFiles.length > 1) {
+      throw new Error("Too many such images");
+    }
+  } else {
+    console.log("Processing all images");
+
+    imageFiles = await glob(`${config.tutorialRoot}/**/*.svg`);
+
   }
 
-  if (imageFile.length > 1) {
-    throw new Error("Too many such images");
+
+  let results = Object.create(null);
+  for(let imageFile of imageFiles) {
+    let stringsObj = await getImageYaml(imageFile);
+    Object.assign(results, stringsObj);
   }
 
-  imageFile = imageFile[0];
-
-  let content = await fs.readFile(imageFile, 'utf-8');
-
-  let tspans = Array.from(content.matchAll(/<tspan.*?>(.*?)<\/tspan>/g));
-
-  console.log(`${image}:`);
-
-  for(let match of tspans) {
-    if (!match) continue; // empty strings sometimes
-    console.log(`  "${match[1].replace(/"/g,'\\"')}": ""`);
+  let output = [];
+  for(let key in results) {
+    output.push(yaml.safeDump({[key]: results[key]}));
   }
+
+  console.log("Writing to images.yml");
+
+  fs.writeFileSync("images.yml", output.join('\n'));
+
 };
 
 

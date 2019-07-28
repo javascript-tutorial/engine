@@ -5,7 +5,7 @@
  * @type {FiguresImporter|exports}
  */
 
-let FiguresImporter = require('../lib/figuresImporter');
+let FigmaImporter = require('../lib/figmaImporter');
 
 let fs = require('fs');
 let path = require('path');
@@ -16,9 +16,8 @@ module.exports = async function() {
 
   let root = fs.realpathSync(config.tutorialRoot);
 
-  let importer = new FiguresImporter({
-    root,
-    figuresFilePath: path.join(root, 'figures.sketch')
+  let importer = new FigmaImporter({
+    root
   });
 
   await importer.syncFigures();
