@@ -94,7 +94,7 @@ function watchTutorial() {
 
 function watchFigures() {
 
-  let figuresFilePath = path.join(config.tutorialRoot, 'figures.sketch');
+  let figuresFilePath = process.env.FIGURES_ROOT || path.join(config.tutorialRoot, 'figures.sketch');
   let importer = new FiguresImporter({
     root: config.tutorialRoot,
     figuresFilePath: figuresFilePath

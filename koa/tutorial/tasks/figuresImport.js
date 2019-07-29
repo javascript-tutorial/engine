@@ -18,7 +18,7 @@ module.exports = async function() {
 
   let importer = new FiguresImporter({
     root,
-    figuresFilePath: path.join(root, 'figures.sketch')
+    figuresFilePath: process.env.FIGURES_ROOT || path.join(root, 'figures.sketch')
   });
 
   await importer.syncFigures();

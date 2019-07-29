@@ -1,10 +1,19 @@
-let fs = require('mz/fs');
+let fs = require('fs-extra');
 let path = require('path');
 let config = require('config');
 const util = require('util');
 const glob = util.promisify(require('glob'));
 let log = require('engine/log')();
 const execSync = require('child_process').execSync;
+
+function loadFiles() {
+  let filePaths = glob.sync(`${config.tutorialRoot}/**/*.*`);
+  let files = Object.create(null);
+  for(let filePath of filePaths) {
+    files[filePath] = filePath.match(/\.(md|html|svg)$/) ? fs.readFileSync(filePath, 'utf-8') : true;
+  }
+  return files;
+}
 
 // Get all strings from image
 module.exports = async function() {
@@ -13,7 +22,11 @@ module.exports = async function() {
     .usage('NODE_LANG=en glp engine:koa:tutorial:pngToSvg')
     .argv;
 
-  let artboardsByPages = JSON.parse(execSync(`/Applications/Sketch.app/Contents/Resources/sketchtool/bin/sketchtool list artboards ${config.tutorialRoot}/figures.sketch`, {
+  let sketchTool = '/Applications/Sketch.app/Contents/Resources/sketchtool/bin/sketchtool';
+
+  let figuresFilePath = process.env.FIGURES_ROOT || path.join(config.tutorialRoot, 'figures.sketch');
+
+  let artboardsByPages = JSON.parse(execSync(`${sketchTool} list artboards ${figuresFilePath}`, {
     encoding: 'utf-8'
   }));
 
@@ -25,34 +38,76 @@ module.exports = async function() {
 
   artboards = artboards.filter(a => a.name.endsWith('.svg'));
 
+  let svgsDir = path.join(config.tmpRoot, 'svgs');
+  fs.emptyDirSync(svgsDir);
+  execSync(`${sketchTool} export artboards "${figuresFilePath}" --overwriting=YES --trimmed=YES --formats=svg --output="${svgsDir}" --items=${artboards.map(a => a.id).join(',')}`, {
+    stdio: 'inherit',
+    encoding: 'utf-8'
+  });
+
+  console.log("Got artboards list");
+
+  let files = loadFiles();
+  console.log("Loaded whole tutorial");
+
   for(let artboard of artboards) {
     let name = artboard.name.slice(0, -4);
-    let pngFile = await glob(`${config.tutorialRoot}/**/${name}.png`);
 
-    if (pngFile.length) {
-      pngFile = pngFile[0];
-      console.log(`Image ${pngFile}`);
-      fs.unlinkSync(pngFile);
-      fs.unlinkSync(pngFile.replace('.png', '@2x.png'));
-      fs.writeFileSync(pngFile.replace('.png', '.svg'), '');
-    }
-
-    let files = await glob(`${config.tutorialRoot}/**/*.md`);
-    for(let file of files) {
-      let content = fs.readFileSync(file, 'utf-8');
-      let replaced = content.replace(`${name}.png`, `${name}.svg`);
-      if (content !== replaced) {
-        console.log(`Replace in ${file}`);
-        fs.writeFileSync(file, replaced);
+    let pngFiles = [];
+    for(let filePath in files) {
+      if(filePath.endsWith(`/${name}.png`)) {
+        pngFiles.push(filePath);
       }
     }
 
+    for(let pngFile of pngFiles) {
+      console.log(`Image ${pngFile}`);
+      fs.unlinkSync(pngFile);
+      try {
+        fs.unlinkSync(pngFile.replace('.png', '@2x.png'));
+      } catch(e) {}
 
+      fs.copySync(path.join(svgsDir, artboard.name + '.svg'), path.join(path.dirname(pngFile), artboard.name))
+    }
 
+    for(let [filePath, content] of Object.entries(files)) {
+      if (content === true) continue;
+      let replaced = content.replace(new RegExp(name + '.png', 'g'), `${name}.svg`);
+      if (content !== replaced) {
+        console.log(`Replace in ${filePath}`, `${name}.png`, `${name}.svg`);
+        files[filePath] = replaced;
+        fs.writeFileSync(filePath, replaced);
+      }
+    }
 
   }
 
-  console.log("Done, now please call figuresImport task to fill SVGs!");
+  files = loadFiles();
+  console.log("Reloaded whole tutorial");
+
+  console.log("Deleting unused images");
+
+  // Delete unused images
+  let allImagePaths = Object.keys(files).filter(p => p.endsWith('.svg') || p.endsWith('.png'));
+
+  for(let image of allImagePaths) {
+    let used = false;
+    for(let filePath in files) {
+      // console.log("Looking for", image, filePath);
+      let content = files[filePath];
+      if (content === true) continue;
+      if (content.includes(path.basename(image).replace('@2x', ''))) {
+        used = true;
+        break;
+      }
+    }
+    if (!used) {
+      console.log("Unused image, deleting", image);
+      fs.unlinkSync(image);
+    }
+  }
+
+
 };
 
 

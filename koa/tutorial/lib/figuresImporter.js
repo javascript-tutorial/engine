@@ -19,30 +19,6 @@ const execSync = require('child_process').execSync;
 // 4. Update translation
 // 5. Reimport: glp engine:koa:tutorial:figuresImport
 
-function pixelWidth({text, font, size}) {
-  let fontPath = path.join(__dirname, `../resources/${font}.ttf`);
-  if (!fs.existsSync(fontPath)) {
-    throw new Error("No font: " + fontPath);
-  }
-  let result = execSync(`convert -debug annotate xc: -font ${fontPath} -pointsize ${size} -annotate 0 "${text.replace(/"/g, '\\"')}" null: 2>&1`, {
-    encoding: 'utf-8'
-  });
-
-  if (result.includes('unable to read font')) {
-    throw new Error(result);
-  }
-
-  let width = result.match(/^\s+Metrics:.*?width: (\d+)/m);
-
-  width = width && width[1];
-  width = +width;
-
-  if (!width) {
-    throw new Error("No width in output: " + result);
-  }
-
-  return width;
-}
 
 module.exports = class FiguresImporter {
   constructor(options) {
@@ -50,14 +26,6 @@ module.exports = class FiguresImporter {
 
     this.root = fs.realpathSync(options.root);
     this.figuresFilePath = options.figuresFilePath;
-
-    let imageTranslationsPath = path.join(this.root, 'images.yml');
-    if (fs.existsSync(imageTranslationsPath)) {
-      this.translations = yaml.safeLoad(fs.readFileSync(imageTranslationsPath, 'utf8'));
-    } else {
-      this.translations = Object.create(null);
-    }
-
   }
 
   async syncFigures() {
@@ -125,88 +93,6 @@ module.exports = class FiguresImporter {
         // code-style.svg.svg -> code-style.svg
         fs.renameSync(image, image.replace(/.(svg|png)/, ''));
       }
-    }
-
-
-    // apply translations to SVG
-    let images = glob.sync('**/*.svg', {cwd: outputDir});
-
-    for(let image of images) {
-      let translation = this.translations[path.basename(image)];
-      if (!translation) {
-        continue;
-      }
-
-      let content = fs.readFileSync(path.join(outputDir, image), 'utf-8');
-
-      let translatedContent = content.replace(/(<tspan.*?x=")(.*?)(".*?>)(.*?)(?=<\/tspan>)/g, (match, part1, x, part2, text, offset) => {
-        if (!translation[text]) {
-          // no such translation
-          return match;
-        }
-
-        x = +x;
-
-        let translated = translation[text];
-
-        if (typeof translated == 'string') {
-          // replace text
-          return part1 + x + part2 + translated;
-        }
-
-        assert(typeof translated == 'object');
-
-        if (translated.x) {
-          x += +translated.x;
-        }
-
-        if (translated.position) {
-          // Get font family and font-size to calc width
-          let fontFamilyIndex = content.lastIndexOf('font-family="', offset);
-          let reg = /[^"]+/y;
-          reg.lastIndex = fontFamilyIndex + 'font-family="'.length;
-
-          let fontFamily = content.match(reg);
-
-          fontFamily = fontFamily && fontFamily[0];
-
-          let fontSizeIndex = content.lastIndexOf('font-size="', offset);
-          reg.lastIndex = fontSizeIndex + 'font-size="'.length;
-          let fontSize = content.match(reg);
-          fontSize = fontSize && fontSize[0];
-          fontSize = +fontSize;
-
-          fontFamily = fontFamily.split(',')[0];
-
-          const widthBefore = pixelWidth({text, font: fontFamily, size: fontSize });
-          const widthAfter = pixelWidth({text: translated.text, font: fontFamily, size: fontSize });
-
-          log.debug({
-            text,
-            fontSize,
-            widthBefore,
-            widthAfter,
-            x,
-            position: translated.position
-          });
-
-          if (translated.position === "center") {
-            x -= (widthAfter - widthBefore) / 2;
-          } else if (translated.position === "right") {
-            x -= (widthAfter - widthBefore);
-          } else {
-            throw new Error("Unsupported position: " + translated.position);
-          }
-
-          log.debug("New x", x);
-        }
-
-
-        return part1 + x + part2 + translated.text;
-      });
-
-      log.debug("translated file", image);
-      fs.writeFileSync(path.join(outputDir, image), translatedContent);
     }
 
     // Copy exported to tutorial
