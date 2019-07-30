@@ -30,11 +30,9 @@ module.exports = async function() {
       if (e.status === 1) {
         execSync(`git add -A`, {cwd: root, stdio: 'inherit'});
 
-        // exit code 1 means that there's something to commit
         execSync(`git commit -m "Move images PNG to SVG"`, {cwd: root, stdio: 'inherit'});
         execSync(`git push origin master`, {cwd: root, stdio: 'inherit'});
       } else {
-
         throw e;
       }
     }

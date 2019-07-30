@@ -47,6 +47,21 @@ module.exports = async function() {
 
   console.log("Got artboards list");
 
+
+  for(let artboard of artboards) {
+    if (!artboard.name.endsWith('.svg')) continue;
+
+    let existingSvgs = glob.sync(`${config.tutorialRoot}/**/${artboard.name}`);
+    for (let old of existingSvgs) {
+      fs.copySync(path.join(svgsDir, artboard.name + '.svg'), old);
+    }
+  }
+
+  console.log("Replaced old svgs");
+
+
+
+
   let files = loadFiles();
   console.log("Loaded whole tutorial");
 
@@ -67,7 +82,7 @@ module.exports = async function() {
         fs.unlinkSync(pngFile.replace('.png', '@2x.png'));
       } catch(e) {}
 
-      fs.copySync(path.join(svgsDir, artboard.name + '.svg'), path.join(path.dirname(pngFile), artboard.name))
+      fs.copySync(path.join(svgsDir, artboard.name + '.svg'), path.join(path.dirname(pngFile), artboard.name));
     }
 
     for(let [filePath, content] of Object.entries(files)) {
