@@ -36,7 +36,7 @@ module.exports = async function() {
 
   let imageFiles;
   if (args.image) {
-    console.log(`Processing image ${image}`);
+    console.log(`Processing image ${args.image}`);
     let image = args.image.endsWith('.svg') ? args.image : (args.image + '.svg');
 
     imageFiles = await glob(`${config.tutorialRoot}/**/${image}`);
@@ -67,9 +67,7 @@ module.exports = async function() {
     output.push(yaml.safeDump({[key]: results[key]}));
   }
 
-  console.log("Writing to images.yml");
-
-  fs.writeFileSync("images.yml", output.join('\n'));
+  console.log(output.join('\n'));
 
 };
 

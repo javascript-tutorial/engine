@@ -101,16 +101,18 @@ module.exports = async function() {
 
       if (typeof translated == 'string') {
         // replace text
-        return part1 + x + part2 + translated;
+        translated = { text: translated };
       }
 
       assert(typeof translated == 'object');
+
+      translated = Object.assign({}, translation._defaults || {}, translated);
 
       if (translated.x) {
         x += +translated.x;
       }
 
-      if (translated.position) {
+      if (translated.position && translated.position !== "left") {
         // Get font family and font-size to calc width
         let fontFamilyIndex = content.lastIndexOf('font-family="', offset);
         let reg = /[^"]+/y;
@@ -144,7 +146,7 @@ module.exports = async function() {
           x -= (widthAfter - widthBefore) / 2;
         } else if (translated.position === "right") {
           x -= (widthAfter - widthBefore);
-        } else {
+        } else if (translated.position !== "left") {
           throw new Error("Unsupported position: " + translated.position);
         }
 
