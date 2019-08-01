@@ -157,7 +157,7 @@ move:
   - drag-and-drop mouse-drag-and-drop
   - range-textrange-selection selection-range # todo: add ref to archive in new article
   - external-script script-async-defer
-  
+
 archiveNoReplacement:
   - mousewheel
   - widgets-structure
