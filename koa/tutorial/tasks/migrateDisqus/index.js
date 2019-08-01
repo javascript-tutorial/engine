@@ -44,7 +44,9 @@ module.exports = async function() {
   }
 
   for(let disqusUrl of disqus) {
-    let url = disqusUrl.replace('http://javascript', 'https://javascript');
+    let url = disqusUrl
+      .replace('http://javascript', 'https://javascript')
+      .replace('http://learn.javascript', 'https://learn.javascript');
 
     url = url.replace(/\?.*/, '');
 
@@ -82,6 +84,7 @@ module.exports = async function() {
   }
   content = content.trim();
 
+  console.log("Writing to ",disqusExportFile.replace('.csv', '.result.csv'));
   fs.writeFileSync(path.join(__dirname, disqusExportFile.replace('.csv', '.result.csv')), content);
 
 
