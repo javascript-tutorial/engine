@@ -83,6 +83,32 @@ function initSidebarHighlight() {
     window.addEventListener('scroll', highlight);
   });
 
-
 }
 
+
+/*
+document.addEventListener('DOMContentLoaded', function() {
+
+  if (window._bsa) {
+    initCarbon();
+  } else {
+    let script = document.querySelector('script[src*="buysellads.com"]');
+    script.onload = () => setTimeout(initCarbon);
+  }
+
+  function initCarbon() {
+
+    _bsa.init('custom', 'CKYDEK3U', 'placement:javascriptinfo',
+      {
+        target:   '#carbon',
+        template: `
+    <a href="##statlink##" target="_blank" rel="nofollow noopener" class="carbon-cpc">
+    <div class="carbon-description"><strong>##company##</strong> — ##description##</div>
+    </a>
+    <a href="https://www.carbonads.net/?utm_source=javascript-info-custom&utm_medium=ad_via_link&utm_campaign=in_unit&utm_term=custom" target="_blank" rel="nofollow noopener" class="carbon-sponsor">Ads via Carbon</a>
+    `
+      }
+    );
+  }
+});
+*/

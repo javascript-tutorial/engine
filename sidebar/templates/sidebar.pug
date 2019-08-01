@@ -23,8 +23,7 @@ if githubLink
   +e.section
     +e('a').link(href=githubLink rel="nofollow")= t('site.edit_on_github')
 
-
 if lang === 'en'
-  +e.section
-    #codefund
-    script(src="https://codefund.io/properties/339/funder.js" async="async")
+  +e.section#sponsorBar
+    +e.section-title Ads
+    script window.initSponsorBar()
