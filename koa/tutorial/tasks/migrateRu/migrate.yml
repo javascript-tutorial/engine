@@ -156,7 +156,8 @@ move:
   - custom-events dispatch-events
   - drag-and-drop mouse-drag-and-drop
   - range-textrange-selection selection-range # todo: add ref to archive in new article
-
+  - external-script script-async-defer
+  
 archiveNoReplacement:
   - mousewheel
   - widgets-structure
@@ -183,7 +184,6 @@ archive:
   - let-const
   - es-string
   - bitwise-operators
-  - external-script
   - closures-module
   - with
   - about-oop
