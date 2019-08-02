@@ -1,5 +1,3 @@
-'use strict';
-
 const mountHandlerMiddleware = require('engine/koa/mountHandlerMiddleware');
 
 exports.init = function(app) {
