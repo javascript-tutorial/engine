@@ -35,7 +35,9 @@ function CodeBox(elem) {
   let isTrusted = +elem.getAttribute('data-trusted');
   let isNoStrict = +elem.getAttribute('data-no-strict');
 
-  if (!isNoStrict && isJS) runCode="'use strict';\n" + runCode;
+  if (!isNoStrict && isJS) {
+    runCode="'use strict';\n" + runCode;
+  }
 
   let jsFrame;
   let globalFrame;

@@ -67,7 +67,6 @@ module.exports = async function() {
   let translations = fs.existsSync(imageTranslationsPath) ?
     yaml.safeLoad(fs.readFileSync(imageTranslationsPath, 'utf8')) : Object.create(null);
 
-
   for(let image of images) {
     let translation = translations[path.basename(image)];
     if (!translation) {
@@ -90,6 +89,14 @@ module.exports = async function() {
     });
 
     let translatedContent = content.replace(/(<tspan.*?x=")(.*?)(".*?>)(.*?)(?=<\/tspan>)/g, (match, part1, x, part2, text, offset) => {
+
+      if (typeof translation[text] == 'function') {
+        // reserved word: "constructor"
+        // or similar, like "hasOwnProperty"
+        // there are no translations for those
+        return match;
+      }
+
       if (!translation[text]) {
         // no such translation
         return match;
@@ -99,11 +106,13 @@ module.exports = async function() {
 
       let translated = translation[text];
 
+      // console.log(translation, text, translated);
       if (typeof translated == 'string') {
         // replace text
         translated = { text: translated };
       }
 
+      // log.debug("Translated", translated);
       assert(typeof translated == 'object');
 
       translated = Object.assign({}, translation._defaults || {}, translated);
