@@ -6,7 +6,7 @@ t.requirePhrase('engine/markit');
 
 module.exports = function(md) {
 
-  md.renderer.rules.blocktag_old = function(tokens, idx, options, env, slf) {
+  md.renderer.rules.blocktag_recent = function(tokens, idx, options, env, slf) {
 
     let token = tokens[idx];
 
