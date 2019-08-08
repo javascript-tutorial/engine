@@ -501,6 +501,17 @@ module.exports = class TutorialImporter {
 
     await solutionView.mergeAndSyncPlunk(solutionFilesForView, this.plunkerToken);
 
+    // Copy files for src="..."
+
+    let pathName = path.basename(jsPath).replace('.view', '');
+    let dst = path.join(task.getResourceFsRoot(), pathName);
+
+    fse.ensureDirSync(dst);
+    fs.readdirSync(jsPath).forEach(function(dirFile) {
+      copySync(path.join(jsPath, dirFile), path.join(dst, dirFile));
+    });
+
+
   };
 
 };

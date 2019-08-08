@@ -100,7 +100,7 @@ module.exports = async function (tokens, options) {
       console.error("Bad path", sourcePath);
       throw new SrcError(
         t('markit.error.read_file', {src: token.blockTagAttrs.src}) +
-        (process.env.NODE_ENV == 'development' ? ` [${sourcePath}]` : '')
+        ((process.env.NODE_ENV === 'development' || process.env.TUTORIAL_EDIT) ? ` [${sourcePath}]` : '')
       );
     }
 
