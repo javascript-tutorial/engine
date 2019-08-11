@@ -66,7 +66,7 @@ module.exports = async function(tokens, options) {
   function srcUnderRoot(root, src) {
     let absolutePath = path.join(root, src);
 
-    if (absolutePath.slice(0, root.length + 1) != root + path.sep) {
+    if (absolutePath.slice(0, root.length + 1) !== root + path.sep) {
       throw new SrcError(t('markit.error.src_out_of_root', {src}));
     }
 

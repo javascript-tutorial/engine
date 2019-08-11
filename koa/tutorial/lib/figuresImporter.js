@@ -8,6 +8,80 @@ const yaml = require('js-yaml');
 const assert = require('assert');
 const log = require('engine/log')();
 const execSync = require('child_process').execSync;
+const SVGO = require('svgo');
+
+let svgo = new SVGO({
+  plugins: [{
+    cleanupAttrs: true,
+  }, {
+    removeDoctype: true,
+  },{
+    removeXMLProcInst: true,
+  },{
+    removeComments: true,
+  },{
+    removeMetadata: true,
+  },{
+    removeTitle: true,
+  },{
+    removeDesc: true,
+  },{
+    removeUselessDefs: true,
+  },{
+    removeEditorsNSData: true,
+  },{
+    removeEmptyAttrs: true,
+  },{
+    removeHiddenElems: true,
+  },{
+    removeEmptyText: true,
+  },{
+    removeEmptyContainers: true,
+  },{
+    removeViewBox: false,
+  },{
+    cleanupEnableBackground: true,
+  },{
+    convertStyleToAttrs: true,
+  },{
+    convertColors: true,
+  },{
+    convertPathData: true,
+  },{
+    convertTransform: true,
+  },{
+    removeUnknownsAndDefaults: true,
+  },{
+    removeNonInheritableGroupAttrs: true,
+  },{
+    removeUselessStrokeAndFill: true,
+  },{
+    removeUnusedNS: true,
+  },{
+    cleanupIDs: true,
+  },{
+    cleanupNumericValues: true,
+  },{
+    moveElemsAttrsToGroup: true,
+  },{
+    moveGroupAttrsToElems: true,
+  },{
+    collapseGroups: true,
+  },{
+    removeRasterImages: false,
+  },{
+    mergePaths: true,
+  },{
+    convertShapeToPath: true,
+  },{
+    sortAttrs: true,
+  }/*,{
+    removeDimensions: true,
+  }*/
+  /*,{  // removes colors
+    removeAttrs: {attrs: '(stroke|fill)'},
+  }*/]
+});
 
 // TODO: use htmlhint/jslint for html/js examples
 
@@ -125,10 +199,38 @@ module.exports = class FiguresImporter {
         let artboardPath = artboardPaths[j];
 
         log.info("syncFigure move " + artboard.name + " -> " + artboardPath);
-        fse.copySync(path.join(outputDir, artboard.name), path.join(artboardPath, artboard.name));
+
         if (path.extname(artboard.name) === '.png') {
+          fse.copySync(path.join(outputDir, artboard.name), path.join(artboardPath, artboard.name));
           let x2Name = artboard.name.replace('.png', '@2x.png');
           fse.copySync(path.join(outputDir, x2Name), path.join(artboardPath, x2Name));
+        } else if (path.extname(artboard.name) === '.svg') {
+          let content = fse.readFileSync(path.join(outputDir, artboard.name), 'utf-8');
+
+          content = content.replace(/(?<=<svg.*>)/, `
+            <defs>
+              <style>
+              @import url('https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,bolditalic%7CPT+Mono');
+              @font-face {
+                font-family: 'PT Mono';
+                font-weight: bold;
+                font-style: normal;
+                src: local('PT MonoBold'),
+                        url('/pack/modules/styles/blocks/font/PTMonoBold.woff2') format('woff2'),
+                        url('/pack/modules/styles/blocks/font/PTMonoBold.woff') format('woff'),
+                        url('/pack/modules/styles/blocks/font/PTMonoBold.ttf') format('truetype');
+              }
+              </style>
+            </defs>
+          `);
+
+          ({data: content} = await svgo.optimize(content));
+
+          // console.log(content);
+          fs.writeFileSync(path.join(artboardPath, artboard.name), content);
+
+        } else {
+          fse.copySync(path.join(outputDir, artboard.name), path.join(artboardPath, artboard.name));
         }
       }
 

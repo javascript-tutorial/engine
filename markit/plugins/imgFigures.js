@@ -23,7 +23,7 @@ function imgFigures(state) {
     // prev token is paragraph open
 
     let isInParagraph = state.tokens[idx - 1].type == 'paragraph_open' &&
-        state.tokens[idx + 1].type == 'paragraph_ close';
+        state.tokens[idx + 1].type == 'paragraph_close';
 
     let hasFigureAttr = tokenUtils.attrGet(token.children[0], 'figure');
 
@@ -64,9 +64,20 @@ module.exports = function(md) {
     // so we put our own class on it
     // (if it had, it would refer to figure?)
 
+    let src = tokenUtils.attrGet(token, 'src');
+
+    let img;
+    if (!src.endsWith('.svg')) {
+      img = `<img${slf.renderAttrs(token)} class="image__image">`;
+    } else {
+      img = `<object type="image/svg+xml" data="${src}" width="${width}" height="${height}" class="image__image">
+        <img${slf.renderAttrs(token)}>
+      </object>`;
+    }
+
     return `<figure><div class="image" style="width:${width}px">
       <div class="image__ratio" style="padding-top:${height / width * 100}%"></div>
-      <img${slf.renderAttrs(token)} class="image__image">
+      ${img}
       </div></figure>`;
 
   };
