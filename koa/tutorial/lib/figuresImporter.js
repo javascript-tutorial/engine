@@ -216,9 +216,9 @@ module.exports = class FiguresImporter {
                 font-weight: bold;
                 font-style: normal;
                 src: local('PT MonoBold'),
-                        url('/pack/modules/styles/blocks/font/PTMonoBold.woff2') format('woff2'),
-                        url('/pack/modules/styles/blocks/font/PTMonoBold.woff') format('woff'),
-                        url('/pack/modules/styles/blocks/font/PTMonoBold.ttf') format('truetype');
+                        url('/font/PTMonoBold.woff2') format('woff2'),
+                        url('/font/PTMonoBold.woff') format('woff'),
+                        url('/font/PTMonoBold.ttf') format('truetype');
               }
               </style>
             </defs>
