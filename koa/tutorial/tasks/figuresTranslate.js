@@ -66,10 +66,8 @@ module.exports = async function() {
 
   for(let image of images) {
     console.log("Image", image);
-    let translation = translations[path.basename(image)];
-    if (!translation) {
-      continue;
-    }
+
+    let translation = translations[path.basename(image)] || {};
 
     try {
       execSync(`git rev-parse upstream/master`, {cwd: config.tutorialRoot});
@@ -81,93 +79,107 @@ module.exports = async function() {
       }
     }
 
-    let content = execSync(`git show upstream/master:${image}`, {
-      encoding: 'utf-8',
-      cwd: config.tutorialRoot
-    });
+    let content;
 
-    let translatedContent = content.replace(/(<tspan.*?x=")(.*?)(".*?>)(.*?)(?=<\/tspan>)/g, (match, part1, x, part2, text, offset) => {
-
-      if (typeof translation[text] == 'function') {
-        // reserved word: "constructor"
-        // or similar, like "hasOwnProperty"
-        // there are no translations for those
-        return match;
+    try {
+      content = execSync(`git show upstream/master:${image}`, {
+        encoding: 'utf-8',
+        cwd: config.tutorialRoot
+      });
+    } catch(e) {
+      if (e.output.join('').includes('exists on disk, but not in')) {
+        log.error(e.output.join(''));
+        content = fs.readFileSync(path.join(config.tutorialRoot, image));
+        // ignore this error, e.g. RU version has some files of its own, that don't exist in upstream
+      } else {
+        throw e;
       }
+    }
 
-      if (!translation[text]) {
-        // no such translation
-        return match;
-      }
+    if (Object.keys(translation).length) {
+      content = content.replace(/(<tspan.*?x=")(.*?)(".*?>)(.*?)(?=<\/tspan>)/g, (match, part1, x, part2, text, offset) => {
 
-      x = +x;
-
-      let translated = translation[text];
-
-      // console.log(translation, text, translated);
-      if (typeof translated == 'string') {
-        // replace text
-        translated = { text: translated };
-      }
-
-      // log.debug("Translated", translated);
-      assert(typeof translated == 'object');
-
-      translated = Object.assign({}, translation._defaults || {}, translated);
-
-      if (translated.x) {
-        x += +translated.x;
-      }
-
-      if (translated.position && translated.position !== "left") {
-        // Get font family and font-size to calc width
-        let fontFamilyIndex = content.lastIndexOf('font-family="', offset);
-        let reg = /[^"]+/y;
-        reg.lastIndex = fontFamilyIndex + 'font-family="'.length;
-
-        let fontFamily = content.match(reg);
-
-        fontFamily = fontFamily && fontFamily[0];
-
-        let fontSizeIndex = content.lastIndexOf('font-size="', offset);
-        reg.lastIndex = fontSizeIndex + 'font-size="'.length;
-        let fontSize = content.match(reg);
-        fontSize = fontSize && fontSize[0];
-        fontSize = +fontSize;
-
-        fontFamily = fontFamily.split(',')[0];
-
-        const widthBefore = pixelWidth({text, font: fontFamily, size: fontSize });
-        const widthAfter = pixelWidth({text: translated.text, font: fontFamily, size: fontSize });
-
-        log.debug({
-          text,
-          fontSize,
-          widthBefore,
-          widthAfter,
-          x,
-          position: translated.position
-        });
-
-        if (translated.position === "center") {
-          x -= (widthAfter - widthBefore) / 2;
-        } else if (translated.position === "right") {
-          x -= (widthAfter - widthBefore);
-        } else if (translated.position !== "left") {
-          throw new Error("Unsupported position: " + translated.position);
+        if (typeof translation[text] == 'function') {
+          // reserved word: "constructor"
+          // or similar, like "hasOwnProperty"
+          // there are no translations for those
+          return match;
         }
 
-        log.debug("New x", x);
-      }
+        if (!translation[text]) {
+          // no such translation
+          return match;
+        }
+
+        x = +x;
+
+        let translated = translation[text];
+
+        // console.log(translation, text, translated);
+        if (typeof translated == 'string') {
+          // replace text
+          translated = {text: translated};
+        }
+
+        // log.debug("Translated", translated);
+        assert(typeof translated == 'object');
+
+        translated = Object.assign({}, translation._defaults || {}, translated);
+
+        if (translated.x) {
+          x += +translated.x;
+        }
+
+        if (translated.position && translated.position !== "left") {
+          // Get font family and font-size to calc width
+          let fontFamilyIndex = content.lastIndexOf('font-family="', offset);
+          let reg = /[^"]+/y;
+          reg.lastIndex = fontFamilyIndex + 'font-family="'.length;
+
+          let fontFamily = content.match(reg);
+
+          fontFamily = fontFamily && fontFamily[0];
+
+          let fontSizeIndex = content.lastIndexOf('font-size="', offset);
+          reg.lastIndex = fontSizeIndex + 'font-size="'.length;
+          let fontSize = content.match(reg);
+          fontSize = fontSize && fontSize[0];
+          fontSize = +fontSize;
+
+          fontFamily = fontFamily.split(',')[0];
+
+          const widthBefore = pixelWidth({text, font: fontFamily, size: fontSize});
+          const widthAfter = pixelWidth({text: translated.text, font: fontFamily, size: fontSize});
+
+          log.debug({
+            text,
+            fontSize,
+            widthBefore,
+            widthAfter,
+            x,
+            position: translated.position
+          });
+
+          if (translated.position === "center") {
+            x -= (widthAfter - widthBefore) / 2;
+          } else if (translated.position === "right") {
+            x -= (widthAfter - widthBefore);
+          } else if (translated.position !== "left") {
+            throw new Error("Unsupported position: " + translated.position);
+          }
+
+          log.debug("New x", x);
+        }
 
 
-      return part1 + x + part2 + translated.text;
-    });
+        return part1 + x + part2 + translated.text;
+      });
+    }
 
     log.debug("translated file", path.join(config.tutorialRoot, image));
 
     // 1-js/10-error-handling/1-try-catch/try-catch-flow.svg
-    fs.writeFileSync(path.join(config.tutorialRoot, image), translatedContent);
+    fs.writeFileSync(path.join(config.tutorialRoot, image), content);
   }
 
 };
