@@ -161,7 +161,7 @@ async function renderArticle(ctx) {
 
   if (tutorialStats.isTranslated(article.getUrl()) === false && config.lang !== 'ru' && config.env !== 'development') {
     const translatedLangs = tutorialStats.getMaterialLangs(article.getUrl());
-    rendered.translateNotification = t('tutorial.not_translated', {url: config.tutorialRepo.blob + article.githubLink, translatedLangs, currentLang: config.langFull});
+    rendered.translateNotification = t('tutorial.not_translated', {url: config.tutorialRepo.blob + article.githubPath, translatedLangs, currentLang: config.langFull});
   }
 
   await renderProgress();
