@@ -23,7 +23,11 @@ if githubLink
   +e.section
     +e('a').link(href=githubLink rel="nofollow")= t('site.edit_on_github')
 
-if lang === 'en'
+if lang == 'zh'
+  +e.section
+    +e('a').link.wechat-qq(href='#') 加微信和 QQ 群
+
+if lang === 'en' && currentSection == 'tutorial'
   +e.section#sponsorBar
     +e.section-title Ads
     script window.initSponsorBar()
