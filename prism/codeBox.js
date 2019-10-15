@@ -219,7 +219,7 @@ function CodeBox(elem) {
         /* jshint -W061 */
         window["eval"].call(window, runCode);
       } catch (e) {
-        alert("Error: " + e.message);
+        alert(e.constructor.name + ": " + e.message);
       }
 
     } else {

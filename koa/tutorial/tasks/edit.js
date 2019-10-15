@@ -37,7 +37,7 @@ module.exports = async function() {
     }
 
     console.log(path.dirname(result));
-    execSync('a -n ' + result);
+    execSync('atom -n ' + result);
   }
 
   if (urlPath[0] == 'task') {
@@ -54,6 +54,6 @@ module.exports = async function() {
     }
 
     console.log(path.dirname(result));
-    execSync('a -n ' + result + ' ' + result.replace('task.md', 'solution.md'));
+    execSync('atom -n ' + result + ' ' + result.replace('task.md', 'solution.md'));
   }
 };
