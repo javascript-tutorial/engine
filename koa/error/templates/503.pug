@@ -7,13 +7,11 @@ block append variables
 block content
   +b.error
     +e('h1').type= headTitle
-    +e.code 500
+    +e.code 503
 
     if error.info
       +e.text
-        p= error.info
-
-    - let subject = encodeURIComponent(t('error.500.subject', {href: url.href}))
-    +e.text!= t('error.500.description', { email: supportEmail, subject })
-    +e.text
-      +e('span').request RequestId: #{requestId}
+        p!= error.info
+    else
+      - let subject = encodeURIComponent(t('error.503.subject', {href: url.href}))
+      +e.text!= t('error.503.description', { email: supportEmail, subject })

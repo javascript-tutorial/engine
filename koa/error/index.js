@@ -82,7 +82,7 @@ function renderError(ctx, err) {
     return;
   }
 
-  ctx.status = err.expose ? +err.status : 500;
+  ctx.status = +err.status || 500;
 
   if (preferredType == 'json') {
     ctx.body = {
