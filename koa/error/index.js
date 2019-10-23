@@ -76,7 +76,7 @@ function renderError(ctx, err) {
       ctx.body.statusCode = err.statusCode || err.status;
     } else {
       ctx.type = 'text/html; charset=utf-8';
-      ctx.body = "<html><body><h1>" + err.message + "</h1><ul>" + stack + "</ul></body></html>";
+      ctx.body = "<html><body><h1>" + escapeHtml(err.message) + "</h1><ul>" + stack + "</ul></body></html>";
     }
 
     return;

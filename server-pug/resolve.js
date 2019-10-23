@@ -26,7 +26,7 @@ function tryPaths(roots, filename) {
   return null;
 }
 
-function index(filename, source, loadOptions) {
+module.exports = function(filename, source, loadOptions) {
   filename = filename.replace(/\.pug$/, '');
 
   // console.log("RESOLVE", filename, source);
@@ -61,6 +61,4 @@ function index(filename, source, loadOptions) {
     throw new Error(`Pug file ${filename} from ${source || 'code'} not resolved`);
   }
   return result;
-}
-
-module.exports = index;
+};
