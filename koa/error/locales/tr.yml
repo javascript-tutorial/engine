@@ -14,6 +14,7 @@
   use_search:  'Sayfayı bulmak için aramayı kullanabilirsin:'
   search: Search
   use_top: …veya üst menüden erişebilirsin.
+  go_to_main: Go to main page
 
 500:
   title: Sunucu Hatası

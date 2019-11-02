@@ -14,6 +14,7 @@
   use_search:  '你可以通过搜索找到想要的网页：'
   search: 搜索
   use_top: …或顶部导航。
+  go_to_main: Go to main page
 
 500:
   title: 服务器错误
