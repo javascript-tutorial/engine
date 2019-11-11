@@ -1,0 +1,7 @@
+image_not_found: "이미지 \"#{src}\"를 찾을 수 없습니다."
+image_invalid: "이미지 \"#{src}\"가 유효하지 않습니다."
+attr_required: "속성 \"#{attr}\"이 필요합니다."
+src_out_of_root: "소스 경로 \"#{src}\"가 루트 바깥에 있습니다."
+read_file: "파일 \"#{src}\"을 읽을 수 없습니다."
+no_such_plunk: "plunk \"#{src}\"를 찾을 수 없습니다."
+anchor_exists: "앵커 \"#{anchor}\"가 이미 존재합니다."

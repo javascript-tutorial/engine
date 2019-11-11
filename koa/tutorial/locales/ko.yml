@@ -1,0 +1,14 @@
+modern_javascript_tutorial: "모던 JavaScript 튜토리얼"
+subtitle: "모던 JavaScript 튜토리얼은 상세한 설명과 함께 JavaScript 기본 개념 및 고급 개념을 다룹니다."
+part: "파트 #{num}"
+more: "더 보기…"
+contents: '목차'
+description: '파트 1은 프로그래밍 언어로서의 자바스크립트를, 파트 2는 브라우저에서 동작하는 자바스크립트를 다룹니다. 파트 3에선 이 외의 다양한 주제를 다룹니다.'
+
+part3:
+  title: "추가 주제"
+  content: "파트 1과 2에서 다루지 않은 추가 주제를 다룹니다. 파트 3은 순서가 없습니다. 학습을 원하는 주제를 골라 읽으세요."
+
+tutorial: 튜토리얼
+tutorial_map: 튜토리얼 지도
+not_translated: '이 글은 다음 언어로만 작성되어 있습니다. #{translatedLangs}. <strong>#{currentLang.title}</strong> <a href="#{url}">번역에 참여</a>해주세요.'

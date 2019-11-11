@@ -1,0 +1,17 @@
+open_task:
+  sandbox:
+    tests: 테스트 코드가 담긴 샌드박스를 열어 정답을 작성해보세요.
+    no_tests: 샌드박스를 열어 정답을 작성해보세요.
+
+open_solution:
+  sandbox:
+    tests: 테스트 코드가 담긴 샌드박스를 열어 정답을 확인해보세요.
+    no_tests: 샌드박스를 열어 정답을 확인해보세요.
+
+Importance: 중요도
+importance: 중요도
+solution: 해답
+back: 돌아가기
+importance_help: 과제의 중요도에 따라 1부터 5까지의 점수가 매겨졌습니다.
+
+task_not_found: "과제 \"#{path}\"를 찾을 수 업습니다."
