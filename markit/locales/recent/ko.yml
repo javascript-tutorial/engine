@@ -4,4 +4,4 @@ browser:
   value: "예시는 #{browser}에서만 동작할 수 있습니다."
   none: "이 문법을 지원하지 않거나 부분적으로만 지원하는 엔진을 사용 중이라면 폴리필을 구현해야 합니다."
   new: 구식 브라우저는 폴리필이 필요합니다.
-caniuse: "You can find the current state of support at <a href=\"https://caniuse.com/#feat=#{feat}\">https://caniuse.com/#feat=#{feat}</a>."
+caniuse: "<a href=\"https://caniuse.com/#feat=#{feat}\">https://caniuse.com/#feat=#{feat}</a>에서 브라우저별 지원 여부를 확인할 수 있습니다."
