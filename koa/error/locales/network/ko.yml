@@ -1,0 +1,7 @@
+
+server_connection_error: 서버 접속 에러
+server_request_timeout: 서버 요청 타임아웃
+request_aborted: 요청이 취소되었습니다.
+no_response: 서버로부터 응답이 없습니다.
+server_error: "서버 에러(코드 #{status})가 발생했습니다. 잠시 후 다시 시도해주세요."
+invalid_format: 유효하지 않은 응답 포맷

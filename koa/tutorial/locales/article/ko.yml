@@ -1,0 +1,11 @@
+lesson:
+  next: 다음 주제
+  prev: 이전 주제
+
+sibling_chapters: 연관 챕터
+lesson_navigation: 주제 탐색
+tasks: 과제
+chapter: 챕터
+lesson_of: "#{bookLeafCount}개의 주제 중 #{bookChildNumber}번째 주제"
+
+article_not_found: "\"#{path}\"를 찾을 수 없습니다."
