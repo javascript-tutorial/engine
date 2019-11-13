@@ -13,7 +13,8 @@ switch(lang) {
     module.exports = require('./ru'); // not sure what to use here
     break;
   case 'ja':
-    module.exports = require('./ja');
+  case 'ko':
+    module.exports = require('./numbers');
     break;
   case 'zh':
     module.exports = require('./zh');
