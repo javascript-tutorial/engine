@@ -7,9 +7,10 @@
 
 module.exports = function(text) {
 
-  let titleReg = /^\s*#\s+(.*)(\n|$)/;
+  let titleReg = /^\s*#\s+(.*)/u;
   let title = text.match(titleReg);
 
+  // console.log("TITLE", title);
   if (!title) {
     return {
       text: text,
