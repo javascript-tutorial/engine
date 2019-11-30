@@ -36,7 +36,7 @@ function CodeBox(elem) {
   let isNoStrict = +elem.getAttribute('data-no-strict');
 
   if (!isNoStrict && isJS) {
-    runCode="'use strict';\n" + runCode;
+    runCode="'use strict';\n\n" + runCode;
   }
 
   let jsFrame;
@@ -256,7 +256,7 @@ function CodeBox(elem) {
       html = normalizeHtml(code);
     } else {
       // let codeIndented = code.replace(/^/gim, '    ');
-      html = `<!DOCTYPE html><script>\n${runCode}\n</script>`;
+      html = `<!DOCTYPE html>\n<script>\n${runCode}\n</script>`;
     }
 
     let form = document.createElement('form');
