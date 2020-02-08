@@ -4,3 +4,4 @@ browser:
   value: "Örnekler sadece yeni #{browser} çalışır."
   none: "JavaScript motoru tarafından henüz desteklenmemektedir. Pollyfill gerekmektedir."
   new: Eski tarayıcılar pollyfill gerektirebilir
+caniuse: "You can find the current state of support at <a href=\"https://caniuse.com/#feat=#{feat}\">https://caniuse.com/#feat=#{feat}</a>."

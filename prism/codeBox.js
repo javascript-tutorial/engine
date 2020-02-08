@@ -175,6 +175,7 @@ function CodeBox(elem) {
   // Evaluates a script in a global context
   function globalEval( code ) {
     let script = document.createElement( "script" );
+    script.type = 'module';
     script.text = code;
     document.head.appendChild( script ).parentNode.removeChild( script );
   }

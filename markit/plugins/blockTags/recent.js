@@ -11,6 +11,7 @@ module.exports = function(md) {
     let token = tokens[idx];
 
     let browser = token.blockTagAttrs.browser;
+    let caniuse = token.blockTagAttrs.caniuse;
 
     if (browser === 'none') {
       browser = t('markit.recent.browser.none')
@@ -22,11 +23,15 @@ module.exports = function(md) {
       browser = '';
     }
 
+    if (caniuse) {
+      caniuse = t('markit.recent.caniuse', { feat: caniuse });
+    }
+
     return `<div class="important important_warn">
             <div class="important__header"><span class="important__type">${t('markit.recent.recent')}</span></div>
             <div class="important__content">
             ${t('markit.recent.recent_addition')}
-            ${browser}
+            ${caniuse || browser}
             </div></div>\n`;
   };
 
