@@ -123,26 +123,7 @@ module.exports = class ArticleRenderer {
 
     const tokens = await parser.parse(article.content);
 
-    let headers = [];
-
-    for (let idx = 0; idx < tokens.length; idx++) {
-      let token = tokens[idx];
-      if (token.type === 'heading_open') {
-        let i = idx + 1;
-        while (tokens[i].type !== 'heading_close') i++;
-
-        let headingTokens = tokens.slice(idx + 1, i);
-
-        headers.push({
-          level: +token.tag.slice(1),
-          anchor: token.anchor,
-          title: parser.render(headingTokens)
-        });
-
-        idx = i;
-      }
-
-    }
+    let headers = parser.getHeaders(tokens);
 
     let content = parser.render(tokens);
 
