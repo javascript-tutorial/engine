@@ -106,7 +106,7 @@ module.exports = class ServerParser {
         headers.push({
           level: +token.tag.slice(1),
           anchor: token.anchor,
-          title: parser.render(headingTokens)
+          title: this.render(headingTokens)
         });
 
         idx = i;
