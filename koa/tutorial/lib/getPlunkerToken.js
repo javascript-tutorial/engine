@@ -4,17 +4,16 @@ let request = require('request-promise');
 const assert = require('assert');
 
 module.exports = async function getPlunkerToken() {
-  // require here, not need to instal these in server
+  // require here, not need to install these in server
   const puppeteer = require('puppeteer');
-  const getChromeLocation = require('getChromeLocation');
 
   const browser = await puppeteer.launch({
     // todo: run not from root
     // remove this
-    args: ['--no-sandbox']
-    // headless: false,
-    // devtools: true,
-    // slowMo: 250,
+    args: ['--no-sandbox'],
+    headless: false,
+    devtools: false,
+    // slowMo: 300,
     //executablePath: getChromeLocation()
   });
 
@@ -22,7 +21,6 @@ module.exports = async function getPlunkerToken() {
 
   await page.setRequestInterception(true);
 
-  let urls = [];
   page.on('request', (request) => {
     if (
       ['image', 'font'].includes(request.resourceType()) ||
@@ -35,45 +33,41 @@ module.exports = async function getPlunkerToken() {
     } else {
       log.debug("loaded", request.url());
 
-      urls.push(request.url());
       request.continue();
     }
   });
 
-  await page.goto('https://plnkr.co/?plnkr=legacy');
+  await page.goto('https://plnkr.co/');
 
-  if (page.url().startsWith('http://next.plnkr.co') || page.url().startsWith('https://next.plnkr.co')) {
-
-    log.debug("wait for old plnkr button");
-    await page.waitForSelector('[ng-href^="https://plnkr.co"]');
-    log.debug("clicked it");
-    await page.click('[ng-href^="https://plnkr.co"]');
-    // prevent redirects to
-    // https://next.plnkr.co/?utm_source=legacy&utm_medium=worker&utm_campaign=next
-  }
-
-
+  /*
   // return anon session
-  let sid = await page.evaluate(() => window._plunker.session.id);
+  let token = await page.evaluate(() => document.cookie.match(/plnkr.access_token=([\w.]+)/)[1]);
   await browser.close();
-  return sid;
+  return token;
+  */
 
+  // The code below is unfinished
+  // may not work well because of github device verification
 
-  // The code below authenticates user
-  // it doesn't work well
 
   log.debug("wait for login button");
-  await page.waitForSelector('button[ng-click="visitor.login()"]');
+  await page.waitForSelector('button.plunker-toolbar-login');
 
   log.debug("Pages: ", (await browser.pages()).length);
 
   await new Promise(r => setTimeout(r, 1000));
 
-  const loginButton = await page.$('button[ng-click="visitor.login()"]');
+  const loginButton = await page.$('button.plunker-toolbar-login');
+
+  await loginButton.click();
+
+  await page.waitForSelector('.auth-service-icon.fa-github');
+
+  const githubAuthButton = await page.$('.auth-service-icon.fa-github');
 
   const nav = new Promise(res => browser.on('targetcreated', res));
 
-  await loginButton.click();
+  githubAuthButton.click();
 
   log.debug("PLNKR LOGIN CLICKED");
 
@@ -83,7 +77,10 @@ module.exports = async function getPlunkerToken() {
 
   log.debug("Pages", pages.map(page => page.url()));
 
-  let githubPage = pages.find(page => page.url().startsWith('https://github.com/login'));
+  let githubPage = pages[pages.length - 1];
+
+  await githubPage.waitForSelector('#login_field');
+  // await githubPage.waitForNavigation({waitUntil: 'networkidle0'});
 
   assert(githubPage);
 
@@ -92,53 +89,38 @@ module.exports = async function getPlunkerToken() {
   await githubPage.type('#login_field', config.plnkr.login);
   await githubPage.type('#password', config.plnkr.pass);
 
-  let githubPageClose = new Promise(resolve => githubPage.on('close', resolve));
-
   const submitElem = await githubPage.$('input[type=submit]');
   await submitElem.click();
 
+  let result = await new Promise((resolve, reject) => {
+    page.on('response', response => {
+      console.log("RESPONSE", response.url());
+      if (response.url() == 'https://api.plnkr.co/v2/auth/token') {
+        response.json().then(resolve, reject);
+      }
+    });
+  });
+
+  console.log("RESULT!!", result);
+
+  await browser.close();
+
+  return result.access_token;
+/*
+  pages = await browser.pages();
+
+  await new Promise(resolve => setTimeout(resolve, 10000));
+
+  console.log("PAGES", pages.map(page => page.url()), pages[1] === page);
+
   // I'll click on github login, and AFTER THAT we'll wait till plunker created session on server for that user
-  let waitForResponse = page.waitForResponse(response => response.url().match(/api.plnkr.co\/sessions\/\w+\/user/) && response.status() === 201);
+  page.waitForResponse(response => response.url().match(/api.plnkr.co\/v2\/auth\/token/));
 
-  let isClosed = false;
-
-  try {
-    log.debug("WAITING js-oauth-authorize-btn");
-    await Promise.race([
-      githubPage.waitFor('#js-oauth-authorize-btn:not([disabled])'),
-      githubPageClose
-    ]);
-    isClosed = githubPage.isClosed();
-  } catch (e) {
-    isClosed = true;
-    /* if no authorization needed, gighut popup just closes, may be error */
-  }
-
-  if (!isClosed) {
-
-    log.debug("CLICK js-oauth-authorize-btn", await githubPage.evaluate(() => document.querySelector('#js-oauth-authorize-btn').outerHTML));
-
-    await new Promise(r => setTimeout(r, 1000));
-
-    await githubPage.click('#js-oauth-authorize-btn');
-    log.debug("CLICKED js-oauth-authorize-btn");
-  }
+  // console.log("HERE", page);
+  let token = await page.evaluate(() => document.cookie.match(/plnkr.access_token=([\w.]+)/)[1]);
 
 
-  await page.waitFor(() => !document.querySelector('[ng-click="visitor.login()"]'));
+  console.log("DONE", token);
 
-  log.debug("Visitor is logged in");
-
-  await waitForResponse;
-
-
-  await new Promise(r => setTimeout(r, 3000));
-
-  let sessionId = await page.evaluate(() => window._plunker.session.id);
-
-
-  log.debug("SID", sessionId);
-
-  log.debug(urls.sort());
-  return sessionId;
+ */
 };
