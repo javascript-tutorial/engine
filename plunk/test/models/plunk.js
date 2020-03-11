@@ -3,31 +3,29 @@ const should = require('should');
 const Plunk = require('../../models/plunk');
 const request = require('request-promise');
 
-describe("Plunk", function () {
+describe("Plunk", function() {
 
-  describe("mergeAndSyncRemote", function () {
+  describe("mergeAndSyncRemote", function() {
 
-    it("can create new plunk", async function () {
+    it("can create new plunk", async function() {
 
       const plunkerToken = await getPlunkerToken();
 
       let slug = '/tmp-' + Math.random();
       let plunk = new Plunk({
-        webPath: slug,
+        webPath:     slug,
         description: slug
       });
 
-      let filesForPlunk = {
-        'index.html': {
-          filename: 'index.html',
-          content: 'v1'
-        }
-      };
+      let filesForPlunk = [{
+        filename: 'index.html',
+        content:  'v1'
+      }];
 
       await plunk.mergeAndSyncRemote(filesForPlunk, plunkerToken);
 
       let plunkFromServer = await request({
-        url: 'http://api.plnkr.co/plunks/' + plunk.plunkId,
+        url:  `https://api.plnkr.co/v2/plunks/${plunk.plunkId}`,
         json: true
       });
 
@@ -35,31 +33,31 @@ describe("Plunk", function () {
 
     });
 
-    it("can update a plunk", async function () {
+    it("can update a plunk", async function() {
 
       const plunkerToken = await getPlunkerToken();
 
-      let slug = '  /tmp-' + Math.random();
+      let slug = '/tmp-' + Math.random();
       let plunk = new Plunk({
-        webPath: slug,
+        webPath:     slug,
         description: slug
       });
 
-      let filesForPlunk = {
-        'index.html': {
-          filename: 'index.html',
-          content: 'v1'
-        }
-      };
+      let filesForPlunk = [{
+        filename: 'index.html',
+        content:  'v1'
+      }];
 
       await plunk.mergeAndSyncRemote(filesForPlunk, plunkerToken);
 
       const newPlunkerToken = await getPlunkerToken();
 
-      filesForPlunk['index.html'].content = 'v2';
+      filesForPlunk = [{
+        filename: 'index.html',
+        content:  'v2'
+      }];
 
       await plunk.mergeAndSyncRemote(filesForPlunk, newPlunkerToken);
-
 
     });
 

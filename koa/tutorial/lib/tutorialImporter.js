@@ -450,18 +450,16 @@ module.exports = class TutorialImporter {
       TutorialViewStorage.instance().set(sourceWebPath, sourceView);
     }
 
-    let sourceFilesForView = {
-      'index.html': {
-        content:  source,
-        filename: 'index.html'
-      }
-    };
+    let sourceFilesForView = [{
+      content:  source,
+      filename: 'index.html'
+    }];
 
     if (testJs) {
-      sourceFilesForView['test.js'] = {
+      sourceFilesForView.push({
         content:  testJs.trim(),
         filename: 'test.js'
-      };
+      });
     }
 
 
@@ -483,18 +481,16 @@ module.exports = class TutorialImporter {
       TutorialViewStorage.instance().set(solutionWebPath, solutionView);
     }
 
-    let solutionFilesForView = {
-      'index.html': {
-        content:  solution,
-        filename: 'index.html'
-      }
-    };
+    let solutionFilesForView = [{
+      content:  solution,
+      filename: 'index.html'
+    }];
 
     if (testJs) {
-      solutionFilesForView['test.js'] = {
+      solutionFilesForView[{
         content:  testJs.trim(),
         filename: 'test.js'
-      };
+      }];
     }
 
     log.debug("save plunk for ", solutionWebPath);
@@ -642,13 +638,13 @@ function readFs(dir) {
     return fileA > fileB ? 1 : -1;
   });
 
-  let filesForPlunk = {};
+  let filesForPlunk = [];
   for (let i = 0; i < files.length; i++) {
     let file = files[i];
-    filesForPlunk[file] = {
+    filesForPlunk.push({
       filename: file,
       content: stripIndents(fs.readFileSync(path.join(dir, file), 'utf-8'))
-    };
+    });
   }
 
   // console.log("FILES FOR PLUNK", filesForPlunk);

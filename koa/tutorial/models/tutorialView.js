@@ -53,138 +53,86 @@ module.exports = class TutorialView {
     log.debug("OLD files", this.files);
     log.debug("NEW files", files);
 
-    /* delete this.files which are absent in files */
-    for (let i = 0; i < this.files.length; i++) {
-      let file = this.files[i];
-      if (!files[file.filename]) {
-        this.files.splice(i--, 1);
-        changes[file.filename] = null; // for submitting to plnkr
-      }
+    let changed = false;
+    if (this.files.length != files.length) {
+      changed = true;
     }
 
-    for (let name in files) {
-      let existingFile = null;
-      for (let i = 0; i < this.files.length; i++) {
-        let item = this.files[i];
-        if (item.filename == name) {
-          existingFile = item;
+    // console.log(this.files, files);
+
+    if (changed == false) {
+      for (let i = 0; i < files.length; i++) {
+        if (this.files[i].filename != files[i].filename
+          || this.files[i].content != files[i].content) {
+          changed = true;
           break;
         }
       }
-      if (existingFile) {
-        if (existingFile.content == files[name].content) continue;
-        existingFile.content = files[name].content;
-      } else {
-        this.files.push(files[name]);
-      }
-      changes[name] = files[name];
     }
 
-    log.debug("UPDATED files", this.files);
-
-    if (_.isEmpty(changes) && !this.plunkId.startsWith(DEV_PREFIX)) {
+    if (!changed) {
       log.debug("no changes, skip updating");
       return;
-    } else {
-      log.debug("plunk " + this.plunkId + " changes", changes);
     }
 
-    // if (this.plunkId && !this.plunkId.startsWith(DEV_PREFIX)) {
-    //   log.debug("update remotely", this.webPath, this.plunkId);
-    //   await this.updatePlunk(this.plunkId, changes, plunkerToken);
-    // } else {
-    log.debug("create plunk remotely", this.webPath);
-    this.plunkId = await this.createPlunk(this.description, this.files, plunkerToken);
-    // }
+    log.debug("plunk has changes or is new", this.plunkId);
 
-    // console.error("TEST PLUNK UPLOAD")
-    // process.exit(1);
+    this.files = files;
+
+    await this.updateRemote(plunkerToken);
+
+    await this.persist();
+
+    log.debug("plunk has changes or is new", this.plunkId);
   }
 
-  async createPlunk(description, files, plunkerToken) {
+  async updateRemote(plunkerToken) {
 
     if (!process.env.PLNKR_ENABLED) {
-      return DEV_PREFIX + Math.random().toString(36).slice(2);
+      if (!this.plunkId) {
+        this.plunkId = DEV_PREFIX + Math.random().toString(36).slice(2);
+      }
+      return this.plunkId;
     }
 
-    let filesObj = {};
-    files.forEach(function (file) {
-      filesObj[file.filename] = {
-        filename: file.filename,
-        content: file.content
-      }; // no _id
+    let entries = this.files.map(file => {
+      return {
+        content:  file.content,
+        encoding: 'utf-8',
+        type: 'file',
+        pathname: file.filename
+      }
     });
 
-    let form = {
-      description: description,
-      tags: [],
-      files: filesObj,
-      private: true
-    };
-
-
-    /*  let j = request.jar();
-      let cookie = request.cookie('plnk_session');
-      cookie.value = plunkerToken;
-      j.setCookie(cookie, "http://api.plnkr.co");
-    */
-    let data = {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json;charset=utf-8'},
-      json: true,
-      url: "http://api.plnkr.co/plunks/?sessid=" + plunkerToken,
-      body: form
-    };
-
-
-    log.debug("plunk createRemote", data);
-
-    let result = await this.requestPlunk(data);
-
-    log.debug("plunk createdRemote", result.body);
-
-    assert.strictEqual(result.statusCode, 201);
-
-    return result.body.id;
-
-  };
-
-  async requestPlunk(data) {
-    let result = await request(data);
-
-    if (result.statusCode == 404) {
-      throw new Error("result " + data.url + " status code 404, probably (plnkrAuthId is too old OR this plunk doesn't belong to plunk@javascript.ru (javascript-plunk) user)");
-    }
-    if (result.statusCode == 400) {
-      throw new Error("invalid json, probably you don't need to stringify body (request will do it)");
-    }
-
-    return result;
-  };
-
-  async updatePlunk(plunkId, changes, plunkerToken) {
-
-    if (!process.env.PLNKR_ENABLED) {
-      return;
-    }
-
-    let form = {
-      files: changes
-    };
-
     let options = {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      json: true,
-      url: "http://api.plnkr.co/plunks/" + plunkId + "?sessid=" + plunkerToken,
-      body: form
+      method:  'POST',
+      headers: {
+        'Content-Type':  'application/json;charset=utf-8',
+        'Authorization': `Bearer ${plunkerToken}`
+      },
+      json:    true
     };
 
-    log.debug(options);
+    options.url = this.plunkId ? `https://api.plnkr.co/v2/plunks/${this.plunkId}/versions` : "http://api.plnkr.co/v2/plunks";
 
-    let result = await this.requestPlunk(options);
+    options.body = this.plunkId ? {entries} : {
+      title:   'Code example',
+      tags:    [],
+      private: true,
+      entries
+    };
 
-    assert.strictEqual(result.statusCode, 200);
+    let response = await request(options);
+
+    // console.log(response);
+
+    assert.equal(response.statusCode, 201);
+
+    if (!this.plunkId) {
+      this.plunkId = response.body.id;
+    }
+
+    return response.body.id;
   };
 
 };
