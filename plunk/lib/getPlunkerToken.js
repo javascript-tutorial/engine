@@ -1,23 +1,64 @@
 let config = require('config');
 let log = require('engine/log')();
-let request = require('request-promise');
 const assert = require('assert');
+const PlunkSession = require('../models/plunkSession');
 
-module.exports = async function getPlunkerToken() {
+module.exports = async function getPlunkerToken({refresh = false} = {}) {
+  let session;
+
+  if (!process.env.PLNKR_ENABLED) {
+    return '';
+  }
+
+  log.debug("Get plunker token");
+
+  if (!refresh) {
+    log.debug("Get plunker token from db");
+    session = await PlunkSession.findOne({});
+  }
+
+  if (!session) {
+    log.debug('Get new plunk token');
+    await PlunkSession.remove({});
+    const token = await fetchPlunkSessionId();
+    session = await PlunkSession.create({
+      token,
+      expires:   new Date(Date.now() + 86400 * 1e3), // expires in 1 day
+      createdAt: new Date()
+    });
+  }
+
+  return session.token;
+};
+
+async function fetchPlunkSessionId() {
+
   // require here, not need to install these in server
-  const puppeteer = require('puppeteer');
+  // const puppeteer = require('puppeteer');
+  const puppeteer = require('puppeteer-extra')
+
+// Add stealth plugin and use defaults (all tricks to hide puppeteer usage)
+  const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+  puppeteer.use(StealthPlugin());
 
   const browser = await puppeteer.launch({
     // todo: run not from root
     // remove this
-    args: ['--no-sandbox'],
+    // args:     ['--no-sandbox'],
     headless: false,
-    devtools: false,
+    dumpio: true
+    // devtools: false,
     // slowMo: 300,
     //executablePath: getChromeLocation()
   });
 
+  browser.on('targetdestroyed', target => {
+    console.log("DESTROY", target.url());
+  });
+
   const page = await browser.newPage();
+
+  // await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36');
 
   await page.setRequestInterception(true);
 
@@ -90,37 +131,43 @@ module.exports = async function getPlunkerToken() {
   await githubPage.type('#password', config.plnkr.pass);
 
   const submitElem = await githubPage.$('input[type=submit]');
-  await submitElem.click();
 
-  let result = await new Promise((resolve, reject) => {
+  let tokenPromise = new Promise((resolve, reject) => {
     page.on('response', response => {
-      console.log("RESPONSE", response.url());
+      // console.log("RESPONSE", response.url());
       if (response.url() == 'https://api.plnkr.co/v2/auth/token') {
-        response.json().then(resolve, reject);
+        response.text().then(resolve, reject);
       }
     });
   });
 
+  await submitElem.click();
+
+  let result = await tokenPromise;
+
   console.log("RESULT!!", result);
+
+  result = JSON.parse(result); // split to see where the error happens
 
   await browser.close();
 
   return result.access_token;
-/*
-  pages = await browser.pages();
+  /*
+    pages = await browser.pages();
 
-  await new Promise(resolve => setTimeout(resolve, 10000));
+    await new Promise(resolve => setTimeout(resolve, 10000));
 
-  console.log("PAGES", pages.map(page => page.url()), pages[1] === page);
+    console.log("PAGES", pages.map(page => page.url()), pages[1] === page);
 
-  // I'll click on github login, and AFTER THAT we'll wait till plunker created session on server for that user
-  page.waitForResponse(response => response.url().match(/api.plnkr.co\/v2\/auth\/token/));
+    // I'll click on github login, and AFTER THAT we'll wait till plunker created session on server for that user
+    page.waitForResponse(response => response.url().match(/api.plnkr.co\/v2\/auth\/token/));
 
-  // console.log("HERE", page);
-  let token = await page.evaluate(() => document.cookie.match(/plnkr.access_token=([\w.]+)/)[1]);
+    // console.log("HERE", page);
+    let token = await page.evaluate(() => document.cookie.match(/plnkr.access_token=([\w.]+)/)[1]);
 
 
-  console.log("DONE", token);
+    console.log("DONE", token);
 
- */
-};
+   */
+
+}
