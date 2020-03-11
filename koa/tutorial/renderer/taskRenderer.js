@@ -117,36 +117,35 @@ module.exports = class TaskRenderer {
 
       if (solutionPlunk) {
 
-        if (config.lang === 'en') {
-          if (task.solutionJs) { // task may have solution.view OR _js.view
-            // append _js.view/solution.js to the solution UNLESS it has ```js demo in it
-            // English: all ok
-            // Other languages: not checked for duplicates
+        if (task.solutionJs) { // task may have solution.view OR _js.view
+          // append _js.view/solution.js to the solution UNLESS it has ```js demo in it
+          // English: all ok
+          // Other languages: not checked for duplicates
 
-            /*
-  // script to gather all tasks with solutionJs
-  var js = JSON.parse(require('fs').readFileSync('./tutorialTree.json', 'utf-8'));
-  for(let key in js.bySlugMap) {
-    let entry = js.bySlugMap[key];
-    if (!entry.value.solutionJs) continue;
-    console.log('http://javascript.local/task/' + key);
-  }
-  // use it as: node ~/tasks.js | xargs open
+          /*
+// script to gather all tasks with solutionJs
+var js = JSON.parse(require('fs').readFileSync('./tutorialTree.json', 'utf-8'));
+for(let key in js.bySlugMap) {
+  let entry = js.bySlugMap[key];
+  if (!entry.value.solutionJs) continue;
+  console.log('http://javascript.local/task/' + key);
+}
+// use it as: node ~/tasks.js | xargs open
 
-             */
+           */
 
-            if (!solution.match(/data-demo="1"/)) {
-              let solutionJs = `
+          if (!solution.match(/data-demo="1"/)) {
+            let solutionJs = `
 \`\`\`js
 ${task.solutionJs}
 \`\`\`
-          `;
+        `;
 
-              const tokens = await parser.parse(solutionJs);
-              solution += parser.render(tokens);
-            }
+            const tokens = await parser.parse(solutionJs);
+            solution += parser.render(tokens);
           }
         }
+
 
         let files = solutionPlunk.files;
         let hasTest = false;
