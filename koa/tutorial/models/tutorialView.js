@@ -81,8 +81,6 @@ module.exports = class TutorialView {
 
     await this.updateRemote(plunkerToken);
 
-    await this.persist();
-
     log.debug("plunk has changes or is new", this.plunkId);
   }
 
