@@ -209,7 +209,7 @@ module.exports = class TutorialTree {
   }
 
   async saveToCache() {
-    await fs.writeFile(path.join(config.cacheRoot, 'tutorialTree.json'), JSON.stringify(this.serialize()));
+    await fs.writeFile(path.join(config.cacheRoot, 'tutorialTree.json'), JSON.stringify(this.serialize(), null, 2));
   }
 
 };
