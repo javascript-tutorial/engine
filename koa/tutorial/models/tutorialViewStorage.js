@@ -59,7 +59,7 @@ module.exports = class TutorialViewStorage {
       if (!exists) return;
     }
 
-    return;
+    // return;
 
     let views = await fs.readFile(path.join(config.cacheRoot, 'tutorialViewStorage.json'));
     views = JSON.parse(views);
