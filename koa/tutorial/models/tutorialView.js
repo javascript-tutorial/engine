@@ -124,6 +124,11 @@ module.exports = class TutorialView {
 
     // console.log(response);
 
+    if (response.statusCode == 401) {
+      let fileNames = this.files.map(f => f.filename);
+      throw new Error(`No permissions to create/update, plunkId:${this.plunkId} files:${fileNames.join(',')}`);
+    }
+
     assert.equal(response.statusCode, 201);
 
     if (!this.plunkId) {
