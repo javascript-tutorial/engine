@@ -83,6 +83,8 @@ module.exports = async function(tokens, options) {
     // check readability
     let stat;
 
+    // console.log("image", options.publicRoot, src, ' -> ', sourcePath);
+    
     try {
       stat = await fs.stat(sourcePath);
     } catch (e) {

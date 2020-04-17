@@ -2,6 +2,8 @@ let assert = require('assert');
 let _ = require('lodash');
 let log = require('engine/log')();
 let Zip = require('node-zip');
+const fs = require('fs-extra');
+const stripIndents = require('engine/text-utils/stripIndents');
 
 // we create fake plunk ids with this prefix
 // so that when updating for real, we know they do not exist and don't send updates to https://plnkr.co server
@@ -137,5 +139,67 @@ module.exports = class TutorialView {
 
     return response.body.id;
   };
+
+
+  static async readFs(dir) {
+
+    let allFiles = await fs.readdir(dir);
+
+    let files = [];
+    for(let file of allFiles) {
+      if (file[0] == ".") continue;
+
+      let filePath = path.join(dir, file);
+      if ((await fs.stat(filePath)).isDirectory()) {
+        log.error("Directory not allowed: " + file);
+        return null;
+      }
+
+      let type = mime.getType(file).split('/');
+      if (type[0] != 'text' && type[1] != 'json' && type[1] != 'javascript' && type[1] != 'svg+xml') {
+        log.error("Bad file extension: " + file);
+        return null;
+      }
+
+      files.push(file);
+    }
+
+    files = files.sort(function(fileA, fileB) {
+      let extA = fileA.slice(fileA.lastIndexOf('.') + 1);
+      let extB = fileB.slice(fileB.lastIndexOf('.') + 1);
+
+      if (extA == extB) {
+        return fileA > fileB ? 1 : -1;
+      }
+
+      // html always first
+      if (extA == 'html') return 1;
+      if (extB == 'html') return -1;
+
+      // then goes CSS
+      if (extA == 'css') return 1;
+      if (extB == 'css') return -1;
+
+      // then JS
+      if (extA == 'js') return 1;
+      if (extB == 'js') return -1;
+
+      // then other extensions
+      return fileA > fileB ? 1 : -1;
+    });
+
+    let filesForPlunk = [];
+    for (let i = 0; i < files.length; i++) {
+      let file = files[i];
+      filesForPlunk.push({
+        filename: file,
+        content: stripIndents(await fs.readFile(path.join(dir, file), 'utf-8'))
+      });
+    }
+
+    // console.log("FILES FOR PLUNK", filesForPlunk);
+
+    return filesForPlunk;
+  }
 
 };

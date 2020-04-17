@@ -392,7 +392,7 @@ module.exports = class TutorialImporter {
       log.debug("Created new plunk (db empty)", view);
     }
 
-    let filesForPlunk = readFs(dir);
+    let filesForPlunk = await TutorialView.readFs(dir);
     log.debug("Files for plunk", filesForPlunk);
 
     if (!filesForPlunk) return; // had errors
@@ -586,68 +586,3 @@ function copySync(srcPath, dstPath) {
   fse.copySync(srcPath, dstPath);
 }
 
-
-function readFs(dir) {
-
-  let files = fs.readdirSync(dir);
-
-  let hadErrors = false;
-  files = files.filter(function(file) {
-    if (file[0] == ".") return false;
-
-    let filePath = path.join(dir, file);
-    if (fs.statSync(filePath).isDirectory()) {
-      log.error("Directory not allowed: " + file);
-      hadErrors = true;
-    }
-
-    let type = mime.getType(file).split('/');
-    if (type[0] != 'text' && type[1] != 'json' && type[1] != 'javascript' && type[1] != 'svg+xml') {
-      log.error("Bad file extension: " + file);
-      hadErrors = true;
-    }
-
-    return true;
-  });
-
-  if (hadErrors) {
-    return null;
-  }
-
-  files = files.sort(function(fileA, fileB) {
-    let extA = fileA.slice(fileA.lastIndexOf('.') + 1);
-    let extB = fileB.slice(fileB.lastIndexOf('.') + 1);
-
-    if (extA == extB) {
-      return fileA > fileB ? 1 : -1;
-    }
-
-    // html always first
-    if (extA == 'html') return 1;
-    if (extB == 'html') return -1;
-
-    // then goes CSS
-    if (extA == 'css') return 1;
-    if (extB == 'css') return -1;
-
-    // then JS
-    if (extA == 'js') return 1;
-    if (extB == 'js') return -1;
-
-    // then other extensions
-    return fileA > fileB ? 1 : -1;
-  });
-
-  let filesForPlunk = [];
-  for (let i = 0; i < files.length; i++) {
-    let file = files[i];
-    filesForPlunk.push({
-      filename: file,
-      content: stripIndents(fs.readFileSync(path.join(dir, file), 'utf-8'))
-    });
-  }
-
-  // console.log("FILES FOR PLUNK", filesForPlunk);
-
-  return filesForPlunk;
-}
