@@ -14,8 +14,6 @@ const getPlunkerToken = require('engine/plunk').getPlunkerToken;
 const TutorialParser = require('./tutorialParser');
 const stripTitle = require('engine/markit').stripTitle;
 const stripYamlMetadata = require('engine/markit').stripYamlMetadata;
-const mime = require('mime');
-const stripIndents = require('engine/text-utils/stripIndents');
 
 const t = require('engine/i18n');
 

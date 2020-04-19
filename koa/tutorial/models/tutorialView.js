@@ -4,6 +4,8 @@ let log = require('engine/log')();
 let Zip = require('node-zip');
 const fs = require('fs-extra');
 const stripIndents = require('engine/text-utils/stripIndents');
+const path = require('path');
+const mime = require('mime');
 
 // we create fake plunk ids with this prefix
 // so that when updating for real, we know they do not exist and don't send updates to https://plnkr.co server
