@@ -12,6 +12,7 @@ require('prismjs/components/prism-http.js');
 require('prismjs/components/prism-scss.js');
 require('prismjs/components/prism-sql.js');
 require('prismjs/components/prism-java.js');
+require('prismjs/components/prism-bash.js');
 
 // for iBooks to use monospace font
 Prism.hooks.add('wrap', function(env) {

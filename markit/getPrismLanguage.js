@@ -7,7 +7,7 @@ let ext2language = {
   '':     'none'
 };
 
-let languages = 'none markup javascript css coffeescript php http java ruby scss sql'.split(' ');
+let languages = 'none markup javascript css coffeescript php http java ruby scss sql bash'.split(' ');
 
 let allSupported = Object.keys(ext2language).concat(languages);
 
