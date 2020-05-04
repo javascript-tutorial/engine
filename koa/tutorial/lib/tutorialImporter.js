@@ -22,6 +22,7 @@ const execa = require('execa');
 module.exports = class TutorialImporter {
   constructor(options) {
     this.root = fs.realpathSync(options.root);
+    this.parserDryRunEnabled = options.parserDryRunEnabled;
     this.onchange = options.onchange || function () {};
     this.tree = TutorialTree.instance();
   }
@@ -106,11 +107,6 @@ module.exports = class TutorialImporter {
 
     //this.tree.destroyTree(data.slug);
 
-    let options = {
-      staticHost: config.urlBase.static.href.slice(0, -1),
-      resourceWebRoot: Article.getResourceWebRootBySlug(data.slug)
-    };
-
     let tmp = stripYamlMetadata(content);
 
     content = tmp.text;
@@ -125,9 +121,15 @@ module.exports = class TutorialImporter {
 
     data.content = content;
 
-    const parser = new TutorialParser(options);
+    if (this.parserDryRunEnabled) {
+      let options = {
+        staticHost: config.urlBase.static.href.slice(0, -1),
+        resourceWebRoot: Article.getResourceWebRootBySlug(data.slug)
+      };
+      const parser = new TutorialParser(options);
 
-    await parser.parse(content);
+      await parser.parse(content);
+    }
 
     data.githubPath = sourceFolderPath.slice(this.root.length);
 
@@ -176,11 +178,6 @@ module.exports = class TutorialImporter {
 
     // this.tree.destroyTree(data.slug);
 
-    const options = {
-      staticHost: config.urlBase.static.href.slice(0, -1),
-      resourceWebRoot: Article.getResourceWebRootBySlug(data.slug)
-    };
-
     let tmp = stripYamlMetadata(content);
 
     content = tmp.text;
@@ -197,10 +194,16 @@ module.exports = class TutorialImporter {
 
     data.content = content;
 
-    const parser = new TutorialParser(options);
+    if (this.parserDryRunEnabled) {
+      // just make sure it parses
+      const options = {
+        staticHost: config.urlBase.static.href.slice(0, -1),
+        resourceWebRoot: Article.getResourceWebRootBySlug(data.slug),
+      };
+      const parser = new TutorialParser(options);
 
-    // just make sure it parses
-    await parser.parse(content);
+      await parser.parse(content);
+    }
 
     data.githubPath = articlePath.slice(this.root.length); // + '/article.md';
 
@@ -297,12 +300,6 @@ module.exports = class TutorialImporter {
 
     //this.tree.destroyTree(data.slug);
 
-    const options = {
-      staticHost: config.urlBase.static.href.slice(0, -1),
-      resourceWebRoot: Task.getResourceWebRootBySlug(data.slug)
-    };
-
-
     let tmp = stripYamlMetadata(content);
 
     content = tmp.text;
@@ -318,18 +315,24 @@ module.exports = class TutorialImporter {
 
     data.content = content;
 
-    const parser = new TutorialParser(options);
-
-    await parser.parse(content);
-
     // Solution, no title, no meta
     const solutionPath = path.join(taskPath, 'solution.md');
     const solution = fs.readFileSync(solutionPath, 'utf-8').trim();
     data.solution = solution;
 
-    log.debug("parsing solution");
+    
+    if (this.parserDryRunEnabled) {
+      log.debug('parsing content and solution');
+      const options = {
+        staticHost: config.urlBase.static.href.slice(0, -1),
+        resourceWebRoot: Task.getResourceWebRootBySlug(data.slug),
+      };
 
-    await parser.parse(solution);
+      const parser = new TutorialParser(options);
+
+      await parser.parse(content);
+      await parser.parse(solution);
+    }
 
     if (fs.existsSync(path.join(taskPath, '_js.view', 'solution.js'))) {
       data.solutionJs = fs.readFileSync(path.join(taskPath, '_js.view', 'solution.js'), 'utf8');
