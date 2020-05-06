@@ -463,8 +463,8 @@ module.exports = class TutorialImporter {
       });
     }
 
+    log.debug("save plunk for", sourceWebPath);
 
-    log.debug("save plunk for ", sourceWebPath);
     await sourceView.mergeAndSyncPlunk(sourceFilesForView, this.plunkerToken);
 
     // Solution
@@ -488,13 +488,13 @@ module.exports = class TutorialImporter {
     }];
 
     if (testJs) {
-      solutionFilesForView[{
+      solutionFilesForView.push({
         content:  testJs.trim(),
         filename: 'test.js'
-      }];
+      });
     }
 
-    log.debug("save plunk for ", solutionWebPath);
+    log.debug("save plunk for", solutionWebPath);
 
     await solutionView.mergeAndSyncPlunk(solutionFilesForView, this.plunkerToken);
 
