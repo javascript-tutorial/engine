@@ -17,7 +17,10 @@ function stripSpaceIndent(text) {
 
   let stripPattern = /^ *(?=\S+)/gm;
 
-  let indentLen = text.match(stripPattern)
+  let match = text.match(stripPattern);
+  if (!match) return text;
+  
+  let indentLen = match
     .reduce(function (min, line) {
       return Math.min(min, line.length);
     }, Infinity);
