@@ -8,6 +8,9 @@ const log = require('engine/log')();
 const yaml = require('js-yaml');
 const pixelWidth = require('../lib/pixelWidth');
 const execSync = require('child_process').execSync;
+const Entities = require('html-entities').XmlEntities;
+ 
+const entities = new Entities();
 
 async function getImageYaml(imageFile) {
   let content = await fs.readFile(imageFile, 'utf-8');
@@ -106,6 +109,8 @@ module.exports = async function() {
           return match;
         }
 
+        text = entities.decode(text);
+
         if (!translation[text]) {
           // no such translation
           return match;
@@ -172,7 +177,7 @@ module.exports = async function() {
         }
 
 
-        return part1 + x + part2 + translated.text;
+        return part1 + x + part2 + entities.encode(translated.text);
       });
     }
 
