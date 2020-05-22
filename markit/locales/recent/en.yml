@@ -2,6 +2,6 @@ recent: A recent addition
 recent_addition: This is a recent addition to the language.
 browser:
   value: "Examples work in the recent #{browser}."
-  none: "Not supported in JavaScript engines, or supported partially yet, requires polyfilling."
-  new: Old browsers may need polyfills.
+  none: "Not supported in JavaScript engines, or supported partially yet, requires <a href="https://javascript.info/polyfills">polyfilling</a>."
+  new: Old browsers may need <a href="https://javascript.info/polyfills">polyfills</a>.
 caniuse: "You can find the current state of support at <a href=\"https://caniuse.com/#feat=#{feat}\">https://caniuse.com/#feat=#{feat}</a>."
