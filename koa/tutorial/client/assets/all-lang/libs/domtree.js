@@ -22,7 +22,6 @@ function drawHtmlTree(json, nodeTarget, w, h) {
   var tree, diagonal, vis;
 
   function update(source) {
-    // Compute the flattened node list. TODO use d3.layout.hierarchy.
     var nodes = tree.nodes(root);
     // Compute the "layout".
     nodes.forEach(function(n, i) {

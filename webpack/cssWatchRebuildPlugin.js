@@ -52,7 +52,6 @@ class CssWatchFS {
       let handlerPath = config.handlers[handlerName].path;
       if (!fs.statSync(handlerPath).isDirectory()) continue;
 
-      //console.log("GLOB SYNC", `${handlerPath}/client/styles/**/*.styl`, {cwd: config.projectRoot});
       let handlerStyles = glob.sync(`**/*.styl`, {cwd: handlerPath});
       for (const handlerStyle of handlerStyles) {
 
