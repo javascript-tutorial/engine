@@ -1,5 +1,3 @@
-'use strict';
-
 let filters = require('pug').filters;
 
 let BasicParser = require('engine/markit').BasicParser;
