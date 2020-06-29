@@ -16,7 +16,11 @@ const KoaApplication = require('koa');
 
 const log = require('engine/log')();
 const Cookies = require('cookies');
-
+const https = require('https');
+const http = require('http');
+const fs = require('fs');
+const config = require('config');
+const path = require('path');
 
 module.exports = class Application extends KoaApplication {
   constructor() {
@@ -39,12 +43,25 @@ module.exports = class Application extends KoaApplication {
 
   }
 
-// adding middlewares only possible *before* app.run
-// (before server.listen)
-// assigns server instance (meaning only 1 app can be run)
-//
-// app.listen can also be called from tests directly (and synchronously), without waitBoot (many times w/ random port)
-// it's ok for tests, db requests are buffered, no need to waitBoot
+  listen(port, host, callback) {
+    if (process.env.HTTPS) {
+      let httpsOptions = {
+        key: fs.readFileSync(path.join(config.certDir, 'local-key.pem')),
+        cert: fs.readFileSync(path.join(config.certDir, 'local.pem')),
+      };
+
+      return https.createServer(httpsOptions, this.callback()).listen(...arguments);
+    } else {
+      return http.createServer(this.callback()).listen(...arguments);
+    }
+  }
+
+  // adding middlewares only possible *before* app.run
+  // (before server.listen)
+  // assigns server instance (meaning only 1 app can be run)
+  //
+  // app.listen can also be called from tests directly (and synchronously), without waitBoot (many times w/ random port)
+  // it's ok for tests, db requests are buffered, no need to waitBoot
 
   async waitBootAndListen(host, port) {
     await this.waitBoot();
