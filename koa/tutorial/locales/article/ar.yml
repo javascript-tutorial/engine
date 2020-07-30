@@ -1,0 +1,11 @@
+lesson:
+  next: الدرس التالي
+  prev: الدرس السابق
+
+sibling_chapters: فصول الأشقاء
+lesson_navigation: التنقل في الدرس
+tasks: مهمه
+chapter: فصل
+lesson_of: "الدرس #{bookChildNumber} في #{bookLeafCount}"
+
+article_not_found: "المقاله \"#{path}\" غير موجوده"

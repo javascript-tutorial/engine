@@ -1,0 +1,17 @@
+open_task:
+  sandbox:
+    tests: افتح sandbox بالإختبارات.
+    no_tests: افتح sandbox للمهمه.
+
+open_solution:
+  sandbox:
+    tests: افتح الحل الإختبارات في sandbox.
+    no_tests: افتح الحل في sandbox.
+
+Importance: الأهمية
+importance: الأهمية
+solution: الحل
+back: الرجوع الي الدرس
+importance_help: كيف كانت درجة اهمية المهمه, من 1 الى 5
+
+task_not_found: "المهمه \"#{path}\" غير موجوده"

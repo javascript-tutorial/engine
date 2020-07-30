@@ -1,0 +1,7 @@
+
+server_connection_error: خطأ في الإتصال بالخادم.
+server_request_timeout: مهلة طلب الخادم.
+request_aborted: تم إلغاء الطلب.
+no_response: لا يوجد استجابة من الخادم.
+server_error: "خطأ بالخادم (code #{status}), حاول لاحقاً."
+invalid_format: صيغة إستجابة غير صحيحة.

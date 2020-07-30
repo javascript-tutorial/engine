@@ -1,0 +1,7 @@
+recent: إضافة حديثة
+recent_addition: هذه إضافة حديثة إلى اللغه.
+browser:
+  value: "الإمثله تعمل فى النسخه الحديثه من #{browser}."
+  none: "غير مدعوم فى محرك جافاسكريبت, أو مدعوم بشكل جزئي حتي الآن, يتطلب polyfilling."
+  new: المتصفحات القديمه ربما تتطلب polyfills.
+caniuse: "يمكنك العثور على الحالة الحالية للدعم في <a href=\"https://caniuse.com/#feat=#{feat}\">https://caniuse.com/#feat=#{feat}</a>."

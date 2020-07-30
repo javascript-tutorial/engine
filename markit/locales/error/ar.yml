@@ -1,0 +1,7 @@
+image_not_found: "الصورة \"#{src}\" غير موجودة"
+image_invalid: "الصورة \"#{src}\" تالفة"
+attr_required: "السمة \"#{attr}\" مطلوبة"
+src_out_of_root: "مسار المصدر \"#{src}\" خارج أساس الملفات 'root'"
+read_file: "لا يمكن قراءة الملف \"#{src}\""
+no_such_plunk: "لا يوجد مثل هذا \"#{src}\""
+anchor_exists: "'Anchor' المرتكز موجود بالفعل: \"#{anchor}\""
