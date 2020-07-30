@@ -14,6 +14,7 @@ switch(lang) {
     break;
   case 'ja':
   case 'ko':
+  case 'ar':
     module.exports = require('./numbers');
     break;
   case 'zh':

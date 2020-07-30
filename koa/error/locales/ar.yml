@@ -1,8 +1,8 @@
 400:
   title: طلب خاطئ
 401:
-  title: 'Authentication' المصادقة مطلوبة
-  description: ربما, انت بحاجة إلى <a href="#" data-action-login>تسجيل الدخول</a>?
+  title: "'Authentication' المصادقة مطلوبة"
+  description: "ربما, انت بحاجة إلى <a href="#" data-action-login>تسجيل الدخول</a>?'"
 
 403:
   title: الدخول مرفوض
