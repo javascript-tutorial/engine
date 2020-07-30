@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Loads info from external sources for
  * sandbox: links
@@ -86,6 +84,10 @@ module.exports = async function (tokens, options) {
   async function blocktag_source(token) {
 
     if (!token.blockTagAttrs.src) return;
+
+    if (!token.blockTagAttrs.src.replace) { // test error
+      console.error("ODD", token.blockTagAttrs.src);
+    }
 
     let sourcePath = srcUnderRoot(
       options.publicRoot,
