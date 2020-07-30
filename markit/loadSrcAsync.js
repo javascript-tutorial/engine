@@ -86,7 +86,7 @@ module.exports = async function (tokens, options) {
     if (!token.blockTagAttrs.src) return;
 
     if (!token.blockTagAttrs.src.replace) { // test error
-      console.error("ODD", token.blockTagAttrs.src);
+      console.error("ODD", token);
     }
 
     let sourcePath = srcUnderRoot(
