@@ -85,9 +85,11 @@ module.exports = async function (tokens, options) {
 
     if (!token.blockTagAttrs.src) return;
 
-    if (!token.blockTagAttrs.src.replace) { // test error
+    /*
+    if (!token.blockTagAttrs.src.replace) { // findme: fixme: strange token for ar
       console.error("ODD", token);
     }
+    */
 
     let sourcePath = srcUnderRoot(
       options.publicRoot,
