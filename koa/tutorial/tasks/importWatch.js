@@ -18,7 +18,8 @@ module.exports = async function() {
   await TutorialViewStorage.instance().loadFromCache();
 
   let importer = new TutorialImporter({
-    root: config.tutorialRoot
+    root: config.tutorialRoot,
+    parserDryRunEnabled: false
   });
 
   tree.clear();
@@ -49,6 +50,7 @@ function watchTutorial() {
 
   let importer = new TutorialImporter({
     root:     config.tutorialRoot,
+    parserDryRunEnabled: false,
     onchange: function(path) {
       log.info("livereload.change", path);
       livereload.changed(path);

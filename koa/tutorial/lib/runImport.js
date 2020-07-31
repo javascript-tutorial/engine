@@ -14,7 +14,8 @@ module.exports = async function() {
   let viewStorage = TutorialViewStorage.instance();
 
   let importer = new TutorialImporter({
-    root: config.tutorialRoot
+    root: config.tutorialRoot,
+    parserDryRunEnabled: true
   });
 
   tree.clear();
