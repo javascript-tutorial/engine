@@ -86,7 +86,7 @@ module.exports = async function (tokens, options) {
     if (!token.blockTagAttrs.src) return;
 
     if (token.blockTagAttrs.src === true) {
-      throw new SrcError('No value for attribute src');
+      throw new SrcError('No value for attribute src (there should be no space in src=value)');
     }
 
     /*
