@@ -15,12 +15,11 @@ switch(lang) {
   case 'ja':
   case 'ko':
   case 'ar':
-  case 'he':
     module.exports = require('./numbers');
     break;
   case 'zh':
     module.exports = require('./zh');
     break;
   default:
-    throw new Error("No transliteration module for language " + lang);
+    module.exports = require('./numbers');
 }
