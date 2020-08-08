@@ -21,5 +21,5 @@ switch(lang) {
     module.exports = require('./zh');
     break;
   default:
-    throw new Error("No transliteration module for language " + lang);
+    module.exports = require('./numbers');
 }
