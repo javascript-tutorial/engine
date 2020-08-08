@@ -125,7 +125,8 @@ module.exports = async function(tokens, options) {
 
   async function doProcessImageOrFigure(token) {
     let src = tokenUtils.attrGet(token, 'src');
-    if (!src) return;
+    // ignore absolute links (to external resources)
+    if (!src || src.includes('://')) return;
 
     let imageInfo = await getImageInfo(src);
 
