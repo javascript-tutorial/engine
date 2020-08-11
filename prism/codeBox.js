@@ -2,6 +2,7 @@ let resizeOnload = require('client/head/resizeOnload');
 let isScrolledIntoView = require('client/isScrolledIntoView');
 let makeLineNumbers = require('./makeLineNumbers');
 let makeHighlight = require('./makeHighlight');
+const { highlight } = require('prismjs');
 
 function CodeBox(elem) {
 
@@ -27,8 +28,12 @@ function CodeBox(elem) {
 
   preElem.insertAdjacentHTML("beforeEnd", lineNumbersWrapper);
 
-  let masks = makeHighlight(JSON.parse(elem.getAttribute('data-highlight')));
-  preElem.insertAdjacentHTML("afterBegin", masks);
+  let ranges = JSON.parse(elem.getAttribute('data-highlight'));
+  if (ranges) {
+    emphasize(codeElem, ranges);
+  }
+
+  // preElem.insertAdjacentHTML("afterBegin", masks);
 
   let isJS = preElem.classList.contains('language-javascript');
   let isHTML = preElem.classList.contains('language-markup');
@@ -82,6 +87,23 @@ function CodeBox(elem) {
       return;
     }
     win.postMessage(runCode, 'https://lookatcode.com/showjs');
+  }
+
+  function emphasize(codeElem, ranges) {
+    let codeHtml = codeElem.innerHTML;
+    for(let range of ranges) {
+      if (range.start !== undefined && range.end !== undefined) {
+        // full line emphasize
+        let split = codeHtml.split(/\n/);
+        codeHtml = split.slice(0, range.start).join('\n') +
+           '<div class="block-highlight">' +
+           split.slice(range.start, range.end + 1).join('\n') + '</div>' +
+           split.slice(range.end + 1).join('\n')
+        debugger;
+        
+      }
+    }
+    codeElem.innerHTML = codeHtml;
   }
 
   function runHTML() {
