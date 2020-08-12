@@ -26,7 +26,7 @@ function CodeBox(elem) {
   }
   */
 
-  preElem.insertAdjacentHTML("beforeEnd", lineNumbersWrapper);
+  preElem.insertAdjacentHTML("afterBegin", lineNumbersWrapper);
 
   let ranges = JSON.parse(elem.getAttribute('data-highlight'));
   if (ranges) {
@@ -99,7 +99,7 @@ function CodeBox(elem) {
            '<div class="block-highlight">' +
            split.slice(range.start, range.end + 1).join('\n') + '</div>' +
            split.slice(range.end + 1).join('\n')
-        debugger;
+        // debugger;
         
       }
     }
