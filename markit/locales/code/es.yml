@@ -1,0 +1,4 @@
+run: ejecutar
+show: mostrar
+open:
+  sandbox: abrir en entorno controlado

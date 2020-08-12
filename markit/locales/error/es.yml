@@ -1,0 +1,7 @@
+image_not_found: "La imágen \"#{src}\" no se encontró"
+image_invalid: "La imágen \"#{src}\" está dañada"
+attr_required: "Se requiere el atributo \"#{attr}\""
+src_out_of_root: "La ruta de origen \"#{src}\" está fuera del root"
+read_file: "No se puede leer archivo \"#{src}\""
+no_such_plunk: "No existe tal plunk \"#{src}\""
+anchor_exists: "Ya existe el ancla: \"#{anchor}\""

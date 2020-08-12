@@ -1,0 +1,17 @@
+open_task:
+  sandbox:
+    tests: Abrir en entorno controlado con pruebas.
+    no_tests: Abrir un entorno controlado para la tarea.
+
+open_solution:
+  sandbox:
+    tests: Abrir la solución con pruebas en un entorno controlado.
+    no_tests: Abrir la solución en un entorno controlado.
+
+Importance: Importancia
+importance: importancia
+solution: solución
+back: regresar a la lección
+importance_help: Qué tan importante es la tarea, del 1 a 5
+
+task_not_found: "La tarea \"#{path}\" no se encontró"

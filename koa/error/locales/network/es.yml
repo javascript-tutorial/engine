@@ -1,0 +1,7 @@
+
+server_connection_error: Error de conexión al servidor.
+server_request_timeout: Tiempo de espera de la solicitud del servidor.
+request_aborted: La solicitud fue cancelada.
+no_response: No hay respuesta del servidor.
+server_error: "Error de servidor (código #{status}), intente nuevamente más tarde."
+invalid_format: Formato de respuesta no válido.

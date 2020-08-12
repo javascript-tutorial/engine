@@ -1,0 +1,27 @@
+400:
+  title: Solicitud no válida
+401:
+  title: Autenticación requerida
+  description: Probablemente usted necesite <a href="#" data-action-login>iniciar sesión</a>?
+
+403:
+  title: Acceso Prohibido
+  wrong_user: Tal vez usted inició sesión con el usuario incorrecto?
+  login: Quizás usted necesite <a href="#" data-action-login>iniciar sesión</a>?
+
+404:
+  title: La página no se encontró
+  use_search:  'Para encontrar la página puedes usar la búsqueda:'
+  search: Buscar
+  use_top: …o navegación en la parte superior.
+  go_to_main: Ir a la página principal
+
+500:
+  title: Error de servidor
+  subject: "Error 500 en #{href}"
+  description: 'Analizamos los errores, pero puede acelerar el proceso informando los detalles a <a href="mailto:#{email}?subject=#{subject}">#{email}</a>.'
+
+503:
+  title: Servicio no disponible
+  description: Disculpe, el servicio no está disponible, por favor intente más tarde.
+

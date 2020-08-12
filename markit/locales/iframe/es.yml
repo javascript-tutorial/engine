@@ -1,0 +1,4 @@
+open:
+  sandbox: abrir en entorno controlado
+  window: abrir en nueva ventana
+  download: descargar como zip
