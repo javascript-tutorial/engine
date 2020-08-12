@@ -18,7 +18,8 @@ switch(lang) {
     module.exports = require('./numbers');
     break;
   case 'zh':
-    module.exports = require('./zh');
+  case 'es':
+    module.exports = require('./limax');
     break;
   default:
     module.exports = require('./numbers');
