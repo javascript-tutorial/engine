@@ -17,10 +17,7 @@ switch(lang) {
   case 'ar':
     module.exports = require('./numbers');
     break;
-  case 'zh':
-  case 'es':
+  default:
     module.exports = require('./limax');
     break;
-  default:
-    module.exports = require('./numbers');
 }
