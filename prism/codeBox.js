@@ -89,21 +89,110 @@ function CodeBox(elem) {
     win.postMessage(runCode, 'https://lookatcode.com/showjs');
   }
 
+  
   function emphasize(codeElem, ranges) {
     let codeHtml = codeElem.innerHTML;
+    let split = codeHtml.split(/\n/);
+    
     for(let range of ranges) {
-      if (range.start !== undefined && range.end !== undefined) {
+      if (range.end !== undefined) {
         // full line emphasize
-        let split = codeHtml.split(/\n/);
-        codeHtml = split.slice(0, range.start).join('\n') +
-           '<div class="block-highlight">' +
-           split.slice(range.start, range.end + 1).join('\n') + '</div>' +
-           split.slice(range.end + 1).join('\n')
-        // debugger;
+        split[range.start] = '<em class="block-highlight">' + split[range.start];
+        split[range.end] += '</em>';
+      } else {
+        let line = split[range.start];
+        let cols = range.cols;
+        let inTag = false;
+        let charCounter = -1;
+        let resultLine = '';
+        /*
+        if (cols.find(c => c.start == 0)) {
+          resultLine += '<em class="inline-highlight">';
+        }
+        */
+        // line = line.replace(/<.*?>/g, '<s>');
+        //line = `alert('Start of try runs');  // (1) &lt;---`;
+
+        for(let i = 0; i < line.length ; i++) {
+          if (line[i] == '<') inTag = true;
+          
+          if (inTag) {
+            resultLine += line[i];
+          } else {
+            charCounter++;
+
+            if (cols.find(c => c.start == charCounter)) {
+              resultLine += '<em class="inline-highlight">';
+            }
+
+            resultLine += line[i];
+
+            if (line[i] == '&') { // entities, such as &lt; are counted as 1 char
+              let entities = ['lt;', 'gt;', 'amp;', 'quot;'];
+              for(let entity of entities) {
+                if (line.slice(i + 1, i + 1 + entity.length) == entity) {
+                  i += entity.length;
+                  resultLine += entity;
+                }
+              }
+            }
+
+            if (cols.find(c => c.end == charCounter + 1)) {
+              resultLine += '</em>';
+            }
+          }
+          
+          if (line[i] == '>') inTag = false;
+        }
+        /*
+        if (cols.find(c => c.end == charCounter + 1)) {
+          resultLine += '</em>';
+        }*/
         
+        split[range.start] = resultLine;
       }
+
     }
-    codeElem.innerHTML = codeHtml;
+    codeElem.innerHTML = split.join('\n');
+  }
+
+  function emphasize0(codeElem, ranges) {
+    for(let range of ranges) {
+      let codeHtml = codeElem.innerHTML;
+      if (range.start !== undefined && range.end !== undefined) {
+        // full line 
+        let idx = -1;
+        let lineNo = 0;
+        let rangeStartIdx, rangeEndIdx;
+        while(true) {
+          idx = codeHtml.indexOf('\n', idx + 1);
+          if (idx == -1) break;
+          lineNo++;
+          if (lineNo == range.start) {
+            rangeStartIdx = idx;
+          }
+          if (lineNo == range.end) {
+            rangeEndIdx = idx;
+            break;
+          }
+        }
+        
+        if (range.start = 0) {
+          rangeStartIdx = 0;
+        }
+        if (idx == -1) {
+          rangeEndIdx = codeElem.innerHTML.length;
+        }
+        
+        let selectionRange = new Range();
+        selectionRange.setStart(codeElem, rangeStartIdx);
+        selectionRange.setEnd(codeElem, rangeStartIdx);
+        let emNode = document.createElement('span');
+        emNode.className = 'block-highlight';
+        selectionRange.surroundContents(emNode);
+        
+      } 
+    }
   }
 
   function runHTML() {
