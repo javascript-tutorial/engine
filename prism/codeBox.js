@@ -96,7 +96,7 @@ function CodeBox(elem) {
     
     for(let range of ranges) {
       if (range.end !== undefined) {
-        // full line emphasize
+        // block emphasize
         split[range.start] = '<em class="block-highlight">' + split[range.start];
         split[range.end] += '</em>';
       } else {
@@ -127,7 +127,7 @@ function CodeBox(elem) {
 
             resultLine += line[i];
 
-            if (line[i] == '&') { // entities, such as &lt; are counted as 1 char
+            if (line[i] == '&') { // entities, such as &lt; are counted as single char in range.cols
               let entities = ['lt;', 'gt;', 'amp;', 'quot;'];
               for(let entity of entities) {
                 if (line.slice(i + 1, i + 1 + entity.length) == entity) {
