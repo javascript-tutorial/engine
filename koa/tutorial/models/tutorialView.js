@@ -1,7 +1,7 @@
 let assert = require('assert');
 let _ = require('lodash');
 let log = require('engine/log')();
-let Zip = require('node-zip');
+let Zip = require('jszip');
 const fs = require('fs-extra');
 const stripIndents = require('engine/text-utils/stripIndents');
 const path = require('path');
@@ -37,14 +37,14 @@ module.exports = class TutorialView {
     }
   }
 
-  getZip() {
+  async getZip() {
     let archive = new Zip();
 
     for (let file of this.files) {
       archive.file(file.filename, file.content);
     }
 
-    let buffer = archive.generate({type: 'nodebuffer'});
+    let buffer = await archive.generateAsync({type: 'nodebuffer'});
 
     return buffer;
   };
