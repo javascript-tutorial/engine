@@ -10,7 +10,7 @@ exports.get = async function(ctx) {
     view = storage.get(webpath);
     if (view.plunkId == ctx.query.plunkId) {
       ctx.set('Content-Type', 'application/zip');
-      ctx.body = view.getZip();
+      ctx.body = await view.getZip();
     }
   }
 
