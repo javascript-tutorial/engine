@@ -1,5 +1,3 @@
-'use strict';
-
 const config = require('config');
 const path = require('path');
 const TutorialEntry = require('./tutorialEntry');
@@ -20,7 +18,7 @@ module.exports = class Task extends TutorialEntry {
 
     this.libs = data.libs || [];
 
-    'importance,headJs,headCss,headHtml,content,solution,solutionJs,parent'.split(',').forEach(field => {
+    'importance,headJs,headCss,headHtml,content,solution,solutionJs,parent,type,version,source,solution'.split(',').forEach(field => {
       if (field in data) {
         this[field] = data[field];
       }

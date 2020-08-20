@@ -1,8 +1,8 @@
-const fs = require('fs');
-const fse = require('fs-extra');
+const fs = require('fs-extra');
 const path = require('path');
 const config = require('config');
-
+const glob = require('util').promisify(require('glob'));
+const mime = require('mime');
 const Article = require('../models/article');
 const Task = require('../models/task');
 const log = require('engine/log')();
@@ -253,7 +253,7 @@ module.exports = class TutorialImporter {
 
 
   async syncResource(sourcePath, destDir) {
-    fse.ensureDirSync(destDir);
+    fs.ensureDirSync(destDir);
 
     log.debug("syncResource", sourcePath, destDir);
 
@@ -268,7 +268,7 @@ module.exports = class TutorialImporter {
       }
       copySync(sourcePath, destPath);
     } else if (stat.isDirectory()) {
-      fse.ensureDirSync(destPath);
+      fs.ensureDirSync(destPath);
       const subPathNames = fs.readdirSync(sourcePath);
       for (let subPath of subPathNames) {
         subPath = path.join(sourcePath, subPath);
@@ -307,6 +307,8 @@ module.exports = class TutorialImporter {
 
     if (meta.libs) data.libs = meta.libs;
     if (meta.importance) data.importance = meta.importance;
+    if (meta.type) data.type = meta.type;
+    data.version = meta.version || (data.type ? 2 : 1);
 
     tmp = stripTitle(content);
 
@@ -339,6 +341,12 @@ module.exports = class TutorialImporter {
     }
 
     log.debug("task data", data);
+
+    if (data.version > 1) {
+      data.source = await readdir(path.join(taskPath, 'source'));
+      data.solution = await readdir(path.join(taskPath, 'solution'));
+      console.log(data);
+    }
 
     const task = new Task(data);
     this.tree.add(task);
@@ -406,7 +414,7 @@ module.exports = class TutorialImporter {
 
     let dst = path.join(parent.getResourceFsRoot(), pathName);
 
-    fse.ensureDirSync(dst);
+    fs.ensureDirSync(dst);
     fs.readdirSync(dir).forEach(function(dirFile) {
       copySync(path.join(dir, dirFile), path.join(dst, dirFile));
     });
@@ -503,7 +511,7 @@ module.exports = class TutorialImporter {
     let pathName = path.basename(jsPath).replace('.view', '');
     let dst = path.join(task.getResourceFsRoot(), pathName);
 
-    fse.ensureDirSync(dst);
+    fs.ensureDirSync(dst);
     fs.readdirSync(jsPath).forEach(function(dirFile) {
       copySync(path.join(jsPath, dirFile), path.join(dst, dirFile));
     });
@@ -529,6 +537,20 @@ function makeSource(sourceJs, testJs) {
   return source;
 }
 
+async function readdir(dir) {
+  let filePaths = await glob('**', {cwd: dir});
+  let files = {};
+  for(let filePath of filePaths) {
+    files[filePath] = await fs.readFile(path.join(dir, filePath));
+    let mimeType = mime.getType(filePath);
+    console.log(filePath, mimeType)
+    if (mimeType.match(/text|javascript|json/)) {
+      files[filePath] = files[filePath].toString();
+    }
+  }
+
+  return files;
+}
 
 function makeSolution(solutionJs, testJs) {
   let solution = "<!doctype html>\n";
@@ -584,6 +606,6 @@ function copySync(srcPath, dstPath) {
 
   log.debug("copySync %s -> %s", srcPath, dstPath);
 
-  fse.copySync(srcPath, dstPath);
+  fs.copySync(srcPath, dstPath);
 }
 
