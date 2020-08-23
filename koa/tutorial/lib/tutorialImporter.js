@@ -541,9 +541,11 @@ async function readdir(dir) {
   let filePaths = await glob('**', {cwd: dir});
   let files = {};
   for(let filePath of filePaths) {
+    filePath = '/' + filePath;
+
     files[filePath] = await fs.readFile(path.join(dir, filePath));
     let mimeType = mime.getType(filePath);
-    console.log(filePath, mimeType)
+
     if (mimeType.match(/text|javascript|json/)) {
       files[filePath] = files[filePath].toString();
     }

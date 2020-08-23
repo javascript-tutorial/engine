@@ -13,7 +13,7 @@ module.exports = async function() {
   for(let lang of config.langs) {
     console.log("LANG", lang.code);
     let root = `/js/javascript-nodejs/repo/${lang.code}.javascript.info`;
-    let figuresRoot = '/js/en.javascript.info/figures.sketch';
+    let figuresRoot = '/js/javascript-nodejs/repo/en.javascript.info/figures.sketch';
 
     execSync(`git reset --hard`, {cwd: root, stdio: 'inherit'});
     execSync(`git clean -df`, {cwd: root, stdio: 'inherit'});
