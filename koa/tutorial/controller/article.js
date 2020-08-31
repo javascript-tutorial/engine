@@ -159,7 +159,7 @@ async function renderArticle(ctx) {
 
   // console.log(article, rendered);
 
-  if (tutorialStats.isTranslated(article.getUrl()) === false && config.lang !== 'ru' && config.env !== 'development') {
+  if (tutorialStats.isTranslated(article.getUrl()) === false && config.lang !== 'ru') {
     const translatedLangs = tutorialStats.getMaterialLangs(article.getUrl());
     rendered.translateNotification = t('tutorial.not_translated', {url: config.tutorialRepo.blob + article.githubPath, translatedLangs, currentLang: config.langFull});
   }
