@@ -7,5 +7,5 @@ exports.tokenUtils = require('./utils/token');
 exports.stripTitle = require('./stripTitle');
 exports.stripYamlMetadata = require('./stripYamlMetadata');
 
-exports.escape = markdown => markdown.replace(/[<>\[\]]/g, '\\$&');
+exports.escape = markdown => markdown.replace(/[<>\[\]\\]/g, '\\$&');
 exports.unescape = markdown => markdown.replace(/\\(.)/g, '$1');
