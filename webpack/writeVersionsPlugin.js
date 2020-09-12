@@ -1,4 +1,5 @@
-let fs = require('fs');
+let fs = require('fs-extra');
+let path = require('path');
 
 function WriteVersionsPlugin(file) {
   this.file = file;
@@ -18,7 +19,10 @@ WriteVersionsPlugin.prototype.writeStats = function(compiler, stats) {
     }
   }
 
-  //console.log(assetsByChunkName);
+  // console.log("WRITING VERSIONS", this.file, assetsByChunkName);
+
+  fs.ensureDirSync(path.dirname(this.file));
+
   fs.writeFileSync(this.file, JSON.stringify(assetsByChunkName));
 };
 

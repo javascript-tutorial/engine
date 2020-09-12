@@ -5,6 +5,7 @@ const util = require('util');
 const path = require('path');
 const config = require('config');
 const fs = require('fs');
+const glob = require('glob');
 const log = require('engine/log')();
 const pug = require('engine/server-pug');
 const t = require('engine/i18n');
@@ -44,14 +45,40 @@ module.exports = class Renderer {
       .replace(/[\u007f-\uffff]/g, (c) => '\\u' + ('0000' + c.charCodeAt(0).toString(16)).slice(-4));
   }
 
+  readVersions() {
+    if (this.versions && process.env.mode == 'production') {
+      return;
+    }
+
+    this.versions = {};
+
+    if (fs.existsSync(path.join(config.cacheRoot, 'webpack.versions.json'))) {
+      // this file was used before webpack split build
+      // remove this after full update of webpack
+      this.versions = JSON.parse(
+        fs.readFileSync(path.join(config.cacheRoot, 'webpack.versions.json'), {encoding: 'utf-8'})
+      );
+    }
+
+    let dir = path.join(config.cacheRoot, 'webpack', 'versions');
+    let files = glob.sync('*', {cwd: dir});
+
+    for(let file of files) {
+      let versions = JSON.parse( fs.readFileSync(path.join(dir, file), {encoding: 'utf-8'}) );
+      Object.assign(this.versions, versions);
+    }
+    // console.log("PACK VERSIONS", this.versions);
+  }
+
   pack(name, ext) {
-    let versions = JSON.parse(
-      fs.readFileSync(path.join(config.cacheRoot, 'webpack.versions.json'), {encoding: 'utf-8'})
-    );
-    let versionName = versions[name];
+    this.readVersions();
+    
+    let versionName = this.versions[name];
     // e.g style = [ style.js, style.js.map, style.css, style.css.map ]
 
-    if (!Array.isArray(versionName)) return versionName;
+    if (!Array.isArray(versionName)) {
+      return versionName;
+    }
 
     let extTestReg = new RegExp(`.${ext}\\b`);
 
