@@ -1,5 +1,6 @@
 let path = require('path');
 let log = require('engine/log')();
+let config = require('config');
 
 let TutorialTree = require('../models/tutorialTree');
 let url = require('url');
@@ -10,7 +11,7 @@ module.exports = async function() {
   let args = require('yargs')
     .usage("tutorial url is required.")
     .example("gulp tutorial:edit --url http://javascript.local/memory-leaks-jquery")
-    .demand(['url', 'root'])
+    .demand(['url'])
     .argv;
 
   let urlPath = url.parse(args.url).pathname.split('/').filter(Boolean);
@@ -27,7 +28,7 @@ module.exports = async function() {
     let weight = article.weight + '';
 
     let dirName = weight + '-' + article.slug;
-    let cmd = "find '" + args.root + "' -path '*" + dirName + "/article.md'";
+    let cmd = "find '" + config.tutorialRoot + "' -path '*" + dirName + "/article.md'";
     console.log(cmd);
 
     let result = execSync(cmd, {encoding: 'utf8'}).trim();
