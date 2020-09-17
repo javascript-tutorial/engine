@@ -34,10 +34,12 @@ function stripTabIndent(text) {
 
   let stripPattern = /^\t*(?=\S+)/gm;
 
-  let indentLen = text.match(stripPattern)
-    .reduce(function (min, line) {
-      return Math.min(min, line.length);
-    }, Infinity);
+  let indentLen = text.match(stripPattern);
+  if (!indentLen) return text;
+  
+  indentLen = indentLen.reduce(function (min, line) {
+    return Math.min(min, line.length);
+  }, Infinity);
 
   let indent = new RegExp('^\t{' + indentLen + '}', 'gm');
   return indentLen > 0 ? text.replace(indent, '') : text;
