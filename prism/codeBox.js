@@ -6,10 +6,14 @@ const { highlight } = require('prismjs');
 
 function CodeBox(elem) {
 
+  let self = this;
+
   let preElem = elem.querySelector('pre');
   let codeElem = Array.from(preElem.childNodes).find(n => n.tagName === 'CODE');
 
   let code = codeElem.textContent;
+
+  let outputBox;
 
   let runCode = code;
   if (elem.hasAttribute('data-async')) {
@@ -156,44 +160,6 @@ function CodeBox(elem) {
     codeElem.innerHTML = split.join('\n');
   }
 
-  function emphasize0(codeElem, ranges) {
-    for(let range of ranges) {
-      let codeHtml = codeElem.innerHTML;
-      if (range.start !== undefined && range.end !== undefined) {
-        // full line 
-        let idx = -1;
-        let lineNo = 0;
-        let rangeStartIdx, rangeEndIdx;
-        while(true) {
-          idx = codeHtml.indexOf('\n', idx + 1);
-          if (idx == -1) break;
-          lineNo++;
-          if (lineNo == range.start) {
-            rangeStartIdx = idx;
-          }
-          if (lineNo == range.end) {
-            rangeEndIdx = idx;
-            break;
-          }
-        }
-        
-        if (range.start = 0) {
-          rangeStartIdx = 0;
-        }
-        if (idx == -1) {
-          rangeEndIdx = codeElem.innerHTML.length;
-        }
-        
-        let selectionRange = new Range();
-        selectionRange.setStart(codeElem, rangeStartIdx);
-        selectionRange.setEnd(codeElem, rangeStartIdx);
-        let emNode = document.createElement('span');
-        emNode.className = 'block-highlight';
-        selectionRange.surroundContents(emNode);
-        
-      } 
-    }
-  }
 
   function runHTML() {
 
@@ -284,11 +250,26 @@ function CodeBox(elem) {
   }
 
   // Evaluates a script in a global context
-  function globalEval( code ) {
+  function globalEval(code) {
     let script = document.createElement( "script" );
     script.type = 'module';
     script.text = code;
-    document.head.appendChild( script ).parentNode.removeChild( script );
+    document.head.append(script);
+    script.remove();
+  }
+
+  this.consoleLog = function(args) {
+    if (!outputBox) {
+      outputBox = document.createElement('div');
+      outputBox.className = 'codebox__output';
+      elem.append(outputBox);
+    }
+
+    let logElem = document.createElement('div');
+    logElem.innerHTML = args;
+    outputBox.append(logElem);
+
+    consoleLogNative("LOG", args);
   }
 
   function runJS() {
@@ -413,6 +394,12 @@ function CodeBox(elem) {
 
 
   function run() {
+
+    window.consoleLogTarget = self;
+    if (outputBox) {
+      outputBox.innerHTML = '';
+    }
+
     if (isJS) {
       runJS();
     } else {
