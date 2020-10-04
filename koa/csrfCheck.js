@@ -1,6 +1,8 @@
-const KoaCsrf = require('koa-csrf');
+const koaCsrf = require('koa-csrf');
 const PathListCheck = require('./pathListCheck');
 
+// don't update to koa-csrf v3
+// update to koa-csrf v3 removes assertCSRF method (we need it!)
 class CsrfChecker {
   constructor() {
     this.ignore = new PathListCheck();
@@ -47,7 +49,7 @@ class CsrfChecker {
 // every request gets different this._csrf to use in POST
 // but ALL tokens are valid
 exports.init = function(app) {
-  app.use(new KoaCsrf());
+  koaCsrf(app);
 
   app.csrfChecker = new CsrfChecker();
 
