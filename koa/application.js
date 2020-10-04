@@ -15,12 +15,12 @@
 const KoaApplication = require('koa');
 
 const log = require('engine/log')();
-const Cookies = require('cookies');
 const https = require('https');
 const http = require('http');
 const fs = require('fs');
 const config = require('config');
 const path = require('path');
+const csrf = require('csrf');
 
 module.exports = class Application extends KoaApplication {
   constructor() {
@@ -97,16 +97,6 @@ module.exports = class Application extends KoaApplication {
     }
 
     this.log.info("App stopped");
-  }
-
-  createContext(req, res) {
-    let context = super.createContext(req, res);
-    context.cookies = new Cookies(req, res, {
-      // no secure!!! we allow https cookies to go over http for auth
-      // otherwise auth with soc networks returns 401 sometimes (https redirect sets secure auth cookie -> http, no cookies)
-      keys: this.keys
-    });
-    return context;
   }
 
   requireHandler(path) {
