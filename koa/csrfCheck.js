@@ -1,4 +1,4 @@
-const koaCsrf = require('koa-csrf');
+const KoaCsrf = require('koa-csrf');
 const PathListCheck = require('./pathListCheck');
 
 class CsrfChecker {
@@ -47,7 +47,7 @@ class CsrfChecker {
 // every request gets different this._csrf to use in POST
 // but ALL tokens are valid
 exports.init = function(app) {
-  koaCsrf(app);
+  app.use(new KoaCsrf());
 
   app.csrfChecker = new CsrfChecker();
 
