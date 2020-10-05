@@ -3,6 +3,7 @@ let isScrolledIntoView = require('client/isScrolledIntoView');
 let makeLineNumbers = require('./makeLineNumbers');
 let makeHighlight = require('./makeHighlight');
 const { highlight } = require('prismjs');
+const config = require('config');
 
 function CodeBox(elem) {
 
@@ -90,7 +91,7 @@ function CodeBox(elem) {
       alert("Sorry, your browser is too old");
       return;
     }
-    win.postMessage(runCode, 'https://lookatcode.com/showjs');
+    win.postMessage(runCode, config.lookatCodeUrlBase + '/showjs');
   }
 
   
@@ -221,7 +222,7 @@ function CodeBox(elem) {
       form.style.display = 'none';
       form.method = 'POST';
       form.enctype = "multipart/form-data";
-      form.action = "https://lookatcode.com/showhtml";
+      form.action = config.lookatCodeUrlBase + "/showhtml";
       form.target = frame.name;
 
       let textarea = document.createElement('textarea');
@@ -289,7 +290,7 @@ function CodeBox(elem) {
       form.style.display = 'none';
       form.method = 'POST';
       form.enctype = "multipart/form-data";
-      form.action = "https://lookatcode.com/showhtml";
+      form.action = config.lookatCodeUrlBase + "/showhtml";
       form.target = 'js-global-frame';
 
       let textarea = document.createElement('textarea');
@@ -326,7 +327,7 @@ function CodeBox(elem) {
         // create iframe for js
         jsFrame = document.createElement('iframe');
         jsFrame.className = 'js-frame';
-        jsFrame.src = 'https://lookatcode.com/showjs';
+        jsFrame.src = config.lookatCodeUrlBase + '/showjs';
         jsFrame.style.width = 0;
         jsFrame.style.height = 0;
         jsFrame.style.border = 'none';
