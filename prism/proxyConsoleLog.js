@@ -1,4 +1,4 @@
-let consoleFormat = require('lookatcode/client/consoleFormat');
+let consoleFormat = require('engine/console/consoleFormat');
 
 module.exports = function proxyConsoleLog() {
   window.consoleLogNative = console.log.bind(console);
