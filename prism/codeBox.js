@@ -269,8 +269,6 @@ function CodeBox(elem) {
     let logElem = document.createElement('div');
     logElem.innerHTML = args;
     outputBox.append(logElem);
-
-    consoleLogNative("LOG", args);
   }
 
   function runJS() {
@@ -309,8 +307,8 @@ function CodeBox(elem) {
         return;
       }
 
+
       try {
-        /* jshint -W061 */
         window["eval"].call(window, runCode);
       } catch (e) {
         alert(e.constructor.name + ": " + e.message);
