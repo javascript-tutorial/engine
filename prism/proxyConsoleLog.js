@@ -1,7 +1,8 @@
 let consoleFormat = require('engine/console/consoleFormat');
 
 module.exports = function proxyConsoleLog() {
-  window.consoleLogNative = console.log.bind(console);
+  // use window.console.log to work around drop_console: true in webpack uglify settings
+  window.consoleLogNative = window.console.log.bind(console);
   
   console.log = function(...args) {
     consoleLogNative(...args);
