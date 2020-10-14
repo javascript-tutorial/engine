@@ -1,5 +1,6 @@
 +e.content
-  != task.content
+  +e.formatted
+    != task.content
 
   +e('button').solution(type="button")= t('tutorial.task.solution')
 
@@ -10,10 +11,12 @@
           +e('button').step-show(type="button", onclick="showStep(this)")= step.title
           +e.answer-content
             +e('h4').step-title= step.title
-            != step.content
+            +e.formatted
+              != step.content
 
     else
       +e.answer-content
-        != task.solution
+        +e.formatted
+          != task.solution
 
     +b('button').close-button.__answer-close(type="button", title=t('site.close'))
