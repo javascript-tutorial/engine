@@ -12,6 +12,7 @@ const quotePlugin = require('./plugins/quote');
 const summaryPlugin = require('./plugins/summary');
 const comparePlugin = require('./plugins/compare');
 const sourceBlocksPlugin = require('./plugins/sourceBlocks');
+const spoilerPlugin = require('./plugins/spoiler');
 
 
 const imgDescToAttrsPlugin = require('./plugins/imgDescToAttrs');
@@ -62,6 +63,7 @@ module.exports = class ServerParser {
     extendedCodePlugin(this.md);
     outlinedBlocksPlugin(this.md);
     sourceBlocksPlugin(this.md);
+    spoilerPlugin(this.md);
     imgDescToAttrsPlugin(this.md);
     resolveRelativeSrcPlugin(this.md);
     resolveMdnSrcPlugin(this.md);

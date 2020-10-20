@@ -9,6 +9,7 @@ const charTypographyPlugin = require('./plugins/charTypography');
 const extendedCodePlugin = require('./plugins/extendedCode');
 const outlinedBlocksPlugin = require('./plugins/outlinedBlocks');
 const sourceBlocksPlugin = require('./plugins/sourceBlocks');
+const spoilerPlugin = require('./plugins/spoiler');
 
 const imgDescToAttrsPlugin = require('./plugins/imgDescToAttrs');
 
@@ -36,6 +37,7 @@ module.exports = class BasicParser {
     extendedCodePlugin(this.md);
     outlinedBlocksPlugin(this.md);
     sourceBlocksPlugin(this.md);
+    spoilerPlugin(this.md);
     imgDescToAttrsPlugin(this.md);
     markdownErrorPlugin(this.md);
     blockTagsPlugin(this.md);
