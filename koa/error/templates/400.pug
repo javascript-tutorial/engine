@@ -9,6 +9,10 @@ block content
     +e('h1').type= headTitle
     +e.code 400
 
+    if error.info
+      +e.text
+        != error.info
+    
     if error.errors
       +e.text
         dl
