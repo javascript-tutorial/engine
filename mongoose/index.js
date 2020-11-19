@@ -42,6 +42,21 @@ autoIncrement.initialize(mongoose.connection);
 _.bindAll(mongoose.connection);
 _.bindAll(mongoose.connection.db);
 
+mongoose.plugin(function(schema) {
+  schema.statics.resort = async function(field = 'weight') {
+    let models = await this.find({}).sort({[field]: 1});
+
+    let i = 1;
+    for(let model of models) {
+
+      model[field] = i;
+      // console.log(model.title, model.weight);
+      await model.persist();
+      i++;
+    }
+  }
+});
+
 // plugin from https://github.com/LearnBoost/mongoose/issues/1859
 // yield.. .persist() or .destroy() for generators instead of save/remove
 // mongoose 3.10 will not need that (!)
