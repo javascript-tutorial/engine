@@ -52,6 +52,10 @@ module.exports = function(md) {
 
     let prismLanguage = getPrismLanguage(lang);
 
+    let blockTagId = Math.random().toString(36).slice(2, 12);
+
+    token.attrPush(['id', blockTagId]);
+
     token.attrPush(['data-trusted', (options.html && !attrs.untrusted) ? 1 : 0]);
 
     if (attrs.global) {
@@ -133,19 +137,18 @@ module.exports = function(md) {
       if (options.ebookType === 'epub' && typeof IS_CLIENT === 'undefined') {
         tokenUtils.attrDel(token, 'data-autorun');
 
-        let name = (Math.random() * 1e9 ^ 0).toString(36);
         let fs = require('fs-extra');
 
         fs.ensureDirSync(config.publicRoot + '/autorun');
-        fs.writeFileSync(config.publicRoot + '/autorun/' + name + '.html', content);
+        fs.writeFileSync(config.publicRoot + '/autorun/' + blockTagId + '.html', content);
         //- iframes with about:html are saved to disk incorrectly by FF (1 iframe content for all)
         //- @see https://bugzilla.mozilla.org/show_bug.cgi?id=1154167
         codeResultHtml = `<div class="code-result code-example__result">
           <iframe
             class="code-result__iframe"
-            name="code-result-${name}"
+            name="${blockTagId}"
             style="height:${height || 200}px"
-            src="/autorun/${name}.html"></iframe>
+            src="/autorun/${blockTagId}.html"></iframe>
         </div>`;
 
       } else {
@@ -154,7 +157,7 @@ module.exports = function(md) {
         codeResultHtml = `<div class="code-result code-example__result">
           <iframe
             class="code-result__iframe"
-            name="code-result-${(Math.random() * 1e9 ^ 0).toString(36)}"
+            name="test-${blockTagId}"
             style="height:${height || 200}px"
             src="${options.ebookType == 'epub' ? ("/ebook/blank.html?" + Math.random()) : 'about:blank'}"></iframe>
         </div>`;

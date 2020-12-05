@@ -4,6 +4,7 @@ let makeLineNumbers = require('./makeLineNumbers');
 let makeHighlight = require('./makeHighlight');
 const { highlight } = require('prismjs');
 const config = require('config');
+let consoleFormat = require('engine/console/consoleFormat');
 
 function CodeBox(elem) {
 
@@ -16,6 +17,8 @@ function CodeBox(elem) {
 
   let outputBox;
 
+  elem.codeBox = this;
+  
   let runCode = code;
   if (elem.hasAttribute('data-async')) {
     runCode = `(async () => {\n${code}\n})()`;
@@ -45,9 +48,13 @@ function CodeBox(elem) {
   let isTrusted = +elem.getAttribute('data-trusted');
   let isNoStrict = +elem.getAttribute('data-no-strict');
 
-  if (!isNoStrict && isJS) {
-    runCode="'use strict';\n\n" + runCode;
-  }
+  let useStrict = (!isNoStrict && isJS) ? `"use strict";` : '';
+  
+  // globalEval evaluates asynchronously, so we must inject codeBox id into the code
+  // then in console.log we use it to show the message under the current box
+  let codeBoxId = `globalThis.__codeBoxId = "${elem.id}";`;
+
+  runCode=`${useStrict}${codeBoxId}\n\n${runCode}`;
 
   let jsFrame;
   let globalFrame;
@@ -182,7 +189,7 @@ function CodeBox(elem) {
       htmlResult.className = "code-result code-example__result";
 
       frame = document.createElement('iframe');
-      frame.name = 'frame-' + Math.random();
+      frame.name = elem.id; // for console.log
       frame.className = 'code-result__iframe';
 
       if (elem.getAttribute('data-demo-height') === "0") {
@@ -195,9 +202,25 @@ function CodeBox(elem) {
       htmlResult.appendChild(frame);
 
       elem.appendChild(htmlResult);
+
     } else {
       frame = htmlResult.querySelector('iframe');
     }
+
+    if (isTrusted && !frame.hasCustomConsoleLog) {
+      // iframe may have been generated above OR already put in HTML by autorun
+      frame.hasCustomConsoleLog = true;
+      let consoleLogNative = frame.contentWindow.console.log.bind(frame.contentWindow.console);
+  
+      // bind console.log to the current elem.id
+      frame.contentWindow.console.log = function(...args) {
+        consoleLogNative(...args);
+      
+        let formattedArgs = consoleFormat(args);
+        window.postMessage({type: 'console-log', log: formattedArgs, codeBoxId: elem.id}, '*');
+      };
+    }      
+
 
     if (isTrusted) {
       let doc = frame.contentDocument || frame.contentWindow.document;
@@ -227,7 +250,13 @@ function CodeBox(elem) {
 
       let textarea = document.createElement('textarea');
       textarea.name = 'code';
-      textarea.value = normalizeHtml(code);
+
+      let normalizedCode = normalizeHtml(code);
+      if (normalizedCode.includes('console.log')) {
+        // insert after <head> or <body>, to ensure that console.log is replaced immediately
+        normalizedCode = normalizedCode.replace(/<head>|<body>/im, '$&__LOOKATCODE_SCRIPT__');
+      }
+      textarea.value = normalizedCode;
       form.appendChild(textarea);
 
       frame.parentNode.insertBefore(form, frame.nextSibling);
@@ -263,7 +292,13 @@ function CodeBox(elem) {
     if (!outputBox) {
       outputBox = document.createElement('div');
       outputBox.className = 'codebox__output';
+
       elem.append(outputBox);
+
+      let label = document.createElement('div');
+      label.className = 'codebox__output-label';
+      label.innerHTML = 'OUTPUT';
+      outputBox.append(label);
     }
 
     let logElem = document.createElement('div');
@@ -302,11 +337,10 @@ function CodeBox(elem) {
     } else if (isTrusted) {
 
       if (elem.hasAttribute('data-autorun')) {
-        // make sure functions from "autorun" go to global scope
+        // make sure functions from "autorun" go to global scope (eval has its own scope)
         globalEval(runCode);
         return;
       }
-
 
       try {
         window["eval"].call(window, runCode);
@@ -394,9 +428,9 @@ function CodeBox(elem) {
 
   function run() {
 
-    window.consoleLogTarget = self;
     if (outputBox) {
-      outputBox.innerHTML = '';
+      outputBox.remove();
+      outputBox = null;
     }
 
     if (isJS) {

@@ -80,16 +80,22 @@ function formatString(value, depth = 0) {
 }
 
 function formatObject(value, depth = 0) {
-  let result = '';
   let name = value.constructor.name;
-  if (name == 'Object') {
+
+  if (name == 'Object' && value[Symbol.toStringTag]) {
     name = value[Symbol.toStringTag];
   }
 
-  if (name) {
-    result += name + ' ';
+  if (name != 'Object' && value.toString != Object.prototype.toString) {
+    return value.toString();
   }
 
+  let result = '';
+
+  if (name != 'Object') {
+    result += name + ' ';
+  }
+  
   result += '{';
 
   if (depth > 1) {
