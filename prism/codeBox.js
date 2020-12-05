@@ -5,10 +5,12 @@ let makeHighlight = require('./makeHighlight');
 const { highlight } = require('prismjs');
 const config = require('config');
 let consoleFormat = require('engine/console/consoleFormat');
+const t = require('engine/i18n/t');
+
+const LANG = require('config').lang;
+t.i18n.add('prism', require('./locales/' + LANG + '.yml'));
 
 function CodeBox(elem) {
-
-  let self = this;
 
   let preElem = elem.querySelector('pre');
   let codeElem = Array.from(preElem.childNodes).find(n => n.tagName === 'CODE');
@@ -297,11 +299,12 @@ function CodeBox(elem) {
 
       let label = document.createElement('div');
       label.className = 'codebox__output-label';
-      label.innerHTML = 'OUTPUT';
+      label.innerHTML = t('prism.output');
       outputBox.append(label);
     }
 
     let logElem = document.createElement('div');
+    logElem.className = 'codebox__output-line';
     logElem.innerHTML = args;
     outputBox.append(logElem);
   }
