@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const gulp = require('gulp');
+const glob = require('glob');
 
 function lazyRequireTask(modulePath, ...args) {
   return async function() {
@@ -15,7 +16,7 @@ function lazyRequireTask(modulePath, ...args) {
 function requireModuleTasks(moduleName) {
 
   let dir = path.join(path.dirname(require.resolve(moduleName)), 'tasks');
-  let taskFiles = fs.readdirSync(dir);
+  let taskFiles = glob.sync('**', {cwd: dir});
 
   let hasDeps;
   try {
@@ -33,8 +34,8 @@ function requireModuleTasks(moduleName) {
     let taskName = taskFile.split('.')[0];
     if (taskName === '') continue; // ignore .files
 
-    let taskNameFull = moduleName.replace(/\//g, ':') + ':' + taskName;
-
+    let taskNameFull = moduleName.replace(/\//g, ':') + ':' + taskName.replace(/\//g, ':');
+    
     // gulp.task(name, task to run before, working function of the task)
     let lazyTask = lazyRequireTask(path.join(dir, taskFile));
 

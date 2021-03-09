@@ -9,7 +9,6 @@ const execSync = require('child_process').execSync;
 // Get all strings from image
 module.exports = async function() {
 
-
   for(let lang of config.langs) {
     console.log("LANG", lang.code);
     let root = `/js/javascript-nodejs/repo/${lang.code}.javascript.info`;

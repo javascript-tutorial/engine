@@ -165,6 +165,13 @@ module.exports = class Renderer {
       locals.sitetoolbar = true;
     }
 
+    locals.localizeNumber = function(num) {
+      // 1 -> 一, 2 -> 二
+      // nu: numeration system,
+      // hanidec: chinese
+      return ['zh','ja'].includes(config.lang) ? new Intl.NumberFormat("zh-Hans-CN-u-nu-hanidec").format(num) : num;
+    };
+
     locals.plugins = [{
       resolve: pug.pugResolve
     }];
