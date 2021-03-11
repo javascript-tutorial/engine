@@ -1,0 +1,27 @@
+400:
+  title: Requête invalide
+401:
+  title: Identification requise
+  description: Vous devez probablement vous <a href="#" data-action-login>connecter</a> ?
+
+403:
+  title: Accès interdit
+  wrong_user: Peut-être que vous vous êtes connecté avec le mauvais utilisateur ?
+  login: Peut-être que vous devez vous <a href="#" data-action-login>connecter</a> ?
+
+404:
+  title: Page non trouvée
+  use_search:  'Pour trouver la page, vous pouvez utiliser la recherche :'
+  search: Recherche
+  use_top: … ou navigation en haut de la page
+  go_to_main: Aller à la page principale
+
+500:
+  title: Erreur Serveur 
+  subject: "Erreur 500 à #{href}"
+  description: 'Nous analysons les erreurs, mais vous pouvez accélérer le processus en signalant les détails à <a href="mailto:#{email}?subject=#{subject}">#{email}</a>.'
+
+503:
+  title: Service non disponible
+  description: Service indisponible, désolé, veuillez essayer d'y accéder plus tard.
+

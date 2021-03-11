@@ -1,0 +1,7 @@
+image_not_found: "Immagine \"#{src}\" non trovata"
+image_invalid: "Immagine \"#{src}\" corrotta"
+attr_required: "Attributo \"#{attr}\" richiesto"
+src_out_of_root: "Il percorso \"#{src}\" è esterno alla root"
+read_file: "Non è possibile leggere il file \"#{src}\""
+no_such_plunk: "Nulla di simile \"#{src}\""
+anchor_exists: "Anchor già esistente: \"#{anchor}\""

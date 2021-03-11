@@ -1,0 +1,7 @@
+recent: Aggiunta di recente
+recent_addition: Questa funzionalità è stata aggiunta di recente al linguaggio.
+browser:
+  value: "Gli esempi funzionano nei #{browser} recenti."
+  none: "Non supportata dai JavaScript engines, oppure supportata ancora parzialmente, richiede polyfilling."
+  new: Vecchi browsers potrebbero richiedere polyfills.
+caniuse: "Puoi trovare l'attuale stato di supporto <a href=\"https://caniuse.com/#feat=#{feat}\">https://caniuse.com/#feat=#{feat}</a>."

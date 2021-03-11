@@ -1,0 +1,14 @@
+modern_javascript_tutorial: "Le Tutoriel JavaScript Moderne"
+subtitle: "Comment c'est fait maintenant. Des bases aux sujets avancés avec des explications simples mais détaillées."
+part: "Partie #{num}"
+more: "Plus …"
+contents: 'Table des matières'
+description: "Le cours principal contient 2 parties qui couvrent JavaScript en tant que langage de programmation et l'utilisation d'un navigateur. Il existe également des séries supplémentaires d'articles thématiques."
+
+part3:
+  title: "Articles supplémentaires"
+  content: "Liste des sujets supplémentaires qui supposent que vous avez couvert les deux premières parties du tutoriel. Il n'y a pas de hiérarchie claire ici, vous pouvez lire les articles dans l'ordre que vous voulez."
+
+tutorial: Tutoriel
+tutorial_map: Carte du tutoriel
+not_translated: "Ce contenu n'est disponible que dans les langues suivantes :#{translatedLangs}. Merci de <a href="#{url}">nous aider</a> à traduire en <strong>#{currentLang.title}</strong>."

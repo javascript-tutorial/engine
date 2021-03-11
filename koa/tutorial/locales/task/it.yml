@@ -1,0 +1,17 @@
+open_task:
+  sandbox:
+    tests: Apri una sandbox con i test.
+    no_tests: Apri una sandbox per l'esercizio.
+
+open_solution:
+  sandbox:
+    tests: Apri la soluzione con i test in una sandbox.
+    no_tests: Apri la soluzione in una sandbox.
+
+Importance: Importanza
+importance: importanza
+solution: soluzione
+back: torna alle lezioni
+importance_help: Importanza dell'esercizion da 1 a 5
+
+task_not_found: "Esercizio \"#{path}\" non trovato"

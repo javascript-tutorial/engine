@@ -1,0 +1,11 @@
+lesson:
+  next: Prochain cours
+  prev: Cours précédent
+
+sibling_chapters: Chapitres voisins
+lesson_navigation: Navigation des cours
+tasks: Exercices
+chapter: Chapitre
+lesson_of: "Cours #{bookChildNumber} de #{bookLeafCount}"
+
+article_not_found: "Article \"#{path}\" non trouvé"

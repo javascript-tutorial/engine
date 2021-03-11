@@ -1,0 +1,7 @@
+recent: Un ajout récent
+recent_addition: Ceci est un ajout récent au language.
+browser:
+  value: "Les exemples fonctionnent dans le récent #{browser}."
+  none: "Non pris en charge dans les moteurs JavaScript, ou partiellement pris en charge, nécessite un polyfilling."
+  new: Les anciens navigateurs peuvent nécessiter des polyfills.
+caniuse: "Vous pouvez trouver l'état actuel du support sur <a href=\"https://caniuse.com/#feat=#{feat}\">https://caniuse.com/#feat=#{feat}</a>."

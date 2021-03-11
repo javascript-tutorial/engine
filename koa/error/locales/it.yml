@@ -1,0 +1,27 @@
+400:
+  title: Richiesta non valida
+401:
+  title: Autenticazione richiesta
+  description: E' probabile che tu debba effettuare il <a href="#" data-action-login>login</a>?
+
+403:
+  title: Accesso vietato
+  wrong_user: E' probabile tu ti sia autenticato con un utente errato?
+  login: E' probabile che tu debba effettuare il <a href="#" data-action-login>login</a>?
+
+404:
+  title: Pagina non trovata
+  use_search:  'Per trovare la pagina, puoi utilizzare la ricerca:'
+  search: Cerca
+  use_top: …oppure la navigazione principale.
+  go_to_main: Vai alla pagina principale
+
+500:
+  title: Errore server
+  subject: "Errore 500 a #{href}"
+  description: 'Analizzeremo gli errori, ma puoi velocizzare il processo segnalando i dettagli a <a href="mailto:#{email}?subject=#{subject}">#{email}</a>.'
+
+503:
+  title: Servizio non disponibile
+  description: Servizio non disponibile, ti chiediamo di riprovare più tardi.
+

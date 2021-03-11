@@ -1,0 +1,7 @@
+image_not_found: "Image \"#{src}\" non trouvée"
+image_invalid: "L’image \"#{src}\" est corrompue"
+attr_required: "L’attribute \"#{attr}\" est requis"
+src_out_of_root: "Le chemin source \"#{src}\" est en dehors de la racine"
+read_file: "Impossible de lire le fichier \"#{src}\""
+no_such_plunk: "Pas ce genre de plunk \"#{src}\""
+anchor_exists: "L’ancre existe déjà : \"#{anchor}\""

@@ -1,0 +1,11 @@
+lesson:
+  next: Lezione successiva
+  prev: Lezione precedente
+
+sibling_chapters: Indice della sezione
+lesson_navigation: Naviga tra le lezioni
+tasks: Esercizi
+chapter: Capitolo
+lesson_of: "Lezione #{bookChildNumber} di #{bookLeafCount}"
+
+article_not_found: "Articolo \"#{path}\" non trovato"

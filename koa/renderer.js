@@ -101,6 +101,7 @@ module.exports = class Renderer {
     locals.moment = moment;
 
     locals.lang = config.lang;
+    locals.langFull = config.langFull;
 
     locals.url = url.parse(ctx.protocol + '://' + ctx.host + ctx.originalUrl);
     locals.context = ctx;

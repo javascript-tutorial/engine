@@ -1,0 +1,4 @@
+run: esegui
+show: mostra
+open:
+  sandbox: apri in sandbox

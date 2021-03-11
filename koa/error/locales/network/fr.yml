@@ -1,0 +1,7 @@
+
+server_connection_error: Erreur de connexion au serveur.
+server_request_timeout: La requête au serveur a expirée.
+request_aborted: La requête a été abandonnée.
+no_response: Aucune réponse du serveur.
+server_error: "Erreur du serveur (code #{status}), réessayez plus tard."
+invalid_format: Format de réponse non valide.
