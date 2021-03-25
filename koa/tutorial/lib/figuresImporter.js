@@ -207,10 +207,11 @@ module.exports = class FiguresImporter {
         } else if (path.extname(artboard.name) === '.svg') {
           let content = fse.readFileSync(path.join(outputDir, artboard.name), 'utf-8');
 
+          /* was fixed in firefox
           if (content.includes('letter-spacing="')) {
             log.error("Bad svg", path.join(outputDir, artboard.name));
             throw new Error("SVG with letter-spacing not supported by Firefox");
-          }
+          }*/
 
           content = content.replace(/(?<=<svg.*>)/, `
             <defs>
