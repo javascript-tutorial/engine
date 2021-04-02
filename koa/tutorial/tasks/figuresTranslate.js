@@ -84,8 +84,14 @@ module.exports = async function() {
 
     let content;
 
+    log.debug("Translation", translation);
+
+    let cmd = `git show upstream/master:${image}`;
+
+    log.debug(cmd);
+
     try {
-      content = execSync(`git show upstream/master:${image}`, {
+      content = execSync(cmd, {
         encoding: 'utf-8',
         cwd: config.tutorialRoot
       });

@@ -11,4 +11,4 @@ part3:
 
 tutorial: Eğitim
 tutorial_map: Eğitim haritası
-not_translated: 'Bu materyal This madde henüz sadece: #{translatedLangs} dillerinde mevcuttur. Lütfen bize bu bölümün çevirisini <strong>#{currentLang.title}</strong> çevirmek <a href="#{url}">için yardım ediniz</a>.'
+not_translated: 'Bu materyal sadece #{translatedLangs} dillerinde mevcuttur. Lütfen <strong>#{currentLang.title}</strong> diline çevirmek için bize <a href="#{url}">yardım edin</a>.'
