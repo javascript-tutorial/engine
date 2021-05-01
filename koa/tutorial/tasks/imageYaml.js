@@ -34,6 +34,8 @@ module.exports = async function() {
     .argv;
 
 
+  console.log(`Searching in tutorial ${config.tutorialRoot}`);
+
   let imageFiles;
   if (args.image) {
     console.log(`Processing image ${args.image}`);
