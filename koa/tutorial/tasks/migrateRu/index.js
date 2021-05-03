@@ -9,7 +9,7 @@ let fs = require('fs-extra');
 let glob = require('glob');
 let rootNew = '/js/ru.javascript.info';
 let rootOld = '/js/javascript-tutorial-ru';
-let migrate = yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'migrate.yml'), 'utf-8'));
+let migrate = yaml.load(fs.readFileSync(path.join(__dirname, 'migrate.yml'), 'utf-8'));
 
 let articlesNew = findEntries(rootNew, 'article');
 let articlesOld = findEntries(rootOld, 'article');

@@ -65,7 +65,7 @@ module.exports = async function() {
 
   let imageTranslationsPath = path.join(config.tutorialRoot, 'images.yml');
   let translations = fs.existsSync(imageTranslationsPath) ?
-    yaml.safeLoad(fs.readFileSync(imageTranslationsPath, 'utf8')) : Object.create(null);
+    yaml.load(fs.readFileSync(imageTranslationsPath, 'utf8')) : Object.create(null);
 
   for(let image of images) {
     console.log("Image", image);

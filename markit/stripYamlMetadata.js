@@ -21,7 +21,7 @@ module.exports = function(text) {
     return {text, meta: {}};
   }
 
-  let meta = yaml.safeLoad(parts[0]);
+  let meta = yaml.load(parts[0]);
 
   return {
     text: parts[1],

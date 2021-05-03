@@ -31,7 +31,7 @@ module.exports = class FigmaImporter {
   constructor(options) {
     let imageTranslationsPath = path.join(config.tutorialRoot, 'images.yml');
     if (fs.existsSync(imageTranslationsPath)) {
-      this.translations = yaml.safeLoad(fs.readFileSync(imageTranslationsPath, 'utf8'));
+      this.translations = yaml.load(fs.readFileSync(imageTranslationsPath, 'utf8'));
     } else {
       this.translations = Object.create(null);
     }

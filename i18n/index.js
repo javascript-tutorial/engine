@@ -18,7 +18,7 @@ t.requireHandlerLocales = function () {
     translationPath = path.join(translationPath, 'en.yml');
   }
 
-  let doc = yaml.safeLoad(fs.readFileSync(translationPath, 'utf-8'));
+  let doc = yaml.load(fs.readFileSync(translationPath, 'utf-8'));
 
   t.i18n.add('', doc);
 
@@ -57,7 +57,7 @@ t.requirePhrase = function (moduleName) {
       translationPath = path.join(localesPath, packageDir, 'en.yml');
     }
 
-    let doc = yaml.safeLoad(fs.readFileSync(translationPath, 'utf-8'));
+    let doc = yaml.load(fs.readFileSync(translationPath, 'utf-8'));
     let name = path.basename(moduleName) + '.' + packageDir.slice(0, -1).replace(/\//g, '.');
 
     t.i18n.add(name, doc);
@@ -73,7 +73,7 @@ t.requirePhrase = function (moduleName) {
   }
 
   if (translationPath) {
-    let doc = yaml.safeLoad(fs.readFileSync(translationPath, 'utf-8'));
+    let doc = yaml.load(fs.readFileSync(translationPath, 'utf-8'));
 
     t.i18n.add(path.basename(moduleName), doc);
   }
