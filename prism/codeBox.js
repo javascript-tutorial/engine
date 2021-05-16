@@ -56,7 +56,10 @@ function CodeBox(elem) {
   // then in console.log we use it to show the message under the current box
   let codeBoxId = `globalThis.__codeBoxId = "${elem.id}";`;
 
-  runCode=`${useStrict}${codeBoxId}\n\n${runCode}`;
+  runCode = `${useStrict}${codeBoxId}\n\n${runCode}`;
+
+  // Sandbox doesn't need codeBoxId
+  let sandboxCode = `${useStrict}\n\n${runCode}`;
 
   let jsFrame;
   let globalFrame;
@@ -385,7 +388,7 @@ function CodeBox(elem) {
       html = normalizeHtml(code);
     } else {
       // let codeIndented = code.replace(/^/gim, '    ');
-      html = `<!DOCTYPE html>\n<script>\n${runCode}\n</script>`;
+      html = `<!DOCTYPE html>\n<script>\n${sandboxCode}\n</script>`;
     }
 
     let form = document.createElement('form');
