@@ -11,12 +11,12 @@
           +e('button').step-show(type="button", onclick="showStep(this)")= step.title
           +e.answer-content
             +e('h4').step-title= step.title
-            +e.formatted
+            .formatted
               != step.content
 
     else
       +e.answer-content
-        +e.formatted
+        .formatted
           != task.solution
 
     +b('button').close-button.__answer-close(type="button", title=t('site.close'))
