@@ -56,11 +56,11 @@ function CodeBox(elem) {
   // then in console.log we use it to show the message under the current box
   let codeBoxId = `globalThis.__codeBoxId = "${elem.id}";`;
 
-  runCode = `${useStrict}${codeBoxId}\n\n${runCode}`;
-
   // Sandbox doesn't need codeBoxId
   let sandboxCode = `${useStrict}\n\n${runCode}`;
 
+  runCode = `${useStrict}${codeBoxId}\n\n${runCode}`;
+  
   let jsFrame;
   let globalFrame;
   let htmlResult;
