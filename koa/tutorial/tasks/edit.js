@@ -20,6 +20,7 @@ module.exports = async function() {
 
   if (urlPath.length === 1) {
     let article = TutorialTree.instance().bySlug(urlPath[0]);
+
     if (!article) {
       console.log("Not found!");
       return;
