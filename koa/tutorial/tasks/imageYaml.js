@@ -66,7 +66,7 @@ module.exports = async function() {
 
   let output = [];
   for(let key in results) {
-    output.push(yaml.safeDump({[key]: results[key]}));
+    output.push(yaml.dump({[key]: results[key]}));
   }
 
   console.log(output.join('\n'));

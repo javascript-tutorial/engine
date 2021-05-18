@@ -211,7 +211,7 @@ module.exports = function(text) {
 
 
   if (Object.keys(meta).length) {
-    text = yaml.safeDump(meta) + '\n---\n\n' + text.replace(/^\s*/, '');
+    text = yaml.dump(meta) + '\n---\n\n' + text.replace(/^\s*/, '');
   }
 
   return {meta, head, text};
