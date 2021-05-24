@@ -76,7 +76,7 @@ class CodeTabsBox {
     let codeElem = preElem.querySelector('code');
     Prism.highlightElement(codeElem);
 
-    preElem.insertAdjacentHTML("beforeEnd", makeLineNumbers(preElem.innerHTML));
+    preElem.insertAdjacentHTML("afterBegin", makeLineNumbers(preElem.innerHTML));
 
     tab.highlighted = true;
   }
