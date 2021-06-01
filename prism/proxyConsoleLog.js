@@ -13,7 +13,11 @@ module.exports = function proxyConsoleLog() {
   
     let formattedArgs = consoleFormat(args);
     // in the main window we have: window.__codeBoxId,
-    window.postMessage({type: 'console-log', log: formattedArgs, codeBoxId: window.__codeBoxId}, '*');
+    window.postMessage({
+      type: 'console-log', 
+      log: formattedArgs, 
+      codeBoxId: window.__codeBoxId
+    }, '*');
   };
 
   window.addEventListener('message', ({source, data}) => {
