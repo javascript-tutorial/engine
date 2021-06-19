@@ -9,10 +9,13 @@ const config = require('config');
 const fs = require('mz/fs');
 const path = require('path');
 
-module.exports = class TutorialTree {
+class TutorialTree {
 
-  constructor() {
+  constructor({
+    name
+  } = options) {
     this.roots = [];
+    this.name = name;
     this.bySlugMap = Object.create(null);
   }
 
@@ -168,11 +171,13 @@ module.exports = class TutorialTree {
     this.roots.length = 0;
   }
 
-  static instance() {
-    if (!this._instance) {
-      this._instance = new TutorialTree();
+  static instance(name = 'tutorialTree') {
+    if (!this._instances[name]) {
+      this._instances[name] = new TutorialTree({
+        name
+      });
     }
-    return this._instance;
+    return this._instances[name];
   }
 
   serialize() {
@@ -203,13 +208,17 @@ module.exports = class TutorialTree {
 
 
   async loadFromCache() {
-    let tree = await fs.readFile(path.join(config.cacheRoot, 'tutorialTree.json'));
+    let tree = await fs.readFile(path.join(config.cacheRoot, `${this.name}.json`));
     tree = JSON.parse(tree);
     this.load(tree);
   }
 
   async saveToCache() {
-    await fs.writeFile(path.join(config.cacheRoot, 'tutorialTree.json'), JSON.stringify(this.serialize(), null, 2));
+    await fs.writeFile(path.join(config.cacheRoot, `${this.name}.json`), JSON.stringify(this.serialize(), null, 2));
   }
 
 };
+
+TutorialTree._instances = {};
+
+module.exports = TutorialTree;
