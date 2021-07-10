@@ -14,7 +14,7 @@ module.exports = class DebugStream extends Stream {
 
   write(record) {
 
-    let logFilePath = '/tmp/log-debug';
+    let logFilePath = '/tmp/log-debug/' + process.env.NODE_LANG;
 
     if (lastCache < Date.now() - 100) {
       hasFile = fs.existsSync(logFilePath);
@@ -34,4 +34,3 @@ module.exports = class DebugStream extends Stream {
   }
 
 };
-
