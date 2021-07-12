@@ -1,0 +1,7 @@
+image_not_found: "\"#{src}\" rasm topilmadi"
+image_invalid: "\"#{src}\" rasm buzilgan"
+attr_required: "\"#{attr}\" atributi talab qilinadi"
+src_out_of_root: "\"#{src}\" manba yo'li ildizdan tashqarida"
+read_file: "Faylni o'qib bo'lmaydi \"#{src}\""
+no_such_plunk: "Bunday plunk yo'q \"#{src}\""
+anchor_exists: "Langar allaqachon mavjud: \"#{anchor}\""

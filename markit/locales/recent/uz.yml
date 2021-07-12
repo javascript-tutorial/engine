@@ -1,0 +1,7 @@
+recent: Yaqinda qo'shilgan
+recent_addition: Bu tilga yaqinda qo'shilgan narsa.
+browser:
+  value: "Misollar yangi #{browser}-da ishlaydi ."
+  none: "JavaScript-ni interpretatorida qo'llab-quvvatlanmaydi yoki hali qisman qo'llab-quvvatlanadi, ko'p to'ldirishni talab qiladi."
+  new: Eski brauzerlarda polifilllar kerak bo'lishi mumkin.
+caniuse: "Siz qo'llab-quvvatlashning hozirgi holatini <a href=\"https://caniuse.com/#feat=#{feat}\">https://caniuse.com/#feat=#{feat}</a>-da topishingiz mumkin."

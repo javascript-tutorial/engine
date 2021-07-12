@@ -1,0 +1,7 @@
+
+server_connection_error: Server ulanishda xatolik yuz berdi.
+server_request_timeout: Server so'rovida tanaffus.
+request_aborted: So'rov bekor qilindi.
+no_response: Serverdan javob yo'q.
+server_error: "Serverda xato (code #{status}), keyinroq qayta urinib ko'ring."
+invalid_format: Javob formati yaroqsiz.

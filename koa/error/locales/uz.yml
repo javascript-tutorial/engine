@@ -1,0 +1,26 @@
+400:
+  title: "Yaroqsiz so'rov"
+401:
+  title: "Autentifikatsiya talab qilinadi"
+  description: "Ehtimol, siz <a href="#" data-action-login>tizimga kirishingiz</a> kerak"
+
+403:
+  title: Kirish taqiqlangan
+  wrong_user: "Ehtimol, siz noto'g'ri user bilan tizimga kirgansiz"
+  login: "Ehtimol, siz <a href="#" data-action-login>tizimga kirishingiz</a> kerak"
+
+404:
+  title: Sahifa topilmadi
+  use_search:  'Sahifani topish uchun siz qidiruvdan foydalanishingiz mumkin:'
+  search: Qidirish
+  use_top: "…yoki yuqori navigatsiya."
+  go_to_main: "Asosiy sahifaga o'tish"
+
+500:
+  title: "Serverda xato"
+  subject: "Error 500 at #{href}"
+  description: "Biz xatolarni tahlil qilamiz, ammo elektron pochta <a href=\"mailto:#{email}?subject=#{subject}\">#{email}</a> xabarlariga batafsil ma'lumot berish orqali jarayonni tezlashtirasiz."
+
+503:
+  title: "Xizmat ish faoliyatida emas"
+  description: "Xizmat mavjud emas, uzr, iltimos, keyinroq kirishga harakat qiling."

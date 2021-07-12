@@ -1,0 +1,16 @@
+open_task:
+  sandbox:
+    tests: Sinovlar bilan sandbox-ni oching.
+    no_tests: Vazifa uchun sandbox-ni oching.
+
+open_solution:
+  sandbox:
+    tests: Yechimni sandbox-dagi sinovlar bilan oching.
+    no_tests: Yechimni sandbox-da oching.
+
+Importance: Muhimlik
+importance: muhimlik
+solution: yechim
+back: darsga qaytish
+importance_help: Vazifa qanchalik muhim, 1 dan 5 gacha
+task_not_found: "\"#{Path}\" vazifasi topilmadi"

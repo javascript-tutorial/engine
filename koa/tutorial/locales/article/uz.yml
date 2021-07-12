@@ -1,0 +1,11 @@
+lesson:
+  next: Keyingi dars
+  prev: Oldingi dars
+
+sibling_chapters: Sibling boblar
+lesson_navigation: Dars navigatsiyasi
+tasks: Vazifalar
+chapter: Bob
+lesson_of: "#{bookLeafCount} ning #{bookChildNumber} darsi"
+
+article_not_found: "\"#{path}\" maqolasi topilmadi"

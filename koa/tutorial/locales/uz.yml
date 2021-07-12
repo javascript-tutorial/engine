@@ -1,0 +1,14 @@
+modern_javascript_tutorial: "Zamonaviy JavaScript qo'llanmasi"
+subtitle: "Hozir qanday amalga oshiriladi. Oddiy, ammo batafsil tushuntirishlar bilan asoslardan ilg'or mavzulargacha."
+part: "Qism #{num}"
+more: "Ko'proq…"
+contents: 'Mundarija'
+description: "Asosiy kurs JavaScript-ni dasturlash tili va brauzer bilan ishlashni o'z ichiga olgan 2 qismdan iborat. Qo'shimcha tematik maqolalar seriyasi ham mavjud."
+
+part3:
+  title: "Qo'shimcha maqolalar"
+  content: "O'quv qo'llanmasining dastlabki ikki qismini o'rgandingiz deb taxmin qiladigan qo'shimcha mavzular ro'yxati. Bu yerda aniq bir iyerarxiya yo'q, siz maqolalarni kerakli tartibda o'qishingiz mumkin."
+
+tutorial: "Qo'llanma"
+tutorial_map: "O'quv qo'llanma xaritasi"
+not_translated: 'Ushbu material faqat quyidagi tillarda mavjud: #{translatedLangs}. Iltimos, bizga  <strong>#{currentLang.title}</strong> ga <a href="#{url}">tarjima qilishda</a> yordam bering.'
