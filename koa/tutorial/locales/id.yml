@@ -1,4 +1,4 @@
-modern_javascript_tutorial: Tutorial JavaScript Modern"
+modern_javascript_tutorial: Tutorial JavaScript Modern
 subtitle: "Bagaimana sekarang. Mulai dari topik dasar hingga lanjutan dengan penjelasan sederhana namun detail."
 part: "Bagian #{num}"
 more: "Lagi…"
@@ -10,5 +10,5 @@ part3:
   content: "Daftar topik tambahan yang menganggap Anda telah membahas dua bagian pertama dari tutorial. Tidak ada hierarki yang jelas di sini, Anda dapat membaca artikel dalam urutan yang Anda inginkan."
 
 tutorial: Tutorial
-tutorial_map: Peta tutorial 
+tutorial_map: Peta tutorial
 not_translated: 'Materi ini hanya tersedia dalam bahasa berikut: #{translatedLangs}. Tolong, <a href="#{url}">bantu kami</a> menerjemahkan ke dalam <strong>#{currentLang.title}</strong>.'
