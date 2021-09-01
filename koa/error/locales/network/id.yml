@@ -1,0 +1,7 @@
+
+server_connection_error: Koneksi server eror.
+server_request_timeout: Server request timeout.
+request_aborted: Permintaan dibatalkan.
+no_response: Tidak ada tanggapan dari server.
+server_error: "Server error (kode #{status}), coba lagi nanti."
+invalid_format: Invalid response format.

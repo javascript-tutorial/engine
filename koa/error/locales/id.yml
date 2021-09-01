@@ -1,0 +1,27 @@
+400:
+  title: Invalid request
+401:
+  title: Authentication required
+  description: Probably, you need to <a href="#" data-action-login>login</a>?
+
+403:
+  title: Akses dilarang
+  wrong_user: Mungkin, Anda masuk dengan akun pengguna yang salah?
+  login: Mungkin, Anda perlu <a href="#" data-action-login>login</a>?
+
+404:
+  title: halaman tidak ditemukan
+  use_search:  'Untuk menemukan halaman, Anda dapat menggunakan pencarian:'
+  search: Mencari
+  use_top: …atau navigasi atas.
+  go_to_main: Pergi ke halaman utama
+
+500:
+  title: Server error
+  subject: "Error 500 at #{href}"
+  description: 'Kami menganalisis kesalahan, tetapi Anda dapat mempercepat prosesnya dengan melaporkan detail ke <a href="mailto:#{email}?subject=#{subject}">#{email}</a>.'
+
+503:
+  title: Layanan tidak tersedia
+  description: Layanan tidak tersedia, maaf, coba akses nanti.
+

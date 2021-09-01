@@ -1,0 +1,7 @@
+recent: Tambahan baru-baru ini
+recent_addition: Ini adalah tambahan terbaru untuk bahasa ini.
+browser:
+  value: "Contoh berfungsi di #{browser} baru-baru ini."
+  none: "Tidak didukung di mesin JavaScript, atau belum didukung sebagian, memerlukan polyfilling."
+  new: Browser lama mungkin memerlukan polyfill.
+caniuse: "Anda dapat menemukan status dukungan saat ini di <a href=\"https://caniuse.com/#feat=#{feat}\">https://caniuse.com/#feat=#{feat}< /a>."

@@ -1,0 +1,11 @@
+lesson:
+  next: Pelajaran berikutnya
+  prev: Pelajaran sebelumnya
+
+sibling_chapters: Bab terdekekat
+lesson_navigation: Navigasi pelajaran
+tasks: Tugas
+chapter: Bab
+lesson_of: "Pelajaran #{bookChildNumber} dari #{bookLeafCount}"
+
+article_not_found: "Artikel \"#{path}\" tidak ditemukan"

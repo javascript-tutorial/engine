@@ -1,0 +1,17 @@
+open_task:
+  sandbox:
+    tests: Buka sandbox dengan tes.
+    no_tests: Buka sandbox untuk tugas tersebut.
+
+open_solution:
+  sandbox:
+    tests: Buka solusi dengan tes di sandbox.
+    no_tests: Buka solusi di kotak pasir.
+
+Importance: Pentingnya
+importance: pentingnya
+solution: solusi
+back: kembali ke pelajaran
+importance_help: Seberapa penting tugas itu, dari 1 hingga 5
+
+task_not_found: "Tugas \"#{path}\" tidak ditemukan"

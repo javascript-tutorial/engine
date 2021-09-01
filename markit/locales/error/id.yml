@@ -1,0 +1,7 @@
+image_not_found: "Gambar \"#{src}\" tidak ditemukan"
+image_invalid: "Gambar \"#{src}\" rusak"
+attr_required: "Atribut \"#{attr}\" wajib diisi"
+src_out_of_root: "Jalur sumber \"#{src}\" berada di luar root"
+read_file: "Tidak dapat membaca file \"#{src}\""
+no_such_plunk: "Tidak ada plunk seperti itu \"#{src}\""
+anchor_exists: "Anchor sudah ada: \"#{anchor}\""
