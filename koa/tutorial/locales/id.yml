@@ -1,13 +1,13 @@
 modern_javascript_tutorial: Tutorial JavaScript Modern
-subtitle: "Bagaimana sekarang. Mulai dari topik dasar hingga lanjutan dengan penjelasan sederhana namun detail."
+subtitle: "Bagaimana perkembangan javaScript sekarang. Mulai dari topik dasar hingga lanjutan dengan penjelasan yang sederhana namun detail."
 part: "Bagian #{num}"
 more: "Lagi…"
 contents: 'Daftar Isi'
-description: 'Main course berisi 2 bagian yang mencakup JavaScript sebagai bahasa pemrograman dan bekerja dengan browser. Ada juga seri artikel tematik tambahan.'
+description: 'Konten utama terdiri dari 2 bagian yang mencakup JavaScript sebagai bahasa pemrograman dan cara kerjanya dengan browser. Ada juga seri artikel tematik tambahan.'
 
 part3:
   title: "Artikel tambahan"
-  content: "Daftar topik tambahan yang menganggap Anda telah membahas dua bagian pertama dari tutorial. Tidak ada hierarki yang jelas di sini, Anda dapat membaca artikel dalam urutan yang Anda inginkan."
+  content: "Daftar topik tambahan yang menganggap Kalian telah membahas dua bagian pertama dari tutorial. Tidak ada susunan yang jelas di sini, Kalian dapat membaca artikel dalam urutan yang Kalian inginkan."
 
 tutorial: Tutorial
 tutorial_map: Peta tutorial
