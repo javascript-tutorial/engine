@@ -233,6 +233,8 @@ module.exports = class FiguresImporter {
           ({data: content} = await svgo.optimize(content));
 
           // console.log(content);
+          console.log(path.join(artboardPath, artboard.name));
+
           fs.writeFileSync(path.join(artboardPath, artboard.name), content);
 
         } else {

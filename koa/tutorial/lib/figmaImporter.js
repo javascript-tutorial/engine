@@ -19,14 +19,6 @@ let req = request.defaults({
 
 // TODO: use htmlhint/jslint for html/js examples
 
-// png to svg
-// export NODE_LANG=ru
-// 1. Replace png->svg in tutorial glp engine:koa:tutorial:pngToSvg
-// 2. Update new svgs glp engine:koa:tutorial:figuresImport
-// 3. Get image.yaml glp engine:koa:tutorial:imageYaml
-// 4. Update translation
-// 5. Reimport: glp engine:koa:tutorial:figuresImport
-
 module.exports = class FigmaImporter {
   constructor(options) {
     let imageTranslationsPath = path.join(config.tutorialRoot, 'images.yml');
@@ -55,6 +47,8 @@ module.exports = class FigmaImporter {
       }
     }
 
+    console.log(ids);
+    
     let idsString = Object.keys(ids).join(',');
 
     let url = `https://api.figma.com/v1/images/${config.figma.tutorialDocumentKey}?format=svg&ids=` + idsString;
@@ -79,7 +73,12 @@ module.exports = class FigmaImporter {
     let exportedImages = await Promise.all(jobs);
 
     for (let i=0; i<exportedImages.length; i++) {
-      fs.writeFileSync(path.join(outputDir, nameByNumber[i]), exportedImages[i]);
+      let imagePath = path.join(outputDir, nameByNumber[i]);
+      if (fs.existsSync(imagePath)) {
+        throw new Error("Figma image already exists: " + imagePath);
+      }
+      console.log(imagePath);
+      fs.writeFileSync(imagePath, exportedImages[i]);
     }
   }
 };
