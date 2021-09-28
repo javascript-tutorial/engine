@@ -1,7 +1,7 @@
 .sidebar
   width sidebar_width - 1
-  background #F5F2F0
-  border-right 1px solid #d5d2d0
+  background var(--backgroundAlt)
+  border-right 1px solid var(--borderPrimary)
 
   &__inner
     overflow auto
@@ -13,7 +13,7 @@
     position relative
 
   &_profile
-    background #f7f7f7
+    background var(--backgroundAlt)
     border-right 0
     transform translateX(0)
 
@@ -21,11 +21,11 @@
       margin-top 30px
 
     & ^[0]__link
-      color #000
+      color var(--foregroundDefault)
 
     & ^[0]__navigation-link
       &_active
-        color link_hover_color
+        color var(--foregroundAccent)
 
   &_profile-empty
     display none
@@ -60,11 +60,11 @@
   //- класс вместо псевдокласса для мобильных
   &__toggle:hover,
   & .map:hover
-    background #f4f4f4
+    background var(--backgroundAlt)
 
   &__toggle::before
     font-size 22px
-    color #8B8987
+    color var(--foregroundAlt)
 
   &__toggle::before
     @extend $font-menu
@@ -82,18 +82,18 @@
     position absolute
     top -12px
     width 35px
-    border-top 1px solid #d7d7d4
+    border-top 1px solid var(--borderPrimary)
 
   &__section_share
     margin-top 18px
 
   &__section-title
-    color #C4C2C0
+    color var(--foregroundSubtle)
     font-weight 400
     margin 12px 0
 
   &__link
-    color navigation_link_color
+    color var(--foregroundSidebarLink)
 
   &__link:hover
     text-decoration none
@@ -103,7 +103,7 @@
     line-height 1.25
 
     &_active
-      color link_hover_color
+      color var(--foregroundAccent)
 
   &__share
     margin 8px 20px 0 0
