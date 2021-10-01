@@ -27,10 +27,11 @@ if lang == 'zh'
   +e.section
     +e('a').link.wechat-qq(href='#') 点击我，关注微信公众号，订阅更多内容，获取学习指导
 
-if lang === 'en' && currentSection == 'tutorial'
+if lang === 'en' && currentSection == 'tutorial' && env == 'production'
   +e.section#sponsorBar
     +e.section-title Sponsored by
-    +e#sponsorBarContent
-      #freemote-img(style="width:100%;position:relative;")
-      a(href="https://freemote.com/strategy?sl=jsinfo")
-        img(src="/freemote.png" style="height:100px;border:#E9E6E4 1px solid")
+    +e.ads#sponsorBarContent
+      +e('a').ads-link(href="https://freemote.com/strategy?sl=jsinfo")
+        +e('img').ads-img(src="/img/freemote-ads.png")
+        +e('h3').ads-title The #[span Zero to Freelance Developer] Bootcamp
+        +e('div').ads-btn Learn more
