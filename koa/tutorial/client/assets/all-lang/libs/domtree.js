@@ -13,7 +13,7 @@ function drawHtmlTree(json, nodeTarget, w, h) {
 
   var i = 0,
     barHeight = 30,
-    barWidth = 250,
+    barWidth = 350,
     barMargin = 2.5,
     barRadius = 4,
     duration = 400,
@@ -74,6 +74,11 @@ function drawHtmlTree(json, nodeTarget, w, h) {
         if (d.content) {
           if (/^\s*$/.test(d.content)) {
             text += " " + d.content.replace(/\n/g, "↵").replace(/ /g, '␣');
+          } else if(/\s*.+\s*/.test(d.content)) {
+            let [_, h, content, t] = d.content.match(/(\s*)(.+)(\s*)/)
+            h = h.replace(/\n/g, "↵").replace(/ /g, '␣');
+            t = t.replace(/\n/g, "↵").replace(/ /g, '␣');
+            text += " " + h + content + t
           } else {
             text += " " + d.content;
           }
