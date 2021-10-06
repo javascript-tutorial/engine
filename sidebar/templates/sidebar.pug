@@ -29,9 +29,6 @@ if lang == 'zh'
 
 if lang === 'en' && currentSection == 'tutorial' && env == 'production'
   +e.section#sponsorBar
-    +e.section-title Sponsored by
-    +e.ads#sponsorBarContent
-      +e('a').ads-link(href="https://freemote.com/strategy?sl=jsinfo")
-        +e('img').ads-img(src="/img/freemote-ads.png")
-        +e('h3').ads-title The #[span Zero to Freelance Developer] Bootcamp
-        +e('div').ads-btn Learn more
+    +e.section-title#sponsorBarTitle
+    +e#sponsorBarContent
+    script window.initSponsorBar()
