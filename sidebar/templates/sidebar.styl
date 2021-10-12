@@ -2,6 +2,8 @@
   width sidebar_width - 1
   background #F5F2F0
   border-right 1px solid #d5d2d0
+  display flex
+  flex-direction column
 
   &__ads-link
     display flex
@@ -50,11 +52,15 @@
   &__inner
     overflow auto
     max-height 100%
+    flex-grow 1
 
   &__content
     padding 23px 25px
     height 100%
     position relative
+    box-sizing border-box
+    display flex
+    flex-direction column
 
   &_profile
     background #f7f7f7
@@ -114,9 +120,12 @@
     @extend $font-menu
 
   &__section
-    margin 22px 0
+    margin 22px 0 0
     padding 0 2px
     position relative
+
+    &#sponsorBar
+      margin-top auto
 
   &__section_separator_before
     margin-top 29px
@@ -134,7 +143,7 @@
   &__section-title
     color #C4C2C0
     font-weight 400
-    margin 12px 0
+    margin 0 0 12px
 
   &__link
     color navigation_link_color
@@ -143,8 +152,10 @@
     text-decoration none
 
   &__navigation-link
-    margin 12px 0
     line-height 1.25
+
+    & + &
+      margin-top 12px
 
     &_active
       color link_hover_color
