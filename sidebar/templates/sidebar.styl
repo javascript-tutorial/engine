@@ -126,6 +126,7 @@
 
     &#sponsorBar
       margin-top auto
+      padding-top 22px
 
   &__section_separator_before
     margin-top 29px
@@ -164,7 +165,7 @@
     margin 8px 20px 0 0
 
   &_compact &__section
-    margin 15px 0
+    margin 15px 0 0
 
   // в компактном виде сохраняем у футера отступы по умолчанию
   // для более удобного выравнивания с нижними хлебными крошками
@@ -175,11 +176,11 @@
     margin-top 24px
 
   &_compact &__section-title
-    margin 8px 0 6px 0
+    margin 0 0 6px 0
 
   &_compact &__navigation-link
     line-height 1.1
-    margin 6px 0
+    margin 0 0 6px 0
 
   &_compact #sponsorBarTitle
     display none
@@ -200,7 +201,7 @@
 
       & ^[0]__navigation-link
         padding 0 10px
-        margin 5px 0
+        margin 0 0 5px 0
 
       & ^[0]__navigation-link:last-child
         margin-right 0
@@ -209,5 +210,5 @@
         display none
 
   @media short_window
-    &_compact&_sticky-footer &__section:last-child
+    &_compact&_sticky-footer &__section:last-child:not(#sponsorBar)
       margin 10px 0
