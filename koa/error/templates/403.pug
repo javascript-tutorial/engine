@@ -3,7 +3,7 @@ extends /layouts/main
 block append variables
   - let headTitle = error.title || t('error.403.title')
   - let layout_header_class = "main__header_center"
-  - let themeEnabled = true
+  - var themeEnabled = true
 
 block content
   +b.error
