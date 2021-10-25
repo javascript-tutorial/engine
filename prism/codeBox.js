@@ -20,7 +20,7 @@ function CodeBox(elem) {
   let outputBox;
 
   elem.codeBox = this;
-  
+
   let runCode = code;
   if (elem.hasAttribute('data-async')) {
     runCode = `(async () => {\n${code}\n})()`;
@@ -51,7 +51,7 @@ function CodeBox(elem) {
   let isNoStrict = +elem.getAttribute('data-no-strict');
 
   let useStrict = (!isNoStrict && isJS) ? `"use strict";` : '';
-  
+
   // globalEval evaluates asynchronously, so we must inject codeBox id into the code
   // then in console.log we use it to show the message under the current box
   let codeBoxId = `globalThis.__codeBoxId = "${elem.id}";`;
@@ -60,7 +60,7 @@ function CodeBox(elem) {
   let sandboxCode = `${useStrict}\n\n${runCode}`;
 
   runCode = `${useStrict}${codeBoxId}\n\n${runCode}`;
-  
+
   let jsFrame;
   let globalFrame;
   let htmlResult;
@@ -106,11 +106,11 @@ function CodeBox(elem) {
     win.postMessage(runCode, config.lookatCodeUrlBase + '/showjs');
   }
 
-  
+
   function emphasize(codeElem, ranges) {
     let codeHtml = codeElem.innerHTML;
     let split = codeHtml.split(/\n/);
-    
+
     for(let range of ranges) {
       if (range.end !== undefined) {
         // block emphasize
@@ -132,7 +132,7 @@ function CodeBox(elem) {
 
         for(let i = 0; i < line.length ; i++) {
           if (line[i] == '<') inTag = true;
-          
+
           if (inTag) {
             resultLine += line[i];
           } else {
@@ -158,14 +158,14 @@ function CodeBox(elem) {
               resultLine += '</em>';
             }
           }
-          
+
           if (line[i] == '>') inTag = false;
         }
         /*
         if (cols.find(c => c.end == charCounter + 1)) {
           resultLine += '</em>';
         }*/
-        
+
         split[range.start] = resultLine;
       }
 
@@ -216,15 +216,15 @@ function CodeBox(elem) {
       // iframe may have been generated above OR already put in HTML by autorun
       frame.hasCustomConsoleLog = true;
       let consoleLogNative = frame.contentWindow.console.log.bind(frame.contentWindow.console);
-  
+
       // bind console.log to the current elem.id
       frame.contentWindow.console.log = function(...args) {
         consoleLogNative(...args);
-      
+
         let formattedArgs = consoleFormat(args);
         window.postMessage({type: 'console-log', log: formattedArgs, codeBoxId: elem.id}, '*');
       };
-    }      
+    }
 
 
     if (isTrusted) {
@@ -294,6 +294,7 @@ function CodeBox(elem) {
   }
 
   this.consoleLog = function(args) {
+    // console.info("Codebox consoleLog", args);
     if (!outputBox) {
       outputBox = document.createElement('div');
       outputBox.className = 'codebox__output';
@@ -332,9 +333,11 @@ function CodeBox(elem) {
       form.action = config.lookatCodeUrlBase + "/showhtml";
       form.target = 'js-global-frame';
 
+      let scriptAttrs = elem.hasAttribute('data-module') ? ' type="module"' : '';
+
       let textarea = document.createElement('textarea');
       textarea.name = 'code';
-      textarea.value = normalizeHtml(`<script>\n${runCode}\n</script>`);
+      textarea.value = normalizeHtml(`<script${scriptAttrs}>\n${runCode}\n</script>`);
       form.appendChild(textarea);
 
       globalFrame.parentNode.insertBefore(form, globalFrame.nextSibling);
@@ -342,7 +345,7 @@ function CodeBox(elem) {
       form.remove();
     } else if (isTrusted) {
 
-      if (elem.hasAttribute('data-autorun')) {
+      if (elem.hasAttribute('data-autorun') || elem.hasAttribute('data-module')) {
         // make sure functions from "autorun" go to global scope (eval has its own scope)
         globalEval(runCode);
         return;

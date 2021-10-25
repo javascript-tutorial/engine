@@ -62,6 +62,10 @@ module.exports = function(md) {
       token.attrPush(['data-global', 1]);
     }
 
+    if (attrs.module) {
+      token.attrPush(['data-module', 1]);
+    }
+
     token.attrPush(['class', 'code-example']);
 
     if (attrs['no-strict']) {
