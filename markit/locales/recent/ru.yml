@@ -2,6 +2,6 @@ recent: Новая возможность
 recent_addition: Эта возможность была добавлена в язык недавно.
 browser:
   value: "Примеры работают в последнем #{browser}."
-  none: "В движках JavaScript пока не поддерживается или поддерживается частично, нужен полифил."
-  new: В старых браузерах может понадобиться полифил.
+  none: "В движках JavaScript пока не поддерживается или поддерживается частично, нужен <a href=\"https://learn.javascript.ru/polyfills\">полифил</a>."
+  new: "В старых браузерах может понадобиться <a href=\"https://learn.javascript.ru/polyfills\">полифил</a>."
 caniuse: "Узнать, где есть поддержка, можно на <a href=\"https://caniuse.com/#feat=#{feat}\">https://caniuse.com/#feat=#{feat}</a>."
