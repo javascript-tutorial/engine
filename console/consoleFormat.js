@@ -24,7 +24,7 @@ function format(value, depth = 0) {
       let copyProps = [Symbol.toStringTag, 'type', 'clientX', 'clientY', 'key', 'code'];
       let obj = {};
       for(let prop of copyProps) {
-        if (prop in value) {  
+        if (prop in value) {
           obj[prop] = value[prop];
         }
       }
@@ -76,7 +76,9 @@ function formatString(value, depth = 0) {
     value = value.slice(0, value.limit - 1) + '…';
   }
 
-  return `"${value}"`;
+  return JSON.stringify(value);
+  // was: `"${value}"`;
+  // but this doesn't excape special chars, such as \n
 }
 
 function formatObject(value, depth = 0) {
@@ -95,7 +97,7 @@ function formatObject(value, depth = 0) {
   if (name != 'Object') {
     result += name + ' ';
   }
-  
+
   result += '{';
 
   if (depth > 1) {
