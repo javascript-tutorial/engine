@@ -11,30 +11,30 @@ function drawHtmlTree(json, nodeTarget, w, h) {
   w = w || 960;
   h = h || 800;
 
-  var i = 0,
+  let i = 0,
     barHeight = 30,
-    barWidth = 250,
+    barWidth = 280,
     barMargin = 2.5,
     barRadius = 4,
     duration = 400,
     root;
 
-  var tree, diagonal, vis;
+  let tree, diagonal, vis;
 
   function update(source) {
-    var nodes = tree.nodes(root);
+    let nodes = tree.nodes(root);
     // Compute the "layout".
     nodes.forEach(function(n, i) {
       n.x = i * barHeight;
     });
 
     // Update the nodes…
-    var node = vis.selectAll("g.node")
+    let node = vis.selectAll("g.node")
       .data(nodes, function(d) {
         return d.id || (d.id = ++i);
       });
 
-    var nodeEnter = node.enter().append("svg:g")
+    let nodeEnter = node.enter().append("svg:g")
       .attr("class", "node")
       .attr("transform", function(d) {
         return "translate(" + (source.y0) + "," + (source.x0) + ")";
@@ -70,13 +70,12 @@ function drawHtmlTree(json, nodeTarget, w, h) {
       .style('fill', '#333')
       .style("pointer-events", "none")
       .text(function(d) {
-        var text = d.name;
+        let text = d.name;
         if (d.content) {
-          if (/^\s*$/.test(d.content)) {
-            text += " " + d.content.replace(/\n/g, "↵").replace(/ /g, '␣');
-          } else {
-            text += " " + d.content;
-          }
+          let [fullMatch, spaceBefore, content, spaceAfter] = d.content.match(/^(\s*)(.*?)(\s*)$/);
+          spaceBefore = spaceBefore.replace(/\n/g, "↵").replace(/ /g, '␣');
+          spaceAfter = spaceAfter.replace(/\n/g, "↵").replace(/ /g, '␣');
+          text += " " + spaceBefore + content + spaceAfter;
         }
         return text;
       });
@@ -115,7 +114,7 @@ function drawHtmlTree(json, nodeTarget, w, h) {
       .remove();
 
     // Update the links…
-    var link = vis.selectAll("path.link")
+    let link = vis.selectAll("path.link")
       .data(tree.links(nodes), function(d) {
         return d.target.id;
       });
@@ -127,7 +126,7 @@ function drawHtmlTree(json, nodeTarget, w, h) {
       .style('stroke', '#BEC3C7')
       .style('stroke-width', '1px')
       .attr("d", function(d) {
-        var o = {
+        let o = {
           x: source.x0,
           y: source.y0
         };
@@ -149,7 +148,7 @@ function drawHtmlTree(json, nodeTarget, w, h) {
     link.exit().transition()
       .duration(duration)
       .attr("d", function(d) {
-        var o = {
+        let o = {
           x: source.x,
           y: source.y
         };
@@ -191,9 +190,9 @@ function drawHtmlTree(json, nodeTarget, w, h) {
       .size([h, 100]);
 
     diagonal = function(d){
-        var deltaX = 7;
-        var deltaY = 0;
-        var points = [
+        let deltaX = 7;
+        let deltaY = 0;
+        let points = [
             "M", [d.source.y+deltaX, d.source.x+deltaY].join(","),
             "L", [d.source.y+deltaX, d.target.x+deltaY].join(","),
             "L", [d.target.y+deltaX, d.target.x+deltaY].join(","),
@@ -221,7 +220,7 @@ function drawHtmlTree(json, nodeTarget, w, h) {
 
 
 function node2json(node) {
-  var obj = {
+  let obj = {
         name: node.nodeName,
         nodeType: node.nodeType
   };
@@ -232,7 +231,7 @@ function node2json(node) {
   }
 
   obj.children = [];
-  for(var i=0; i<node.childNodes.length; i++) {
+  for(let i=0; i<node.childNodes.length; i++) {
     obj.children.push( node2json(node.childNodes[i]) );
   }
 
