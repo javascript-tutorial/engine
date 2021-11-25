@@ -12,8 +12,8 @@ function capitalizeKeys(obj, mapper) {
 
   let output = {};
 
-  for (var key in obj) {
-    var keyCapitalized = key.replace(/_(\w)/g, (match, letter) => letter.toUpperCase());
+  for (let key in obj) {
+    let keyCapitalized = key.replace(/_(\w)/g, (match, letter) => letter.toUpperCase());
     if (mapper) keyCapitalized = mapper(keyCapitalized);
     output[keyCapitalized] = capitalizeKeys(obj[key], mapper);
   }
@@ -21,5 +21,3 @@ function capitalizeKeys(obj, mapper) {
 }
 
 module.exports = capitalizeKeys;
-
-
