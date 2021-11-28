@@ -9,7 +9,6 @@
 
 let mongoose = require('mongoose');
 mongoose.Promise = Promise;
-require('mongoose-long')(mongoose);
 let path = require('path');
 let fs = require('fs');
 let log = require('engine/log')();
