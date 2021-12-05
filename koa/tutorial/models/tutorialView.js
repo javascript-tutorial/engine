@@ -44,7 +44,7 @@ module.exports = class TutorialView {
       archive.file(file.filename, file.content);
     }
 
-    let buffer = await archive.generateAsync({type: 'nodebuffer'});
+    let buffer = await archive.generateAsync({ type: 'nodebuffer' });
 
     return buffer;
   };
@@ -99,7 +99,7 @@ module.exports = class TutorialView {
 
     let entries = this.files.map(file => {
       return {
-        content:  file.content,
+        content: file.content,
         encoding: 'utf-8',
         type: 'file',
         pathname: file.filename
@@ -107,26 +107,28 @@ module.exports = class TutorialView {
     });
 
     let options = {
-      method:  'POST',
+      method: 'POST',
       headers: {
-        'Content-Type':  'application/json;charset=utf-8',
+        'Content-Type': 'application/json;charset=utf-8',
         'Authorization': `Bearer ${plunkerToken}`
       },
-      json:    true
+      json: true
     };
 
     options.url = this.plunkId ? `https://api.plnkr.co/v2/plunks/${this.plunkId}/versions` : "http://api.plnkr.co/v2/plunks";
 
-    options.body = this.plunkId ? {entries} : {
-      title:   'Code example',
-      tags:    [],
+    options.body = this.plunkId ? { entries } : {
+      title: 'Code example',
+      tags: [],
       private: true,
       entries
     };
 
+    console.log(options);
+    
     let response = await request(options);
 
-    // console.log(response);
+    console.log(response.body, response.headers);
 
     if (response.statusCode == 401) {
       let fileNames = this.files.map(f => f.filename);
@@ -151,7 +153,7 @@ module.exports = class TutorialView {
     let allFiles = await fs.readdir(dir);
 
     let files = [];
-    for(let file of allFiles) {
+    for (let file of allFiles) {
       if (file[0] == ".") continue;
 
       let filePath = path.join(dir, file);
@@ -169,7 +171,7 @@ module.exports = class TutorialView {
       files.push(file);
     }
 
-    files = files.sort(function(fileA, fileB) {
+    files = files.sort(function (fileA, fileB) {
       let extA = fileA.slice(fileA.lastIndexOf('.') + 1);
       let extB = fileB.slice(fileB.lastIndexOf('.') + 1);
 
