@@ -126,14 +126,17 @@ module.exports = class TutorialView {
 
     let response = await request(options);
 
-    console.log(response);
+    // console.log(response);
 
     if (response.statusCode == 401) {
       let fileNames = this.files.map(f => f.filename);
       throw new Error(`No permissions to create/update, plunkId:${this.plunkId} files:${fileNames.join(',')}`);
     }
 
-    assert.equal(response.statusCode, 201);
+    if (response.statusCode != 201 && response.statusCode != 301) {
+      console.error(response);
+      throw new Error("Invalid status Code: " + response.statusCode);
+    }
 
     if (!this.plunkId) {
       this.plunkId = response.body.id;
