@@ -115,7 +115,7 @@ module.exports = class TutorialView {
       json: true
     };
 
-    options.url = this.plunkId ? `https://api.plnkr.co/v2/plunks/${this.plunkId}/versions` : "http://api.plnkr.co/v2/plunks";
+    options.url = this.plunkId ? `https://api.plnkr.co/v2/plunks/${this.plunkId}/versions` : "https://api.plnkr.co/v2/plunks";
 
     options.body = this.plunkId ? { entries } : {
       title: 'Code example',
@@ -125,7 +125,7 @@ module.exports = class TutorialView {
     };
 
     console.log(options);
-    
+
     let response = await request(options);
 
     console.log(response.body, response.headers);
