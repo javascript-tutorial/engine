@@ -124,11 +124,11 @@ module.exports = class TutorialView {
       entries
     };
 
-    console.log(options);
+    // console.log(options);
 
     let response = await request(options);
 
-    console.log(response.body, response.headers);
+    // console.log(response.body, response.headers);
 
     if (response.statusCode == 401) {
       let fileNames = this.files.map(f => f.filename);
