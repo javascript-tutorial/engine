@@ -16,8 +16,6 @@ if share
     +b('a').share._tw.sidebar__share(href="https://twitter.com/share?url="+encodeURIComponent(url.href) rel="nofollow")
     //- [] encoded as %5B %5D to make validator happy
     +b('a').share._fb.sidebar__share(href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]="+encodeURIComponent(url.href) rel="nofollow")
-    if lang === 'ru'
-      +b('a').share._vk.sidebar__share(href="https://vkontakte.ru/share.php?url="+encodeURIComponent(url.href) rel="nofollow")
 
 if githubLink
   +e.section
