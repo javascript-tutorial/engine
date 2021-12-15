@@ -1,7 +1,7 @@
 .sidebar
   width sidebar_width - 1
-  background #F5F2F0
-  border-right 1px solid #d5d2d0
+  background var(--backgroundAlt)
+  border-right 1px solid var(--borderPrimary)
   display flex
   flex-direction column
   flex-grow 1
@@ -19,7 +19,7 @@
     margin 0 13px
     max-width  100%
 
-  &__ads-title 
+  &__ads-title
     font-family 'SF Pro Text', sans-serif
     font-style normal
     font-weight 500
@@ -64,7 +64,7 @@
     flex-direction column
 
   &_profile
-    background #f7f7f7
+    background var(--backgroundAlt)
     border-right 0
     transform translateX(0)
 
@@ -72,11 +72,11 @@
       margin-top 30px
 
     & ^[0]__link
-      color #000
+      color var(--foregroundDefault)
 
     & ^[0]__navigation-link
       &_active
-        color link_hover_color
+        color var(--foregroundAccent)
 
   &_profile-empty
     display none
@@ -98,7 +98,7 @@
   & .map
     text-align center
     line-height 44px
-    top 80px
+    top 64px
     transition transform animation_duration animation_duration
 
   & &__toggle:active
@@ -111,14 +111,14 @@
   //- класс вместо псевдокласса для мобильных
   &__toggle:hover,
   & .map:hover
-    background #f4f4f4
+    background var(--backgroundAlt)
 
   &__toggle::before
     font-size 22px
-    color #8B8987
+    color var(--foregroundAlt)
 
   &__toggle::before
-    @extend $font-menu
+    @extend $font-burger
 
   &__section
     margin 22px 0 0
@@ -137,18 +137,18 @@
     position absolute
     top -12px
     width 35px
-    border-top 1px solid #d7d7d4
+    border-top 1px solid var(--borderPrimary)
 
   &__section_share
     margin-top 18px
 
   &__section-title
-    color #C4C2C0
+    color var(--foregroundSubtle)
     font-weight 400
     margin 0 0 12px
 
   &__link
-    color navigation_link_color
+    color var(--foregroundSidebarLink)
 
   &__link:hover
     text-decoration none
@@ -160,7 +160,7 @@
       margin-top 12px
 
     &_active
-      color link_hover_color
+      color var(--foregroundAccent)
 
   &__share
     margin 8px 20px 0 0

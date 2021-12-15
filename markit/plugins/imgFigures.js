@@ -70,7 +70,7 @@ module.exports = function(md) {
     if (!src.endsWith('.svg')) {
       img = `<img${slf.renderAttrs(token)} class="image__image">`;
     } else {
-      img = `<object type="image/svg+xml" data="${src}" width="${width}" height="${height}" class="image__image">
+      img = `<object type="image/svg+xml" data="${src}" width="${width}" height="${height}" class="image__image" data-use-theme>
         <img${slf.renderAttrs(token)}>
       </object>`;
     }

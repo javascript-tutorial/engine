@@ -27,6 +27,8 @@ exports.get = async function(ctx, next) {
 
   locals.sitetoolbar = true;
 
+  locals.themeEnabled = true;
+
   locals.githubLink = renderedArticle.githubLink;
 
   locals.translateNotification = renderedArticle.translateNotification;
@@ -354,4 +356,3 @@ async function renderArticle(ctx) {
   return rendered;
 
 }
-

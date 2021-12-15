@@ -9,6 +9,8 @@ const assert = require('assert');
 const log = require('engine/log')();
 const execSync = require('child_process').execSync;
 const SVGO = require('svgo');
+const SAX = require('@trysound/sax');
+const light2dark = require('client/init/light2dark');
 
 let svgo = new SVGO({
   plugins: [{
@@ -232,8 +234,40 @@ module.exports = class FiguresImporter {
 
           ({data: content} = await svgo.optimize(content));
 
+          const sax = SAX.parser(true, {
+            trim: false,
+            normalize: false,
+            xmlns: true,
+            position: true
+          });
+
+          function checkColor(color) {
+            if (color.startsWith('url(')) return;
+            color = normalizeColor(color);
+            // console.log(`Check color ${color}`);
+            if (!light2dark[color]) {
+              console.error(`No color mapping for ${color} at ${sax.line}:${sax.column}`, path.join(artboardPath, artboard.name));
+            }
+          }
+
+          sax.onattribute = ({name, value}) => {
+            if (value == 'none') return;
+            if (name == 'fill' || name == 'stroke') {
+              checkColor(value);
+            }
+
+            if (name == 'style') {
+              let colors = value.match(/(?<=[ "':])\#[a-z0-9]+/ig);
+              for(let color of colors) {
+                checkColor(color);
+              }
+            }
+          };
+
+
+          sax.write(content).close();
+
           // console.log(content);
-          console.log(path.join(artboardPath, artboard.name));
 
           fs.writeFileSync(path.join(artboardPath, artboard.name), content);
 
@@ -247,3 +281,12 @@ module.exports = class FiguresImporter {
 
   };
 };
+
+// #abc -> #aabbcc
+function normalizeColor(color) {
+  if (color[0] == '#' && color.length == 4) {
+    let letters = color.slice(1).split('');
+    color = '#' + letters[0] + letters[0] +letters[1] +letters[1] + letters[2] + letters[2];
+  }
+  return color.toLowerCase();
+}
