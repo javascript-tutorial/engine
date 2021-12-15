@@ -9,7 +9,7 @@ const yaml = require('js-yaml');
 const pixelWidth = require('../lib/pixelWidth');
 const execSync = require('child_process').execSync;
 const Entities = require('html-entities').XmlEntities;
- 
+
 const entities = new Entities();
 
 async function getImageYaml(imageFile) {
@@ -39,6 +39,15 @@ module.exports = async function() {
     .usage('NODE_LANG=ru glp engine:koa:tutorial:figuresTranslate --image try-catch-flow.svg')
     .usage('NODE_LANG=ru glp engine:koa:tutorial:figuresTranslate --image /path/to/try-catch-flow.svg')
     .argv;
+
+  
+  try {
+    execSync(`git remote remove upstream`, {cwd: config.tutorialRoot});
+  } catch(e) {}
+
+  execSync(`git remote add upstream https://github.com/javascript-tutorial/en.javascript.info`, {cwd: config.tutorialRoot});
+  execSync(`git fetch upstream master`, {cwd: config.tutorialRoot});
+
 
   let images;
   if (args.image) {
@@ -86,7 +95,7 @@ module.exports = async function() {
 
     log.debug("Translation", translation);
 
-    let cmd = `git show upstream/master:${image}`;
+    let cmd = `git show 'upstream/master:${image}'`;
 
     log.debug(cmd);
 
@@ -98,7 +107,7 @@ module.exports = async function() {
     } catch(e) {
       if (e.output.join('').includes('exists on disk, but not in')) {
         log.error(e.output.join(''));
-        content = fs.readFileSync(path.join(config.tutorialRoot, image));
+        content = fs.readFileSync(path.join(config.tutorialRoot, image), 'utf-8');
         // ignore this error, e.g. RU version has some files of its own, that don't exist in upstream
       } else {
         throw e;
@@ -194,5 +203,3 @@ module.exports = async function() {
   }
 
 };
-
-
