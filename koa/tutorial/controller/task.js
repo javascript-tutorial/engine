@@ -24,7 +24,7 @@ exports.get = async function(ctx, next) {
   ctx.locals.taskAnswerOpen = process.env.TUTORIAL_EDIT;
   ctx.locals.githubLink = config.tutorialRepo.blob + task.githubPath;
 
-  locals.themeEnabled = true;
+  ctx.locals.themeEnabled = true;
 
   const tutorialStats = TutorialStats.instance();
 
