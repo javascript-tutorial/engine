@@ -30,7 +30,8 @@ mongoose.set('debug', function (collection, method, query, doc) {
   if (collection == 'users') {
     console.log("MONGOOSE", arguments);
   }
-});*/
+});
+*/
 
 mongoose.connect(config.mongoose.uri, config.mongoose.options);
 
