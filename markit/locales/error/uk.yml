@@ -1,0 +1,7 @@
+image_not_found: "Зображення \"#{src}\" не знайдено"
+image_invalid: "Зображення \"#{src}\" пошкоджено"
+attr_required: "Потрібний атрибут \"#{attr}\""
+src_out_of_root: "Шлях джерела \"#{src}\" знаходиться за межами кореня"
+read_file: "Не вдається прочитати файл \"#{src}\""
+no_such_plunk: "Такого plunk \"#{src}\" не існує"
+anchor_exists: "Якір вже існує: \"#{anchor}\""

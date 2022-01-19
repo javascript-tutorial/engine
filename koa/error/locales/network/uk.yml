@@ -1,0 +1,7 @@
+
+server_connection_error: Помилка підключення до сервера.
+server_request_timeout: Час очікування відповіді від сервера вичерпано.
+request_aborted: Запит було скасовано.
+no_response: Немає відповіді від сервера.
+server_error: "Помилка сервера (код #{status}), спробуйте пізніше."
+invalid_format: Недійсний формат відповіді.

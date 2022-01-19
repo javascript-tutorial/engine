@@ -1,0 +1,11 @@
+lesson:
+  next: Наступний урок
+  prev: Попередній урок
+
+sibling_chapters: Сусідні розділи
+lesson_navigation: Навігація по уроку
+tasks: Завдання
+chapter: Глава
+lesson_of: "Урок #{bookChildNumber} з #{bookLeafCount}"
+
+article_not_found: "Статтю \"#{path}\" не знайдено"
