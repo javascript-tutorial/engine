@@ -33,6 +33,8 @@ module.exports = class TutorialImporter {
    */
   async sync(directory, update = false) {
 
+    log.info(`sync PLNKR_ENABLED=${process.env.PLNKR_ENABLED}`);
+
     if (process.env.PLNKR_ENABLED && !this.plunkerToken) {
       this.plunkerToken = await getPlunkerToken();
     }
@@ -322,7 +324,7 @@ module.exports = class TutorialImporter {
     const solution = fs.readFileSync(solutionPath, 'utf-8').trim();
     data.solution = solution;
 
-    
+
     if (this.parserDryRunEnabled) {
       log.debug('parsing content and solution');
       const options = {
@@ -610,4 +612,3 @@ function copySync(srcPath, dstPath) {
 
   fs.copySync(srcPath, dstPath);
 }
-
