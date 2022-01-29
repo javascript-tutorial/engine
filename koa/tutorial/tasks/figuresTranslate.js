@@ -40,7 +40,7 @@ module.exports = async function() {
     .usage('NODE_LANG=ru glp engine:koa:tutorial:figuresTranslate --image /path/to/try-catch-flow.svg')
     .argv;
 
-  
+
   try {
     execSync(`git remote remove upstream`, {cwd: config.tutorialRoot});
   } catch(e) {}
@@ -115,7 +115,8 @@ module.exports = async function() {
     }
 
     if (Object.keys(translation).length) {
-      content = content.replace(/(<tspan.*?x=")(.*?)(".*?>)(.*?)(?=<\/tspan>)/g, (match, part1, x, part2, text, offset) => {
+      content = content.replace(/(<tspan.*?x=")(.*?)(".*?>)(.*?)(?=<\/tspan>)/g, function(match, part1, x, part2, text, offset) {
+        log.debug("match", part1, x, part2, text, offset);
 
         if (typeof translation[text] == 'function') {
           // reserved word: "constructor"

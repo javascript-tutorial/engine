@@ -12,7 +12,7 @@ block content
 
     if error.info
       +e.text
-        p!= error.info
+        != error.info
 
     - let subject = encodeURIComponent(t('error.500.subject', {href: url.href}))
     +e.text!= t('error.500.description', { email: supportEmail, subject })

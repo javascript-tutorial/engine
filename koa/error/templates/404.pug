@@ -9,9 +9,9 @@ block content
   +b.error
     +e('h1').type= headTitle
     +e.code 404
-    +e.text
-      if error.info
-        p= error.info
+    if error.info
+      +e.text
+        != error.info
 
     if handlerExists('search')
       p= t('error.404.use_search')
