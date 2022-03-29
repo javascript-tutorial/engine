@@ -35,7 +35,9 @@ module.exports = async function() {
 
   watchTutorial();
 
-  watchFigures();
+  if (process.env.IMPORT_WATCH_FIGURES) {
+    watchFigures();
+  }
 
   await new Promise(resolve => {});
 
