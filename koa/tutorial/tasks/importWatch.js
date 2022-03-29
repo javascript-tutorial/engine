@@ -1,7 +1,6 @@
 let TutorialImporter = require('../lib/tutorialImporter');
 let TutorialTree = require('../models/tutorialTree');
 let TutorialViewStorage = require('../models/tutorialViewStorage');
-let FiguresImporter = require('../lib/figuresImporter');
 let fs = require('fs');
 let path = require('path');
 let livereloadServer = require('engine/livereloadServer')
@@ -93,6 +92,8 @@ function watchTutorial() {
 }
 
 function watchFigures() {
+  // only import figures stuff if we're watching figures (not on dev server)
+  let FiguresImporter = require('../lib/figuresImporter');
 
   let figuresFilePath = process.env.FIGURES_ROOT || path.join(config.tutorialRoot, 'figures.sketch');
   let importer = new FiguresImporter({
