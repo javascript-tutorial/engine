@@ -73,6 +73,13 @@ function renderError(ctx, err) {
         message: err.message,
         stack: stack
       };
+
+    if (err.description) {
+      ctx.body.description = err.description;
+    }
+    if (err.info) {
+      ctx.body.info = err.info;
+    }
       ctx.body.statusCode = err.statusCode || err.status;
     } else {
       ctx.type = 'text/html; charset=utf-8';
@@ -91,6 +98,9 @@ function renderError(ctx, err) {
     };
     if (err.description) {
       ctx.body.description = err.description;
+    }
+    if (err.info) {
+      ctx.body.info = err.info;
     }
   } else {
     let templateName = [503, 500, 400, 401, 404, 403].includes(ctx.status) ? ctx.status : 500;

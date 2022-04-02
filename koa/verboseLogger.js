@@ -25,4 +25,3 @@ exports.init = function(app) {
   app.use(app.verboseLogger.middleware());
 
 };
-

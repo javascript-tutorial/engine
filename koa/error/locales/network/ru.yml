@@ -3,4 +3,5 @@ server_request_timeout: Превышено максимально допусти
 request_aborted: Запрос был прерван.
 no_response: Не получен ответ от сервера.
 server_error: "Ошибка на стороне сервера (код #{status}), попытайтесь позднее."
+server_error_info: "Ошибка на стороне сервера (код #{status}). #{info}."
 invalid_format: Некорректный формат ответа от сервера.
