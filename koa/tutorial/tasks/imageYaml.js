@@ -5,6 +5,9 @@ const util = require('util');
 const glob = util.promisify(require('glob'));
 let log = require('engine/log')();
 const yaml = require('js-yaml');
+const Entities = require('html-entities').XmlEntities;
+
+const entities = new Entities();
 
 
 async function getImageYaml(imageFile) {
@@ -19,7 +22,8 @@ async function getImageYaml(imageFile) {
 
   for(let match of tspans) {
     if (!match) continue; // empty strings sometimes
-    obj[name][match[1]] = "";
+    let text = entities.decode(match[1]);
+    obj[name][text] = "";
   }
 
   return obj;
@@ -72,5 +76,3 @@ module.exports = async function() {
   console.log(output.join('\n'));
 
 };
-
-

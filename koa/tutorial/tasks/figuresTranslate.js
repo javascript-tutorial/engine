@@ -116,7 +116,7 @@ module.exports = async function() {
 
     if (Object.keys(translation).length) {
       content = content.replace(/(<tspan.*?x=")(.*?)(".*?>)(.*?)(?=<\/tspan>)/g, function(match, part1, x, part2, text, offset) {
-        log.debug("match", part1, x, part2, text, offset);
+        log.debug("text", part1, x, part2, text, offset);
 
         if (typeof translation[text] == 'function') {
           // reserved word: "constructor"
@@ -135,6 +135,8 @@ module.exports = async function() {
         x = +x;
 
         let translated = translation[text];
+
+        log.debug("match", translated);
 
         // console.log(translation, text, translated);
         if (typeof translated == 'string') {
