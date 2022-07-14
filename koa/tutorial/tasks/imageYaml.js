@@ -70,7 +70,7 @@ module.exports = async function() {
 
   let output = [];
   for(let key in results) {
-    output.push(yaml.dump({[key]: results[key]}));
+    output.push(yaml.dump({[key]: results[key]}, {forceQuotes: true}));
   }
 
   console.log(output.join('\n'));
