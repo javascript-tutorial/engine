@@ -15,7 +15,7 @@ const yaml = require('js-yaml');
 // YAML can throw!
 module.exports = function(text) {
 
-  let parts = text.split(/\n---\n/);
+  let parts = text.split(/\r?\n---\r?\n/);
 
   if (parts.length != 2) {
     return {text, meta: {}};
