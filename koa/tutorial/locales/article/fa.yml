@@ -1,0 +1,11 @@
+lesson:
+  next: "درس بعدی"
+  prev: "درس قبلی"
+
+sibling_chapters: "فصل‌های هم نژاد"
+lesson_navigation: "مطالب درس"
+tasks: "تمارین"
+chapter: "فصل"
+lesson_of: "درس #{bookChildNumber} از #{bookLeafCount}"
+
+article_not_found: "مقاله \"#{path}\" پیدا نشد"

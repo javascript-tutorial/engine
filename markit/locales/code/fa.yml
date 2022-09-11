@@ -1,0 +1,4 @@
+run: "اجرا"
+show: "نمایش"
+open:
+  sandbox: "باز کردن درون sandbox"

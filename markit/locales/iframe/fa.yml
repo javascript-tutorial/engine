@@ -1,0 +1,4 @@
+open:
+  sandbox: "باز کردن درون sandbox"
+  window: "باز کردن درون یک پنجره جدید"
+  download: "دانلود به عنوان zip"

@@ -1,0 +1,17 @@
+open_task:
+  sandbox:
+    tests: "باز کردن یک sandbox همراه با تست‌ها."
+    no_tests: "باز کردن یک sandbox برای تمرین."
+
+open_solution:
+  sandbox:
+    tests: "باز کردن راه‌حل همراه با تست‌ها درون یک sandbox."
+    no_tests: "باز کردن راه‌حل درون sandbox."
+
+Importance: "اهمیت"
+importance: "اهمیت"
+solution: "راه‌حل"
+back: "بازگشت به درس"
+importance_help: "از 1 تا 5، این تمرین چقدر مهم است"
+
+task_not_found: "تمرین \"#{path}\" پیدا نشد"

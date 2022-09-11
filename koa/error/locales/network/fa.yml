@@ -1,0 +1,7 @@
+
+server_connection_error: "ارور اتصال سرور."
+server_request_timeout: "به پایان رسیدن زمان درخواست سرور."
+request_aborted: "درخواست بی‌نتجه ماند."
+no_response: "پاسخی از سرور دریافت نشد."
+server_error: "ارور سرور (کد #{status})، لطفاً بعداً دوباره تلاش کنید."
+invalid_format: "شکل نامعتبری از پاسخ."

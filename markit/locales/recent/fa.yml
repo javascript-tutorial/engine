@@ -1,0 +1,7 @@
+recent: "به تازگی اضافه شده است"
+recent_addition: "این قسمت به تازگی به زبان اضافه شده است."
+browser:
+  value: "مثال‌ها درون #{browser} اخیر کار می‌کنند."
+  none: "در موتورهای جاوااسکریپت پشتیبانی نمی‌شود یا هنوز کامل پشتیبانی نمی‌شود، به <a href=\"https://fa.javascript.info/polyfills\">پلیفیل‌سازی</a> احتیاج دارد."
+  new: "مرورگرهای قدیمی ممکن است به <a href=\"https://javascript.info/polyfills\">پلیفیل</a> نیاز داشته باشند."
+caniuse: "شما می‌توانید وضعیت پشتیبانی فعلی را در <a href=\"https://caniuse.com/#feat=#{feat}\">https://caniuse.com/#feat=#{feat}</a> ببینید."

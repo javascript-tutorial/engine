@@ -1,0 +1,7 @@
+image_not_found: "تصویر \"#{src}\" پیدا نشد"
+image_invalid: "تصویر \"#{src}\" معیوب است"
+attr_required: "مشخصه \"#{attr}\" نیاز است"
+src_out_of_root: "مسیر مبدأ \"#{src}\" بیرون از پوشه ریشه است"
+read_file: "نمی‌توان فایل \"#{src}\" را خواند"
+no_such_plunk: "چنین plunk \"#{src}\" وجود ندارد"
+anchor_exists: "یک Anchor از قبل وجود دارد: \"#{anchor}\""
