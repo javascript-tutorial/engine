@@ -19,7 +19,7 @@
 500:
   title: "ارور سرور"
   subject: "ارور 500 در #{href}"
-  description: "ما ارروها را بررسی می‌کنیم اما شما می‌توانید فرایند را با ارسال یک گزارش به <a href='mailto:#{email}?subject=#{subject}'>#{email}</a>. تسریع کنید"
+  description: "ما ارورها را بررسی می‌کنیم اما شما می‌توانید فرایند را با ارسال یک گزارش به <a href='mailto:#{email}?subject=#{subject}'>#{email}</a> سرعت ببخشید."
 
 503:
   title: "سرویس قابل دسترس نیست"
