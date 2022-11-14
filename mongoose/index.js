@@ -22,7 +22,7 @@ let _ = require('lodash');
 
 if (process.env.MONGOOSE_DEBUG) {
   mongoose.set('debug', true);
-  log.debug(config.mongoose.uri, config.mongoose.options);
+  log.debug("Mongoose", config.mongoose.uri, config.mongoose.options);
 }
 
 /*
