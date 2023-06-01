@@ -3,6 +3,7 @@ let script = document.currentScript || [].slice.call(document.getElementsByTagNa
 script.setAttribute('data-manual', 1);
 
 require('./core');
+require('./sql')(Prism);
 
 let CodeBox = require('./codeBox');
 let CodeTabsBox = require('./codeTabsBox');

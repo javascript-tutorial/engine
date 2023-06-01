@@ -2,13 +2,13 @@ let resizeOnload = require('client/head/resizeOnload');
 let isScrolledIntoView = require('client/isScrolledIntoView');
 let makeLineNumbers = require('./makeLineNumbers');
 let makeHighlight = require('./makeHighlight');
-const { highlight } = require('prismjs');
 const config = require('config');
 let consoleFormat = require('engine/console/consoleFormat');
 const t = require('engine/i18n/t');
 
 const LANG = require('config').lang;
 t.i18n.add('prism', require('./locales/' + LANG + '.yml'));
+
 
 function CodeBox(elem) {
 
