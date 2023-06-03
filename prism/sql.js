@@ -29,6 +29,7 @@ module.exports = (Prism) => {
     'boolean': /\b(?:FALSE|NULL|TRUE)\b/i,
     'number': /\b0x[\da-f]+\b|\b\d+(?:\.\d*)?|\B\.\d+\b/i,
     'operator': /[-+*\/=%^~]|&&?|\|\|?|!=?|<(?:=>?|<|>)?|>[>=]?|\b(?:AND|BETWEEN|DIV|ILIKE|IN|IS|LIKE|NOT|OR|REGEXP|RLIKE|SOUNDS LIKE|XOR)\b/i,
-    'punctuation': /[;[\]()`,.]/
+    'punctuation': /[;[\]()`,.]/,
+    'error': /^\s*ERROR/
   };
 };
