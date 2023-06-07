@@ -1,1 +1,7 @@
-
+image_not_found: "Không tìm thấy hình ảnh \"#{src}\""
+image_invalid: "Hình ảnh \"#{src}\" bị hỏng"
+attr_required: "Thuộc tính \"#{attr}\" là bắt buộc"
+src_out_of_root: "Đường dẫn nguồn \"#{src}\" nằm ngoài thư mục gốc"
+read_file: "Không thể đọc tệp \"#{src}\""
+no_such_plunk: "Không có lỗi như vậy \"#{src}\""
+anchor_exists: "Neo đã tồn tại: \"#{anchor}\""
