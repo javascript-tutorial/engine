@@ -2,13 +2,14 @@
 
 module.exports = priceInWords;
 
-function priceInWords(number, locale) {
-  locale = locale || 'ru';
+function priceInWords(number, addCurrency = true, locale = 'ru') {
 
-  return locale == 'ru' ? ru(number) : ua(number);
+  return (locale == 'ru' ? ru(number, addCurrency) : ua(number, addCurrency)).trim();
 };
 
-function ru(_number) {
+function ru(_number, addCurrency) {
+  if (!_number) return 'Ноль' + (addCurrency ? ' рублей' : '');
+
   let _arr_numbers = new Array();
   _arr_numbers[1] = new Array('', 'один', 'два', 'три', 'четыре', 'пять', 'шесть', 'семь', 'восемь', 'девять', 'десять', 'одиннадцать', 'двенадцать', 'тринадцать', 'четырнадцать', 'пятнадцать', 'шестнадцать', 'семнадцать', 'восемнадцать', 'девятнадцать');
   _arr_numbers[2] = new Array('', '', 'двадцать', 'тридцать', 'сорок', 'пятьдесят', 'шестьдесят', 'семьдесят', 'восемьдесят', 'девяносто');
@@ -35,14 +36,17 @@ function ru(_number) {
       _last_num = parseFloat(_num.charAt(last));
       _slice_num = _num.slice(0, -1);
       _pre_last_num = parseFloat(_slice_num);
-      if (_last_num == 1 && 1 != _pre_last_num) _string += 'рубль';
-      else if (_last_num > 1 && _last_num < 5 && 1 != _pre_last_num)  _string += 'рубля';
-      else if ("" != _slice_num) _string += 'рублей';
-      else if (1 == _pre_last_num) _string += 'рублей';
-      else if ("" != _slice_num && _last_num > 4) _string += 'рублей';
-      else if ("" == _slice_num && _last_num > 4) _string += 'рублей';
-      else if ("" == _slice_num && 0 == _last_num) _string += 'Ноль рублей';
-      else _string += 'рубль';
+
+      if (addCurrency) {
+        if (_last_num == 1 && 1 != _pre_last_num) _string += 'рубль';
+        else if (_last_num > 1 && _last_num < 5 && 1 != _pre_last_num)  _string += 'рубля';
+        else if ("" != _slice_num) _string += 'рублей';
+        else if (1 == _pre_last_num) _string += 'рублей';
+        else if ("" != _slice_num && _last_num > 4) _string += 'рублей';
+        else if ("" == _slice_num && _last_num > 4) _string += 'рублей';
+        else if ("" == _slice_num && 0 == _last_num) _string += 'Ноль рублей';
+        else _string += 'рубль';
+      }
       break;
 
     case 1:
@@ -85,24 +89,13 @@ function ru(_number) {
     return _string;
   }
 
-  function decimals_parser(_num) {
-    let _first_num = _num.substr(0, 1);
-    let _second_num = parseFloat(_num.substr(1, 2));
-    let _string = ' ' + _first_num + _second_num;
-    if (_second_num == 1 && 1 != _first_num) _string += ' копейка';
-    else if (_second_num > 1 && _second_num < 5 && 1 != _first_num) _string += ' копейки';
-    else _string += ' копеек';
-    return _string;
-  }
-
-  if (!_number || _number == 0) return 'Ноль рублей';
   if (typeof _number !== 'number') {
     _number = _number.replace(',', '.');
     _number = parseFloat(_number);
-    if (isNaN(_number)) return 'Ноль рублей';
+    if (isNaN(_number)) return 'Ноль' + (addCurrency ? ' рублей' : '');
   }
-  _number = _number.toFixed(2);
-  let _number_decimals;
+  _number = String(_number);
+
   if (_number.indexOf('.') != -1) {
     let _number_arr = _number.split('.');
     _number = _number_arr[0];
@@ -121,7 +114,7 @@ function ru(_number) {
       _count++;
     }
   }
-  if (_number_decimals) _string += decimals_parser(_number_decimals);
+
   _string = _string.charAt(0).toUpperCase() + _string.substr(1).toLowerCase();
   return _string;
 };
