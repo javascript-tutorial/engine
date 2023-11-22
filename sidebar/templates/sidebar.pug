@@ -21,7 +21,7 @@ if githubLink
   +e.section
     +e('a').link(href=githubLink rel="nofollow")= t('site.edit_on_github')
 
-if lang === 'en' && currentSection == 'tutorial' && env == 'production'
+if lang === 'en' && currentSection == 'tutorial' && env == 'production' && false
   +e.section#sponsorBar
     +e.section-title#sponsorBarTitle
     +e#sponsorBarContent
