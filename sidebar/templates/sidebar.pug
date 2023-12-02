@@ -25,12 +25,13 @@ if lang === 'en' && currentSection == 'tutorial'
   //- && env == 'production'
   +e.section#sponsorBar
     +e.section-title#sponsorBarTitle
-      div#ezoic-pub-ad-placeholder-103
-    //-
-      +e#sponsorBarContent
-        ins(class="adsbygoogle" style="display:block"
-          data-ad-client="ca-pub-6204518652652613"
-          data-ad-slot="8123889259"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        )
+      if adsenseEnabled
+        +e#sponsorBarContent
+          ins(class="adsbygoogle" style="display:block"
+            data-ad-client="ca-pub-6204518652652613"
+            data-ad-slot="8123889259"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          )
+      else
+        div#ezoic-pub-ad-placeholder-103
