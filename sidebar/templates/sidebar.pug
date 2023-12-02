@@ -25,7 +25,8 @@ if lang === 'en' && currentSection == 'tutorial'
   //- && env == 'production'
   if adsenseEnabled
     +e.section#sponsorBar
-      +e.section-title#sponsorBarTitle Google ads
+      +e.section-title#sponsorBarTitle
+        //- Google ads
       +e#sponsorBarContent
         ins(class="adsbygoogle"
           style="display:inline-block;width:200px;height:300px"
