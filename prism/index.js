@@ -45,6 +45,13 @@ exports.init = function () {
 function highlight(elem) {
   initCodeBoxes(elem);
   initCodeTabsBox(elem);
+
+  if (window.ebookType) {
+    // these elements are not needed for ebook and (possibly?) break things
+    for(let elem of document.querySelectorAll('.line-numbers-rows')) {
+      elem.remove();
+    }
+  }
 }
 
 exports.highlight = highlight;
