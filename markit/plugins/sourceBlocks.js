@@ -39,6 +39,8 @@ function rewriteFenceToSource(state) {
 
 }
 
+let SOURCE_BLOCK_ID = 1;
+
 module.exports = function(md) {
 
   md.core.ruler.push('rewrite_fence_to_source', rewriteFenceToSource);
@@ -52,7 +54,9 @@ module.exports = function(md) {
 
     let prismLanguage = getPrismLanguage(lang);
 
-    let blockTagId = Math.random().toString(36).slice(2, 12);
+    // for ebook we use it to simplify html-diff of 2 generated books
+    // not really necessary to have SBID..
+    let blockTagId = process.env.NODE_ENV == 'ebook' ? `SBID${SOURCE_BLOCK_ID++}` : Math.random().toString(36).slice(2, 12);
 
     token.attrPush(['id', blockTagId]);
 
