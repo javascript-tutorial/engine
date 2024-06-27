@@ -6,7 +6,7 @@ let Stream = require('stream').Stream;
 let util = require('util');
 
 let bunyan = require('bunyan');
-let LRU = require('lru-cache');
+let { LRUCache } = require('lru-cache');
 let os = require('os');
 
 ///--- API
@@ -34,7 +34,7 @@ class RequestCaptureStream extends Stream {
     this.limit = opts.maxRecords || 100;
     this.maxRequestIds = opts.maxRequestIds || 1000;
 
-    this.requestMap = new LRU({
+    this.requestMap = new LRUCache({
       max: this.maxRequestIds
     });
 

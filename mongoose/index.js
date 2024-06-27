@@ -19,6 +19,7 @@ let ValidatorError = require('mongoose/lib/error').ValidatorError;
 let config = require('config');
 let _ = require('lodash');
 
+mongoose.set('strictQuery', false);
 
 if (process.env.MONGOOSE_DEBUG) {
   mongoose.set('debug', true);
