@@ -10,6 +10,8 @@ const localStorage = require('engine/local-storage').instance();
 const TutorialStats = require('translate').TutorialStats;
 const config = require('config');
 
+const DISQUS_ENABLED = false;
+
 exports.get = async function(ctx, next) {
 
   let renderedArticle = await localStorage.getOrGenerate(
@@ -89,10 +91,12 @@ exports.get = async function(ctx, next) {
       });
     }
 
-    section2.links.push({
-      title: t('site.comments'),
-      url:   '#comments'
-    });
+    if (DISQUS_ENABLED) {
+      section2.links.push({
+        title: t('site.comments'),
+        url:   '#comments'
+      });
+    }
 
     sections.push(section2);
 
