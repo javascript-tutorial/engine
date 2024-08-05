@@ -38,7 +38,7 @@ exports.get = async function(ctx, next) {
   locals.currentSection = "tutorial";
 
   if (!renderedArticle.isFolder) {
-    locals.comments = true;
+    locals.comments = false;
   }
 
   let sections = [];
