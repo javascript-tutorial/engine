@@ -72,7 +72,7 @@ module.exports = class Renderer {
 
   pack(name, ext) {
     this.readVersions();
-    
+
     let versionName = this.versions[name];
     // e.g style = [ style.js, style.js.map, style.css, style.css.map ]
 
@@ -111,6 +111,8 @@ module.exports = class Renderer {
     locals.css = this.css.bind(this);
 
     locals.env = config.env;
+
+    locals.tutorialEdit = config.env.TUTORIAL_EDIT
 
     locals.urlBase = config.urlBase;
     locals.urlBaseProduction = config.urlBaseProduction;

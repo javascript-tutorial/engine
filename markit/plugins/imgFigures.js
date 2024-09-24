@@ -8,6 +8,7 @@
 
 const parseAttrs = require('../utils/parseAttrs');
 const tokenUtils = require('../utils/token');
+const escapeHtml = require('escape-html');
 
 function imgFigures(state) {
 
@@ -75,10 +76,34 @@ module.exports = function(md) {
       </object>`;
     }
 
-    return `<figure><div class="image" style="width:${width}px">
+    let figureAttrs = {
+      style: ''
+    };
+
+    let imageDivAttrs = {
+      style: `width:${width}px;`
+    };
+
+    let code = tokenUtils.attrGet(token, 'code');
+    if (code) {
+      let [codeShiftX, codeShiftY] = code.split(':').map(Number);
+      figureAttrs.style += `position: relative; padding-bottom: calc(${height}px - (22px + ${codeShiftY}em));`;
+      imageDivAttrs.style += `position: absolute; z-index: 1; bottom: calc(-22px + -${codeShiftY}em); left: ${codeShiftX}em;`;
+      // console.log('code', code);
+    }
+
+    return `<figure${renderAttrsObj(figureAttrs)}><div class="image" ${renderAttrsObj(imageDivAttrs)}>
       <div class="image__ratio" style="padding-top:${height / width * 100}%"></div>
       ${img}
       </div></figure>`;
 
   };
 };
+
+function renderAttrsObj(attrs) {
+  let result = '';
+  for (let key in attrs) {
+    result += ' ' + escapeHtml(key) + '="' + escapeHtml(attrs[key]) + '"';
+  }
+  return result;
+}
