@@ -87,8 +87,8 @@ module.exports = function(md) {
     let code = tokenUtils.attrGet(token, 'code');
     if (code) {
       let [codeShiftX, codeShiftY] = code.split(':').map(Number);
-      figureAttrs.style += `position: relative; padding-bottom: calc(${height}px - (22px + ${codeShiftY}em));`;
-      imageDivAttrs.style += `position: absolute; z-index: 1; bottom: calc(-22px + -${codeShiftY}em); left: ${codeShiftX}em;`;
+      figureAttrs.style += `position: relative; padding-bottom: calc(${height}px - (22px + ${codeShiftY*20}px));`;
+      imageDivAttrs.style += `position: absolute; z-index: 1; bottom: calc(-22px + -${codeShiftY*20}px); left: ${codeShiftX}em;`;
       // console.log('code', code);
     }
 
