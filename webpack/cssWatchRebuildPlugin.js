@@ -8,26 +8,21 @@ const path = require('path');
 class CssWatchRebuildPlugin {
 
   apply(compiler) {
-
     compiler.hooks.afterEnvironment.tap("CssWatchRebuildPlugin", () => {
-
-      compiler.watchFileSystem = new CssWatchFS(
-        compiler.watchFileSystem
-      );
+      compiler.watchFileSystem = new CssWatchFS(compiler.watchFileSystem, compiler);
     });
-
   }
+
 }
 
 module.exports = CssWatchRebuildPlugin;
 
 class CssWatchFS {
-  constructor(wfs, roots) {
+  constructor(wfs, compiler) {
     this.wfs = wfs;
-    this.roots = roots;
+    this.compiler = compiler;
 
     this.rebuild();
-
 
     chokidar.watch(`{templates,modules/styles}/**/*.styl`, {ignoreInitial: true}).on('add', file => this.rebuild());
 

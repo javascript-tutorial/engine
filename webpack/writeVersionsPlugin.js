@@ -1,33 +1,34 @@
-let fs = require('fs-extra');
-let path = require('path');
+const fs = require('fs-extra');
+const path = require('path');
 
-function WriteVersionsPlugin(file) {
-  this.file = file;
-}
-
-WriteVersionsPlugin.prototype.writeStats = function(compiler, stats) {
-  stats = stats.toJson();
-  let assetsByChunkName = stats.assetsByChunkName;
-
-  for (let name in assetsByChunkName) {
-    if (assetsByChunkName[name] instanceof Array) {
-      assetsByChunkName[name] = assetsByChunkName[name].map(function(path) {
-        return compiler.options.output.publicPath + path;
-      });
-    } else {
-      assetsByChunkName[name] = compiler.options.output.publicPath + assetsByChunkName[name];
-    }
+class WriteVersionsPlugin {
+  constructor(file) {
+    this.file = file;
   }
 
-  // console.log("WRITING VERSIONS", this.file, assetsByChunkName);
+  writeStats(compilation, stats) {
+    const assetsByChunkName = stats.toJson().assetsByChunkName;
 
-  fs.ensureDirSync(path.dirname(this.file));
+    for (const name in assetsByChunkName) {
+      if (Array.isArray(assetsByChunkName[name])) {
+        assetsByChunkName[name] = assetsByChunkName[name].map(assetPath => {
+          return compilation.options.output.publicPath + assetPath;
+        });
+      } else {
+        assetsByChunkName[name] = compilation.options.output.publicPath + assetsByChunkName[name];
+      }
+    }
 
-  fs.writeFileSync(this.file, JSON.stringify(assetsByChunkName));
-};
+    // Ensure the directory exists and write the versioned assets to the file
+    fs.ensureDirSync(path.dirname(this.file));
+    fs.writeFileSync(this.file, JSON.stringify(assetsByChunkName));
+  }
 
-WriteVersionsPlugin.prototype.apply = function(compiler) {
-  compiler.plugin("done", this.writeStats.bind(this, compiler));
-};
+  apply(compiler) {
+    compiler.hooks.done.tap('WriteVersionsPlugin', (stats) => {
+      this.writeStats(compiler, stats);
+    });
+  }
+}
 
 module.exports = WriteVersionsPlugin;
