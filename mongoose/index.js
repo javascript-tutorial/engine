@@ -72,19 +72,17 @@ mongoose.plugin(function(schema) {
   schema.methods.persist = function(body) {
     let model = this;
 
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
 
       log.trace("mongoose persist", body);
 
       if (body) model.set(body);
+      let changed;
 
-      model.save(function(err, changed) {
-
-        log.trace("mongoose persist save", err, changed);
-
-        if (!err) {
-          return resolve(changed);
-        }
+      try {
+        changed = await model.save();
+        return resolve(changed);
+      } catch(err) {
         if (err && err.code != 11000) {
           return reject(err);
         }
@@ -176,7 +174,7 @@ mongoose.plugin(function(schema) {
           return reject(valError);
         });
 
-      });
+      }
     });
   };
 

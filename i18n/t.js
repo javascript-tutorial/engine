@@ -28,7 +28,9 @@ if (LANG !== 'en') {
   i18n.setFallback(LANG, 'en');
 }
 
-i18n.add = (...args) => i18n.addPhrase(LANG, ...args);
+i18n.add = (...args) => {
+  args = args.map(arg => arg.__esModule ? arg.default : arg);
+  return i18n.addPhrase(LANG, ...args);
+};
 
 t.i18n = i18n;
-

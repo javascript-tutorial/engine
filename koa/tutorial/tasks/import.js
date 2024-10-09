@@ -15,7 +15,7 @@ module.exports = async function() {
   await runImport();
 
   if (CacheEntry) {
-    await CacheEntry.remove({});
+    await CacheEntry.deleteMany({});
   }
 
   console.log("Tutorial import finished.");
