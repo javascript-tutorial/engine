@@ -153,6 +153,7 @@ mongoose.plugin(function(schema) {
             errorMessage = typeof schemaIndexInfo.unique == 'string' ? schemaIndexInfo.unique : ("Index error: " + indexName);
           }
 
+          // console.dir(err);
           let valError = new ValidationError(err);
 
           let field = indexInfo[0][0]; // if many fields in uniq index - we take the 1st one for error
