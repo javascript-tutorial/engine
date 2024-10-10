@@ -1,4 +1,4 @@
-let { slug } = require("limax");
+let slug = require("limax");
 let lang = require('config').lang;
 
 module.exports = function transliterate(str) {
