@@ -105,7 +105,7 @@ module.exports = async function (tokens, options) {
     try {
       content = await fs.readFile(sourcePath, 'utf-8');
     } catch (e) {
-      console.error("Bad path", sourcePath);
+      console.error("Bad path", sourcePath, e);
       throw new SrcError(
         t('markit.error.read_file', {src: token.blockTagAttrs.src}) +
         ((process.env.NODE_ENV === 'development' || process.env.TUTORIAL_EDIT) ? ` [${sourcePath}]` : '')
@@ -144,5 +144,3 @@ module.exports = async function (tokens, options) {
 
   await walk(tokens);
 };
-
-
