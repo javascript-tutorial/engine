@@ -64,6 +64,17 @@ mongoose.plugin(function(schema) {
   }
 });
 
+
+mongoose.plugin(function(schema) {
+  schema.methods.populateIfMissing = async function(...args) {
+    if (!this.populated(...args)) {
+      return this.populate(...args);
+    } else {
+      return this;
+    }
+  }
+});
+
 // plugin from https://github.com/LearnBoost/mongoose/issues/1859
 // yield.. .persist() or .destroy() for generators instead of save/remove
 // mongoose 3.10 will not need that (!)
@@ -181,6 +192,19 @@ mongoose.plugin(function(schema) {
 
 });
 
+mongoose.connection.on('disconnected', function() {
+  log.debug("Mongoose disconnected");
+});
+
+
+mongoose.connection.on('connected', function() {
+  log.debug("Mongoose connected");
+});
+
+mongoose.connection.on('error', function(error) {
+  log.debug("Mongoose error", error);
+});
+
 mongoose.waitConnect = async function() {
   if (mongoose.connection.readyState === 1) {
     return;
@@ -194,15 +218,12 @@ mongoose.waitConnect = async function() {
     mongoose.connection.on("connected", onConnected);
     mongoose.connection.on("error", onError);
 
-
     function onConnected() {
-      log.debug("Mongoose has just connected");
       cleanUp();
       resolve();
     }
 
     function onError(err) {
-      log.debug('Failed to connect to DB', err);
       cleanUp();
       reject(err);
     }

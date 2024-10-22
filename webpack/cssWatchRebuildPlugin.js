@@ -1,3 +1,5 @@
+// DEPRECATED NOT USED
+
 const fs = require('fs');
 const Minimatch = require("minimatch").Minimatch;
 const config = require('config');
@@ -35,6 +37,7 @@ class CssWatchFS {
   }
 
   rebuild() {
+    console.log("REBUILD");
     let styles = glob.sync(`{templates,modules/styles}/**/*.styl`, {cwd: config.projectRoot});
 
     let filesContent = {
@@ -97,11 +100,14 @@ class CssWatchFS {
         //console.log(fileTimestamps);
         if (err) return callback(err);
 
-        // console.log("Modified",  filesModified, fs.existsSync(filesModified[0]));
+        console.log("Modified",  filesModified, dirsModified, missingModified, fileTimestamps, dirTimestamps);
+
+        let hasDeleted = false;
         for(let fileModified of filesModified) {
           // deleted style
           if (!fs.existsSync(fileModified)) {
-            this.rebuild();
+            console.log("DELETED", fileModified);
+            hasDeleted = true;
             //
             // for(let name in this.roots) {
             //
@@ -116,6 +122,10 @@ class CssWatchFS {
             //
             // }
           }
+        }
+
+        if (hasDeleted) {
+          this.rebuild();
         }
 
         callback(

@@ -29,13 +29,14 @@ function requireModuleTasks(moduleName) {
   let deps = hasDeps ? require(path.join(dir, 'deps.json')) : {};
 
   for(let taskFile of taskFiles) {
+    // console.log(dir, taskFile);
     // migrate:myTask
 
     let taskName = taskFile.split('.')[0];
     if (taskName === '') continue; // ignore .files
 
     let taskNameFull = moduleName.replace(/\//g, ':') + ':' + taskName.replace(/\//g, ':');
-    
+
     // gulp.task(name, task to run before, working function of the task)
     let lazyTask = lazyRequireTask(path.join(dir, taskFile));
 
