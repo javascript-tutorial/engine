@@ -9,9 +9,7 @@ module.exports = async function getPlunkerToken() {
     return '';
   }
 
-  log.debug("Get plunker token");
-
-  let response = await request({
+  let options = {
     url: 'https://api.plnkr.co/v2/oauth/token',
     json: true,
     method: 'POST',
@@ -21,7 +19,13 @@ module.exports = async function getPlunkerToken() {
       client_secret: config.plnkr.credentials.clientSecret,
       audience: 'plunker-api'
     }
-  });
+  };
+
+  log.debug("Get plunker token", options);
+
+  let response = await request(options);
+
+  log.debug("Get plunker token", response);
 
   return response.access_token;
 };
