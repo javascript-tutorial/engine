@@ -52,14 +52,6 @@ module.exports = class Renderer {
 
     this.versions = {};
 
-    if (fs.existsSync(path.join(config.cacheRoot, 'webpack.versions.json'))) {
-      // this file was used before webpack split build
-      // remove this after full update of webpack
-      this.versions = JSON.parse(
-        fs.readFileSync(path.join(config.cacheRoot, 'webpack.versions.json'), {encoding: 'utf-8'})
-      );
-    }
-
     let dir = path.join(config.cacheRoot, 'webpack', 'versions');
     let files = glob.sync('*', {cwd: dir});
 
@@ -67,12 +59,16 @@ module.exports = class Renderer {
       let versions = JSON.parse( fs.readFileSync(path.join(dir, file), {encoding: 'utf-8'}) );
       Object.assign(this.versions, versions);
     }
+
+    if (process.env.NODE_ENV == 'production' && Object.keys(this.versions).length == 0) {
+      throw new Error("No webpack version files (no production build?)");
+    }
     // console.log("PACK VERSIONS", this.versions);
   }
 
   pack(name, ext) {
     this.readVersions();
-    
+
     let versionName = this.versions[name];
     // e.g style = [ style.js, style.js.map, style.css, style.css.map ]
 

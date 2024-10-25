@@ -1,5 +1,3 @@
-'use strict';
-
 let TutorialImporter = require('../lib/tutorialImporter');
 let TutorialTree = require('../models/tutorialTree');
 let TutorialViewStorage = require('../models/tutorialViewStorage');
@@ -34,5 +32,3 @@ module.exports = async function() {
 
   log.info("Tutorial import complete");
 };
-
-
