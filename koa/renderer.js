@@ -52,7 +52,7 @@ module.exports = class Renderer {
 
     this.versions = {};
 
-    let dir = path.join(config.cacheRoot, 'webpack', 'versions');
+    let dir = path.join(config.buildRoot, 'webpack', 'versions');
     let files = glob.sync('*', {cwd: dir});
 
     for(let file of files) {

@@ -2,7 +2,7 @@
 
 let CacheEntry;
 try {
-  CacheEntry = require('cache').CacheEntry;
+  CacheEntry = require('caches').CacheEntry;
 } catch (e) {
   /* ignore (no such module needed for local tutorial server */
 }

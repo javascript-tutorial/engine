@@ -58,19 +58,19 @@ module.exports = class TutorialViewStorage {
     return;
 
     if (allowEmpty) {
-      let exists = await fs.exists(path.join(config.cacheRoot, 'tutorialViewStorage.json'));
+      let exists = await fs.exists(path.join(config.buildRoot, 'tutorialViewStorage.json'));
       if (!exists) return;
     }
 
     // return;
 
-    let views = await fs.readFile(path.join(config.cacheRoot, 'tutorialViewStorage.json'));
+    let views = await fs.readFile(path.join(config.buildRoot, 'tutorialViewStorage.json'));
     views = JSON.parse(views);
     this.load(views);
   }
 
   async saveToCache() {
-    await fs.writeFile(path.join(config.cacheRoot, 'tutorialViewStorage.json'), JSON.stringify(this.serialize(), null, 2));
+    await fs.writeFile(path.join(config.buildRoot, 'tutorialViewStorage.json'), JSON.stringify(this.serialize(), null, 2));
   }
 
 

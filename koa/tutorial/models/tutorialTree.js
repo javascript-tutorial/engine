@@ -208,13 +208,13 @@ class TutorialTree {
 
 
   async loadFromCache() {
-    let tree = await fs.readFile(path.join(config.cacheRoot, `${this.name}.json`));
+    let tree = await fs.readFile(path.join(config.buildRoot, `${this.name}.json`));
     tree = JSON.parse(tree);
     this.load(tree);
   }
 
   async saveToCache() {
-    await fs.writeFile(path.join(config.cacheRoot, `${this.name}.json`), JSON.stringify(this.serialize(), null, 2));
+    await fs.writeFile(path.join(config.buildRoot, `${this.name}.json`), JSON.stringify(this.serialize(), null, 2));
   }
 
 };
