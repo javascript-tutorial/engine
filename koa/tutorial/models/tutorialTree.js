@@ -214,7 +214,9 @@ class TutorialTree {
   }
 
   async saveToCache() {
-    await fs.writeFile(path.join(config.buildRoot, `${this.name}.json`), JSON.stringify(this.serialize(), null, 2));
+    let savePath = path.join(config.buildRoot, `${this.name}.json`);
+    log.debug("Save tree to", savePath);
+    await fs.writeFile(savePath, JSON.stringify(this.serialize(), null, 2));
   }
 
 };

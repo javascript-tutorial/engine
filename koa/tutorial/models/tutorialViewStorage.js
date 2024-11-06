@@ -67,7 +67,9 @@ module.exports = class TutorialViewStorage {
   }
 
   async saveToCache() {
-    await fs.writeFile(path.join(config.buildRoot, 'tutorialViewStorage.json'), JSON.stringify(this.serialize(), null, 2));
+    const savePath = path.join(config.buildRoot, 'tutorialViewStorage.json');
+    log.debug("Save views to ", savePath);
+    await fs.writeFile(savePath, JSON.stringify(this.serialize(), null, 2));
   }
 
 
