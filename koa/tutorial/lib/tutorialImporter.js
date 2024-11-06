@@ -196,17 +196,6 @@ module.exports = class TutorialImporter {
 
     data.content = content;
 
-    if (this.parserDryRunEnabled) {
-      // just make sure it parses
-      const options = {
-        staticHost: config.urlBase.static.href.slice(0, -1),
-        resourceWebRoot: Article.getResourceWebRootBySlug(data.slug),
-      };
-      const parser = new TutorialParser(options);
-
-      await parser.parse(content);
-    }
-
     data.githubPath = articlePath.slice(this.root.length); // + '/article.md';
 
     let {stdout} = await execa('git', ['log' ,'-1', '--format=%at', articlePath], {cwd: this.root});
@@ -247,6 +236,19 @@ module.exports = class TutorialImporter {
         await this.syncResource(subPath, article.getResourceFsRoot());
       }
 
+    }
+
+
+    if (this.parserDryRunEnabled) {
+      // just make sure it parses
+      // running after everything to make sure that all resources are copied to public
+      const options = {
+        staticHost: config.urlBase.static.href.slice(0, -1),
+        resourceWebRoot: Article.getResourceWebRootBySlug(data.slug),
+      };
+      const parser = new TutorialParser(options);
+
+      await parser.parse(content);
     }
 
     this.onchange(article.getUrl());
@@ -324,20 +326,6 @@ module.exports = class TutorialImporter {
     const solution = fs.readFileSync(solutionPath, 'utf-8').trim();
     data.solution = solution;
 
-
-    if (this.parserDryRunEnabled) {
-      log.debug('parsing content and solution');
-      const options = {
-        staticHost: config.urlBase.static.href.slice(0, -1),
-        resourceWebRoot: Task.getResourceWebRootBySlug(data.slug),
-      };
-
-      const parser = new TutorialParser(options);
-
-      await parser.parse(content);
-      await parser.parse(solution);
-    }
-
     if (fs.existsSync(path.join(taskPath, '_js.view', 'solution.js'))) {
       data.solutionJs = fs.readFileSync(path.join(taskPath, '_js.view', 'solution.js'), 'utf8');
     }
@@ -372,6 +360,21 @@ module.exports = class TutorialImporter {
 
     if (fs.existsSync(path.join(taskPath, '_js.view'))) {
       await this.syncTaskJs(path.join(taskPath, '_js.view'), task);
+    }
+
+    // try to parse task after full import
+    // and after its resources are copied to public, so that they can be read by loadSrcAsync
+    if (this.parserDryRunEnabled) {
+      log.debug('parsing content and solution');
+      const options = {
+        staticHost: config.urlBase.static.href.slice(0, -1),
+        resourceWebRoot: Task.getResourceWebRootBySlug(data.slug),
+      };
+
+      const parser = new TutorialParser(options);
+
+      await parser.parse(content);
+      await parser.parse(solution);
     }
 
     this.onchange(task.getUrl());
