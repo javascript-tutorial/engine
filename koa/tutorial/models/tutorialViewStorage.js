@@ -2,6 +2,7 @@ const TutorialView = require('./tutorialView');
 const config = require('config');
 const fs = require('mz/fs');
 const path = require('path');
+const log = require('engine/log')();
 
 module.exports = class TutorialViewStorage {
   constructor() {
