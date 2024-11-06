@@ -54,9 +54,6 @@ module.exports = class TutorialViewStorage {
   }
 
   async loadFromCache({allowEmpty = true} = {}) {
-    // TODO: remove this
-    return;
-
     if (allowEmpty) {
       let exists = await fs.exists(path.join(config.buildRoot, 'tutorialViewStorage.json'));
       if (!exists) return;
