@@ -51,8 +51,6 @@ module.exports = class TutorialView {
 
   async mergeAndSyncPlunk(files, plunkerToken) {
 
-    let changes = {};
-
     log.debug("mergeAndSyncRemote " + this.plunkId);
     log.debug("OLD files", this.files);
     log.debug("NEW files", files);
@@ -86,6 +84,10 @@ module.exports = class TutorialView {
     await this.updateRemote(plunkerToken);
 
     log.debug("plunk has changes or is new", this.plunkId);
+  }
+
+  isDev() {
+    return this.plunkId.startsWith(DEV_PREFIX);
   }
 
   async updateRemote(plunkerToken) {
