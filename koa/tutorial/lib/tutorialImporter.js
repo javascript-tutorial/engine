@@ -396,7 +396,7 @@ module.exports = class TutorialImporter {
 
     let view = TutorialViewStorage.instance().get(webPath);
 
-    let movingFromDevToProd = process.env.PLNKR_ENABLED && view.isDev();
+    let movingFromDevToProd = process.env.PLNKR_ENABLED && view?.isDev();
     if (view && !movingFromDevToProd) {
       log.debug("Plunk from db", view);
     } else {
