@@ -457,7 +457,7 @@ module.exports = class TutorialImporter {
 
     let sourceView = TutorialViewStorage.instance().get(sourceWebPath);
 
-    let movingFromDevToProd = process.env.PLNKR_ENABLED && view?.isDev();
+    let movingFromDevToProd = process.env.PLNKR_ENABLED && sourceView?.isDev();
     if (!sourceView || movingFromDevToProd) {
       sourceView = new TutorialView({
         webPath: sourceWebPath,
