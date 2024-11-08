@@ -457,7 +457,8 @@ module.exports = class TutorialImporter {
 
     let sourceView = TutorialViewStorage.instance().get(sourceWebPath);
 
-    if (!sourceView) {
+    let movingFromDevToProd = process.env.PLNKR_ENABLED && view?.isDev();
+    if (!sourceView || movingFromDevToProd) {
       sourceView = new TutorialView({
         webPath: sourceWebPath,
         description: "Fork from " + config.urlBaseProduction.main.href
@@ -488,7 +489,7 @@ module.exports = class TutorialImporter {
 
     let solutionView = TutorialViewStorage.instance().get(solutionWebPath);
 
-    if (!solutionView) {
+    if (!solutionView || movingFromDevToProd) {
       solutionView = new TutorialView({
         webPath:     solutionWebPath,
         description: "Fork from " + config.urlBaseProduction.main.href

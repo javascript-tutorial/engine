@@ -51,7 +51,7 @@ module.exports = class TutorialView {
 
   async mergeAndSyncPlunk(files, plunkerToken) {
 
-    log.debug("mergeAndSyncRemote " + this.plunkId);
+    log.debug("mergeAndSyncPlunk " + this.plunkId);
     log.debug("OLD files", this.files);
     log.debug("NEW files", files);
 
