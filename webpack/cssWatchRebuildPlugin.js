@@ -11,7 +11,6 @@ module.exports = class CssWatchRebuildPlugin {
   apply(compiler) {
     compiler.hooks.watchRun.tap('CssWatchRebuildPlugin', (compilation) => {
 
-      console.log(compiler.watchMode, '!!!');
       // setup watch
       if (compiler.watchMode && !this.initialized) {
         // console.log("setup watch on styles");
@@ -34,7 +33,8 @@ module.exports = class CssWatchRebuildPlugin {
 
           // console.log("setup watch on ", path);
         }
-        this.initialized = true
+        
+        this.initialized = true;
       }
     });
 
