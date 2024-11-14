@@ -1,43 +1,56 @@
-// DEPRECATED NOT USED
-
-const fs = require('fs');
 const Minimatch = require("minimatch").Minimatch;
 const config = require('config');
 const glob = require('glob');
 const chokidar = require('chokidar');
 const path = require('path');
+const fs = require('fs-extra');
 
-class CssWatchRebuildPlugin {
+module.exports = class CssWatchRebuildPlugin {
+  initialized = false;
 
   apply(compiler) {
-    compiler.hooks.afterEnvironment.tap("CssWatchRebuildPlugin", () => {
-      compiler.watchFileSystem = new CssWatchFS(compiler.watchFileSystem, compiler);
+    compiler.hooks.watchRun.tap('CssWatchRebuildPlugin', (compilation) => {
+
+      console.log(compiler.watchMode, '!!!');
+      // setup watch
+      if (compiler.watchMode && !this.initialized) {
+        // console.log("setup watch on styles");
+
+        let paths = ['templates','modules/styles'];
+
+        for (let handlerName in config.handlers) {
+          let handlerPath = config.handlers[handlerName].path;
+          if (!fs.statSync(handlerPath).isDirectory()) continue;
+          paths.push(handlerPath);
+        }
+
+        for(let path of paths) {
+          chokidar.watch(path, {
+            ignoreInitial: true,
+            ignored: (path, stats) => stats?.isFile() && !path.endsWith('.styl')
+          })
+            .on('add', file => this.rebuild())
+            .on('unlink', file => this.rebuild());
+
+          // console.log("setup watch on ", path);
+        }
+        this.initialized = true
+      }
     });
-  }
 
-}
+    // Runs only once before the initial compilation, regardless of watch mode.
+    // we make sure tmp/ru/styles.styl exists before resolvers
+    compiler.hooks.afterPlugins.tap('CssWatchRebuildPlugin', (compiler) => {
+      // compiler.hooks.beforeRun.tapAsync('CssWatchRebuildPlugin', async (compiler, callback) => {
 
-module.exports = CssWatchRebuildPlugin;
+      this.rebuild();
 
-class CssWatchFS {
-  constructor(wfs, compiler) {
-    this.wfs = wfs;
-    this.compiler = compiler;
-
-    this.rebuild();
-
-    chokidar.watch(`{templates,modules/styles}/**/*.styl`, {ignoreInitial: true}).on('add', file => this.rebuild());
-
-    for (let handlerName in config.handlers) {
-      let handlerPath = config.handlers[handlerName].path;
-      if (!fs.statSync(handlerPath).isDirectory()) continue;
-      chokidar.watch(`${handlerPath}/**/*.styl`, {ignoreInitial: true}).on('add', file => this.rebuild());
-    }
+    });
 
   }
 
   rebuild() {
-    console.log("REBUILD");
+    // console.log("REBUILD");
     let styles = glob.sync(`{templates,modules/styles}/**/*.styl`, {cwd: config.projectRoot});
 
     let filesContent = {
@@ -78,73 +91,9 @@ class CssWatchFS {
       content = content.map(s => `@require '${s}'`).join("\n");
 
       fs.writeFileSync(`${config.tmpRoot}/${name}.styl`, content);
-
-      this.wfs.inputFileSystem.purge(`${config.tmpRoot}/${name}.styl`);
     }
 
     //console.log("LOG STYLES", filesContent);
   }
 
-
-  // rebuild batch for deleted .styl
-  watch(files, dirs, missing, startTime, options, callback, callbackUndelayed) {
-    const watcher = this.wfs.watch(files, dirs, missing, startTime, options,
-      (
-        err,
-        filesModified,
-        dirsModified,
-        missingModified,
-        fileTimestamps,
-        dirTimestamps
-      ) => {
-        //console.log(fileTimestamps);
-        if (err) return callback(err);
-
-        console.log("Modified",  filesModified, dirsModified, missingModified, fileTimestamps, dirTimestamps);
-
-        let hasDeleted = false;
-        for(let fileModified of filesModified) {
-          // deleted style
-          if (!fs.existsSync(fileModified)) {
-            console.log("DELETED", fileModified);
-            hasDeleted = true;
-            //
-            // for(let name in this.roots) {
-            //
-            //   let mm = new Minimatch(`${this.roots[name]}/**/*.styl`);
-            //   let fn = fileModified.slice(config.projectRoot.length + 1);
-            //   //console.log("CHECK", fn);
-            //
-            //   if (mm.match(fn))  {
-            //     this.rebuildRoot(name);
-            //     fileTimestamps.set(`${config.tmpRoot}/${name}.styl`, Date.now());
-            //   }
-            //
-            // }
-          }
-        }
-
-        if (hasDeleted) {
-          this.rebuild();
-        }
-
-        callback(
-          err,
-          filesModified,
-          dirsModified,
-          missingModified,
-          fileTimestamps,
-          dirTimestamps
-        );
-      },
-      callbackUndelayed
-    );
-
-    return {
-      close: () => watcher.close(),
-      pause: () => watcher.pause(),
-      getContextTimestamps: () => watcher.getContextTimestamps(),
-      getFileTimestamps: () => watcher.getFileTimestamps()
-    };
-  }
 }
