@@ -88,8 +88,12 @@
   & .map
     position absolute
     top 12px
-    left 100%
-    margin-left 19px
+    if isRTL
+      right 100%
+      margin-right 19px
+    else
+      left 100%
+      margin-left 19px
     width 44px
     height 44px
     border-radius 50%
