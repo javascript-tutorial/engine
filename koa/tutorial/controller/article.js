@@ -10,7 +10,7 @@ const localStorage = require('engine/local-storage').instance();
 const TutorialStats = require('translate').TutorialStats;
 const config = require('config');
 
-const DISQUS_ENABLED = false;
+const COMMENTS_ENABLED = true;
 
 exports.get = async function(ctx, next) {
 
@@ -37,8 +37,8 @@ exports.get = async function(ctx, next) {
 
   locals.currentSection = "tutorial";
 
-  if (!renderedArticle.isFolder) {
-    locals.comments = false;
+  if (!renderedArticle.isFolder && COMMENTS_ENABLED) {
+    locals.comments = true;
   }
 
   let sections = [];
@@ -91,7 +91,7 @@ exports.get = async function(ctx, next) {
       });
     }
 
-    if (DISQUS_ENABLED) {
+    if (COMMENTS_ENABLED) {
       section2.links.push({
         title: t('site.comments'),
         url:   '#comments'

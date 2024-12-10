@@ -14,7 +14,10 @@ if (typeof IS_CLIENT === 'undefined') {
 function t(phrase) {
 
   if (!i18n.hasPhrase(LANG, phrase)) {
-    err("No such phrase", phrase);
+    if (process.env.NODE_ENV !== 'production' || process.env.I18N_DEBUG) {
+      // silent in production to avoid spamming the logs
+      err("No such phrase", phrase);
+    }
   }
 
   return i18n.t(LANG, ...arguments);
