@@ -6,6 +6,7 @@ const i18n = new BabelFish('en');
 
 let err = console.error;
 
+
 if (typeof IS_CLIENT === 'undefined') {
   const log = require('engine/log')();
   err = (...args) => log.error(...args);
@@ -14,8 +15,10 @@ if (typeof IS_CLIENT === 'undefined') {
 function t(phrase) {
 
   if (!i18n.hasPhrase(LANG, phrase)) {
-    if (process.env.NODE_ENV !== 'production' || process.env.I18N_DEBUG) {
-      // silent in production to avoid spamming the logs
+    // log only in server environment && development
+    // client isn't logging this kind of errors now, comment out to log everywhere
+    let shouldLog = typeof IS_CLIENT === 'undefined' && (process.env.I18N_DEBUG || process.env.NODE_ENV === 'development');
+    if (shouldLog) {
       err("No such phrase", phrase);
     }
   }
