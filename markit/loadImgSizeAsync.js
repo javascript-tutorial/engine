@@ -5,7 +5,7 @@ const assert = require('assert');
 assert(typeof IS_CLIENT === 'undefined');
 
 const { promisify } = require('util');
-const imageSize = promisify(require('image-size'));
+const imageSize = promisify(require('image-size').imageSize);
 
 const path = require('path');
 const tokenUtils = require('./utils/token');
