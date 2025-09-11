@@ -115,6 +115,7 @@ module.exports = async function(tokens, options) {
     try {
       return await imageSize(sourcePath);
     } catch (e) {
+      // console.log("imageSize error", e);
       if (e instanceof TypeError) {
         throw new SrcError(t('markit.error.image_invalid', {src}));
       }

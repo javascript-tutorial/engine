@@ -33,7 +33,7 @@ module.exports = class TutorialImporter {
    */
   async sync(directory, update = false) {
 
-    log.info(`sync PLNKR_ENABLED=${process.env.PLNKR_ENABLED}`);
+    log.info(`sync PLNKR_ENABLED=${process.env.PLNKR_ENABLED || ''}`);
 
     if (process.env.PLNKR_ENABLED && !this.plunkerToken) {
       this.plunkerToken = await getPlunkerToken();
