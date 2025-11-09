@@ -28,26 +28,26 @@ if lang === 'en' && currentSection == 'tutorial'
   //-   +e#sponsorBarContent
   //- script window.initSponsorBar()
 
-  +e.section#sponsorBar.
-    <style>
-      .coffee-btn{
-        --border: rgba(0,0,0,.12);
-        --hover: rgba(42,91,215,.06);          /* soft link-blue wash */
-        display:inline-flex; align-items:center; gap:.5rem;
-        padding:.5rem .75rem; border:1px solid var(--border);
-        border-radius:999px; background:#fff; color:inherit;
-        font:600 14px/1.3 inherit; text-decoration:none;
-      }
-      .coffee-btn:hover{ background:var(--hover); border-color:rgba(0,0,0,.18); }
-      .coffee-btn:focus-visible{ outline:2px solid #2a5bd7; outline-offset:2px; }
-      .coffee-btn .icon{ width:16px; height:16px; }
-      @media (prefers-color-scheme: dark){
-        .coffee-btn{ background:#111; color:#e6e6e6; --border: rgba(255,255,255,.16); --hover: rgba(120,160,240,.12); }
-      }
-    </style>
-    <a class="coffee-btn" href="https://buymeacoffee.com/javascriptinfo" rel="noopener" aria-label="Buy me a coffee — support this site">
-      <svg aria-hidden="true" viewBox="0 0 24 24" class="icon">
-        <path d="M4 10h13v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4Zm13 0h3a2 2 0 1 1 0 4h-3m-9-6V6m4 2V6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      Buy me a coffee
-    </a>
++e.section#sponsorBar.
+  <style>
+    .coffee-btn{
+      --border: rgba(0,0,0,.12);
+      --hover: rgba(42,91,215,.06);          /* soft link-blue wash */
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.5rem .75rem; border:1px solid var(--border);
+      border-radius:999px; background:#fff; color:inherit;
+      font:600 14px/1.3 inherit; text-decoration:none;
+    }
+    .coffee-btn:hover{ background:var(--hover); border-color:rgba(0,0,0,.18); }
+    .coffee-btn:focus-visible{ outline:2px solid #2a5bd7; outline-offset:2px; }
+    .coffee-btn .icon{ width:16px; height:16px; }
+    @media (prefers-color-scheme: dark){
+      .coffee-btn{ background:#111; color:#e6e6e6; --border: rgba(255,255,255,.16); --hover: rgba(120,160,240,.12); }
+    }
+  </style>
+  <a class="coffee-btn" href="https://buymeacoffee.com/javascriptinfo" rel="noopener" aria-label="Buy me a coffee — support this site">
+    <svg aria-hidden="true" viewBox="0 0 24 24" class="icon">
+      <path d="M4 10h13v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4Zm13 0h3a2 2 0 1 1 0 4h-3m-9-6V6m4 2V6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Buy me a coffee
+  </a>
