@@ -1,0 +1,7 @@
+recent: Một bổ sung gần đây
+recent_addition: Đây là một bổ sung gần đây cho ngôn ngữ.
+browser:
+  value: "Ví dụ hoạt động trong thời gian gần đây #{browser}."
+  none: "Không được hỗ trợ trong JavaScript engine hoặc chưa được hỗ trợ một phần, yêu cầu <a href=\"https://javascript.info/polyfills\">polyfill</a>."
+  new: "Các trình duyệt cũ có thể cần <a href=\"https://javascript.info/polyfills\">polyfill</a>."
+caniuse: "Bạn có thể tìm thấy trạng thái hỗ trợ hiện giờ tại <a href=\"https://caniuse.com/#feat=#{feat}\">https://caniuse.com/#feat=#{feat}</a>."
