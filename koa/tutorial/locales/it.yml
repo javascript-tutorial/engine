@@ -3,7 +3,7 @@ subtitle: "Come si sviluppa oggi. Dagli argomenti base fino a quelli avanzati, c
 part: "Parte #{num}"
 more: "Di più…"
 contents: 'Indice dei contenuti'
-description: 'Il corso principale è composta da due parti le quali esplorano JavaScript ocome linguaggio di programmazione e il suo utilizzo in ambiente browser. Potrai trovare anche ulteriori serie di articoli relativi ad altri temi.'
+description: 'Il corso principale è composto da due parti le quali esplorano JavaScript come linguaggio di programmazione e il suo utilizzo in ambiente browser. Potrai trovare anche ulteriori serie di articoli relativi ad altri temi.'
 
 part3:
   title: "Articoli aggiuntivi"
