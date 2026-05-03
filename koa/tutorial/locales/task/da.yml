@@ -1,0 +1,17 @@
+open_task:
+  sandbox:
+    tests: Åbn en sandbox med tests.
+    no_tests: Åbn en sandbox til opgaven.
+
+open_solution:
+  sandbox:
+    tests: Åbn løsningen med tests i en sandbox.
+    no_tests: Åbn løsningen i en sandbox.
+
+Importance: Vigtighed
+importance: vigtighed
+solution: løsning
+back: tilbage til lektionen
+importance_help: Hvor vigtig er opgaven, fra 1 til 5
+
+task_not_found: "Opgaven \"#{path}\" blev ikke fundet"

@@ -1,0 +1,7 @@
+recent: En nylig tilføjelse
+recent_addition: Dette er en nylig tilføjelse til sproget.
+browser:
+  value: "Eksemplerne fungerer i den seneste #{browser}."
+  none: "Ikke understøttet i JavaScript-engines, eller endnu kun delvist understøttet, kræver <a href=\"https://javascript.info/polyfills\">polyfilling</a>."
+  new: "Ældre browsere kan have brug for <a href=\"https://javascript.info/polyfills\">polyfills</a>."
+caniuse: "Du kan finde den aktuelle understøttelsesstatus på <a href=\"https://caniuse.com/#feat=#{feat}\">https://caniuse.com/#feat=#{feat}</a>."

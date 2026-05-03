@@ -1,0 +1,11 @@
+lesson:
+  next: Næste lektion
+  prev: Forrige lektion
+
+sibling_chapters: Søsterkapitler
+lesson_navigation: Lektionsnavigation
+tasks: Opgaver
+chapter: Kapitel
+lesson_of: "Lektion #{bookChildNumber} af #{bookLeafCount}"
+
+article_not_found: "Artiklen \"#{path}\" blev ikke fundet"

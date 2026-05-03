@@ -1,0 +1,27 @@
+400:
+  title: Ugyldig anmodning
+401:
+  title: Godkendelse påkrævet
+  description: Du skal måske <a href="#" data-action-login>logge ind</a>?
+
+403:
+  title: Adgang nægtet
+  wrong_user: Måske er du logget ind med den forkerte bruger?
+  login: Måske skal du <a href="#" data-action-login>logge ind</a>?
+
+404:
+  title: Siden blev ikke fundet
+  use_search:  'For at finde siden kan du bruge søgning:'
+  search: Søg
+  use_top: …eller den øverste navigation.
+  go_to_main: Gå til forsiden
+
+500:
+  title: Serverfejl
+  subject: "Fejl 500 på #{href}"
+  description: 'Vi analyserer fejl, men du kan fremskynde processen ved at rapportere detaljer til <a href="mailto:#{email}?subject=#{subject}">#{email}</a>.'
+
+503:
+  title: Tjeneste utilgængelig
+  description: Tjenesten er utilgængelig, beklager, prøv venligst igen senere.
+

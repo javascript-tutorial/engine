@@ -1,0 +1,7 @@
+
+server_connection_error: Fejl ved serverforbindelse.
+server_request_timeout: Tidsudløb for serveranmodning.
+request_aborted: Anmodningen blev afbrudt.
+no_response: Intet svar fra serveren.
+server_error: "Serverfejl (kode #{status}), prøv igen senere."
+invalid_format: Ugyldigt svarformat.

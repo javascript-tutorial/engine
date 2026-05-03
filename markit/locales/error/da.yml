@@ -1,0 +1,7 @@
+image_not_found: "Billedet \"#{src}\" blev ikke fundet"
+image_invalid: "Billedet \"#{src}\" er beskadiget"
+attr_required: "Attributten \"#{attr}\" er påkrævet"
+src_out_of_root: "Kildestien \"#{src}\" er uden for roden"
+read_file: "Kan ikke læse filen \"#{src}\""
+no_such_plunk: "Ingen sådan plunk \"#{src}\""
+anchor_exists: "Anker findes allerede: \"#{anchor}\""

@@ -1,0 +1,14 @@
+modern_javascript_tutorial: "Den moderne JavaScript-tutorial"
+subtitle: "Sådan gøres det nu. Fra det grundlæggende til avancerede emner med enkle, men detaljerede forklaringer."
+part: "Del #{num}"
+more: "Mere…"
+contents: 'Indholdsfortegnelse'
+description: 'Hovedkurset består af 2 dele, som dækker JavaScript som programmeringssprog og arbejde med en browser. Der er også yderligere serier af tematiske artikler.'
+
+part3:
+  title: "Yderligere artikler"
+  content: "Liste over ekstra emner, der forudsætter, at du har gennemgået de første to dele af tutorialen. Der er ingen klar hierarkisk rækkefølge her, du kan læse artiklerne i den rækkefølge, du vil."
+
+tutorial: Tutorial
+tutorial_map: Tutorial-oversigt
+not_translated: 'Dette materiale er kun tilgængeligt på følgende sprog: #{translatedLangs}. <a href="#{url}">Hjælp os</a> med at oversætte til <strong>#{currentLang.title}</strong>.'
