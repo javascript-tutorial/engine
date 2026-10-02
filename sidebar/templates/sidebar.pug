@@ -21,7 +21,7 @@ if githubLink
   +e.section
     +e('a').link(href=githubLink rel="nofollow")= t('site.edit_on_github')
 
-if lang === 'en' && currentSection == 'tutorial'
+if ['en', 'es', 'fr', 'ja', 'tr'].includes(lang) && currentSection == 'tutorial'
   //- && env == 'production'
   +e.section#sponsorBar
     +e.section-title#sponsorBarTitle
@@ -30,10 +30,10 @@ if lang === 'en' && currentSection == 'tutorial'
       .coddy-ad-box#coddyAd
         a.coddy-ad(href="https://coddy.tech/landing/javascript?from=javascript.info" target="_blank" rel="sponsored nofollow noopener")
           | <svg viewBox="0 0 58 66" aria-hidden="true" focusable="false"><path d="M15 27 L11 9 M43 27 L47 9" stroke="#50a0d8" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="10.5" cy="6.5" r="4.5" fill="#50a0d8"/><circle cx="47.5" cy="6.5" r="4.5" fill="#50a0d8"/><rect x="2.5" y="25" width="50" height="40" rx="13" fill="#50a0d8"/><path d="M21 43.5 H34" stroke="#103878" stroke-width="2.6" stroke-linecap="round"/><circle cx="13" cy="44" r="9" fill="#f8f8e8" stroke="#103878" stroke-width="2.6"/><circle cx="42" cy="44" r="9" fill="#f8f8e8" stroke="#103878" stroke-width="2.6"/><path d="M9 45.5 Q13 41.5 17 45.5 M38 45.5 Q42 41.5 46 45.5" stroke="#103878" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M24 57 Q28 60.5 32 57" stroke="#103878" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
-          | <span><b>Ready to practice JavaScript?</b>Hands-on exercises on <em>Coddy.tech</em><small>Join 5M+ learners</small></span>
-        button.coddy-ad-min(type="button" title="Minimize" aria-label="Minimize") &minus;
+          | <span><b>!{t('site.coddy.title')}</b>!{t('site.coddy.text')}<small>!{t('site.coddy.note')}</small></span>
+        button.coddy-ad-min(type="button" title=t('site.coddy.minimize') aria-label=t('site.coddy.minimize')) &minus;
         a.sidebar__link.coddy-ad-line(href="https://coddy.tech/landing/javascript?from=javascript.info" target="_blank" rel="sponsored nofollow noopener")
-          | <svg viewBox="0 0 58 66" aria-hidden="true" focusable="false"><path d="M15 27 L11 9 M43 27 L47 9" stroke="#50a0d8" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="10.5" cy="6.5" r="4.5" fill="#50a0d8"/><circle cx="47.5" cy="6.5" r="4.5" fill="#50a0d8"/><rect x="2.5" y="25" width="50" height="40" rx="13" fill="#50a0d8"/><path d="M21 43.5 H34" stroke="#103878" stroke-width="2.6" stroke-linecap="round"/><circle cx="13" cy="44" r="9" fill="#f8f8e8" stroke="#103878" stroke-width="2.6"/><circle cx="42" cy="44" r="9" fill="#f8f8e8" stroke="#103878" stroke-width="2.6"/><path d="M9 45.5 Q13 41.5 17 45.5 M38 45.5 Q42 41.5 46 45.5" stroke="#103878" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M24 57 Q28 60.5 32 57" stroke="#103878" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>Practice at Coddy.tech
+          | <svg viewBox="0 0 58 66" aria-hidden="true" focusable="false"><path d="M15 27 L11 9 M43 27 L47 9" stroke="#50a0d8" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="10.5" cy="6.5" r="4.5" fill="#50a0d8"/><circle cx="47.5" cy="6.5" r="4.5" fill="#50a0d8"/><rect x="2.5" y="25" width="50" height="40" rx="13" fill="#50a0d8"/><path d="M21 43.5 H34" stroke="#103878" stroke-width="2.6" stroke-linecap="round"/><circle cx="13" cy="44" r="9" fill="#f8f8e8" stroke="#103878" stroke-width="2.6"/><circle cx="42" cy="44" r="9" fill="#f8f8e8" stroke="#103878" stroke-width="2.6"/><path d="M9 45.5 Q13 41.5 17 45.5 M38 45.5 Q42 41.5 46 45.5" stroke="#103878" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M24 57 Q28 60.5 32 57" stroke="#103878" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>#{t('site.coddy.short')}
 
       script.
         (function() {
