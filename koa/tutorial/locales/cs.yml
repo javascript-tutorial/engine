@@ -1,0 +1,14 @@
+modern_javascript_tutorial: "Moderní JavaScriptový tutoriál"
+subtitle: "Jak se to dělá dnes. Od základů až po pokročilá témata s jednoduchými, ale podrobnými vysvětleními."
+part: "Část #{num}"
+more: "Více…"
+contents: 'Obsah'
+description: 'Hlavní kurz se skládá ze 2 částí, které pokrývají JavaScript jako programovací jazyk a práci s prohlížečem. K dispozici jsou také další série tematických článků.'
+
+part3:
+  title: "Doplňující články"
+  content: "Seznam doplňujících témat, která předpokládají, že jste prošli první dvě části tutoriálu. Není zde žádná jasná hierarchie, články můžete číst v libovolném pořadí."
+
+tutorial: Tutoriál
+tutorial_map: Mapa tutoriálu
+not_translated: 'Tento materiál je dostupný pouze v následujících jazycích: #{translatedLangs}. <a href="#{url}">Pomozte nám</a> prosím s překladem do jazyka <strong>#{currentLang.title}</strong>.'

@@ -1,0 +1,7 @@
+image_not_found: "Obrázek \"#{src}\" nebyl nalezen"
+image_invalid: "Obrázek \"#{src}\" je poškozený"
+attr_required: "Atribut \"#{attr}\" je povinný"
+src_out_of_root: "Zdrojová cesta \"#{src}\" je mimo kořenový adresář"
+read_file: "Nelze přečíst soubor \"#{src}\""
+no_such_plunk: "Pískoviště \"#{src}\" nebylo nalezeno"
+anchor_exists: "Kotva již existuje: \"#{anchor}\""

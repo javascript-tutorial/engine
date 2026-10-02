@@ -1,0 +1,17 @@
+open_task:
+  sandbox:
+    tests: Otevřít pískoviště s testy.
+    no_tests: Otevřít pískoviště pro úlohu.
+
+open_solution:
+  sandbox:
+    tests: Otevřít řešení s testy na pískovišti.
+    no_tests: Otevřít řešení na pískovišti.
+
+Importance: Důležitost
+importance: důležitost
+solution: řešení
+back: zpět k lekci
+importance_help: Jak důležitá je úloha, od 1 do 5
+
+task_not_found: "Úloha \"#{path}\" nebyla nalezena"

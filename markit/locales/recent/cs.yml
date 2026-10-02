@@ -1,0 +1,7 @@
+recent: Nová vlastnost
+recent_addition: Tato vlastnost byla do jazyka přidána nedávno.
+browser:
+  value: "Příklady fungují v nejnovější verzi #{browser}."
+  none: "Není podporováno v JavaScriptových motorech nebo je zatím podporováno jen částečně, vyžaduje <a href=\"https://javascript.info/polyfills\">polyfilly</a>."
+  new: "Staré prohlížeče mohou vyžadovat <a href=\"https://javascript.info/polyfills\">polyfilly</a>."
+caniuse: "Aktuální stav podpory najdete na <a href=\"https://caniuse.com/#feat=#{feat}\">https://caniuse.com/#feat=#{feat}</a>."

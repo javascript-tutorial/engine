@@ -1,0 +1,11 @@
+lesson:
+  next: Další lekce
+  prev: Předchozí lekce
+
+sibling_chapters: Sousední kapitoly
+lesson_navigation: Navigace v lekci
+tasks: Úlohy
+chapter: Kapitola
+lesson_of: "Lekce #{bookChildNumber} z #{bookLeafCount}"
+
+article_not_found: "Článek \"#{path}\" nebyl nalezen"

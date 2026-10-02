@@ -1,0 +1,7 @@
+
+server_connection_error: Chyba připojení k serveru.
+server_request_timeout: Vypršel časový limit požadavku na server.
+request_aborted: Požadavek byl přerušen.
+no_response: Server neodpovídá.
+server_error: "Chyba serveru (kód #{status}), zkuste to později."
+invalid_format: Neplatný formát odpovědi.

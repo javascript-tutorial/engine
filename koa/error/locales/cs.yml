@@ -1,0 +1,27 @@
+400:
+  title: Neplatný požadavek
+401:
+  title: Vyžadováno přihlášení
+  description: Možná se potřebujete <a href="#" data-action-login>přihlásit</a>?
+
+403:
+  title: Přístup zakázán
+  wrong_user: Možná jste se přihlásili jako nesprávný uživatel?
+  login: Možná se potřebujete <a href="#" data-action-login>přihlásit</a>?
+
+404:
+  title: Stránka nenalezena
+  use_search:  'K nalezení stránky můžete použít vyhledávání:'
+  search: Hledat
+  use_top: …nebo horní navigaci.
+  go_to_main: Přejít na hlavní stránku
+
+500:
+  title: Chyba serveru
+  subject: "Chyba 500 na #{href}"
+  description: 'Chyby analyzujeme, ale můžete celý proces urychlit tím, že pošlete podrobnosti na <a href="mailto:#{email}?subject=#{subject}">#{email}</a>.'
+
+503:
+  title: Služba není dostupná
+  description: Služba je nedostupná, omlouváme se, zkuste to prosím později.
+
